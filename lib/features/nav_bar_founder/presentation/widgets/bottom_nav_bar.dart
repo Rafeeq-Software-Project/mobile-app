@@ -7,6 +7,7 @@ import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
 import 'package:rafeeq_app/core/utils/app_icons.dart';
 import 'package:rafeeq_app/features/chat/presentation/screens/conversations_screen.dart';
 import 'package:rafeeq_app/features/founder_profile/presentation/screens/founder_profile_screen.dart';
+import 'package:rafeeq_app/features/founder_projects/presentation/screens/my_projects_screen.dart';
 import 'package:rafeeq_app/features/nav_bar_founder/presentation/manager/nav_bar_cubit/nav_bar_cubit.dart';
 import 'package:rafeeq_app/generated/l10n.dart';
 
@@ -17,7 +18,7 @@ class CustomBottomNavBar extends StatelessWidget {
 
   final List<Widget> views = [
     Container(),
-    Container(),
+    MyProjectsScreen(),
     InvestorApplicationsScreen(),
     ConversationsScreen(),
     FounderProfileScreen(),

@@ -32,7 +32,7 @@ class _ChatInputBarState extends State<ChatInputBar> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: colors.white,
+        color: colors.background,
         boxShadow: [
           BoxShadow(
             color: colors.grey900.withValues(alpha: .05),
@@ -54,6 +54,7 @@ class _ChatInputBarState extends State<ChatInputBar> {
                 hintText: 'اكتب رسالتك...',
               ),
             ),
+            SizedBox(width: 12.w),
 
             if (widget.onVoice != null) ...[
               buildCircleButton(
