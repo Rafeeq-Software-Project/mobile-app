@@ -35,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.customAppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -105,7 +106,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        GoRouter.of(context).push(Routes.forgetPassword);
+                      },
                       child: Text(
                         S.of(context).login_forgot_password,
                         style: TextStyle(

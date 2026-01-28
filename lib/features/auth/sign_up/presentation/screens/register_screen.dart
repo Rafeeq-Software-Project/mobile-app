@@ -47,6 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.customAppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -171,7 +172,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     text: "Sign Up",
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
-                        // TODO: connect register logic
+                        GoRouter.of(context).go(Routes.verification);
                       }
                     },
                   ),

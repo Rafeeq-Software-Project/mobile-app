@@ -59,14 +59,14 @@ class S {
     return Intl.message('Home', name: 'home', desc: '', args: []);
   }
 
-  /// `Road Map`
-  String get roadMap {
-    return Intl.message('Road Map', name: 'roadMap', desc: '', args: []);
+  /// `Projects`
+  String get projects {
+    return Intl.message('Projects', name: 'projects', desc: '', args: []);
   }
 
-  /// `Notes`
-  String get notes {
-    return Intl.message('Notes', name: 'notes', desc: '', args: []);
+  /// `Chat`
+  String get chat {
+    return Intl.message('Chat', name: 'chat', desc: '', args: []);
   }
 
   /// `Settings`
@@ -287,6 +287,411 @@ class S {
   /// `Sign up`
   String get login_sign_up {
     return Intl.message('Sign up', name: 'login_sign_up', desc: '', args: []);
+  }
+
+  /// `Applications`
+  String get applications {
+    return Intl.message(
+      'Applications',
+      name: 'applications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Terms & Conditions`
+  String get termsScreenTitle {
+    return Intl.message(
+      'Terms & Conditions',
+      name: 'termsScreenTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rafeeq`
+  String get platformName {
+    return Intl.message('Rafeeq', name: 'platformName', desc: '', args: []);
+  }
+
+  /// `Please review the following terms and conditions carefully before using the platform.`
+  String get termsScreenSubtitle {
+    return Intl.message(
+      'Please review the following terms and conditions carefully before using the platform.',
+      name: 'termsScreenSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Introduction`
+  String get termsIntroSectionTitle {
+    return Intl.message(
+      'Introduction',
+      name: 'termsIntroSectionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rafeeq is a digital platform designed to connect founders with investors in a professional and secure environment. By accessing or using the platform, you agree to be bound by these Terms and Conditions.`
+  String get termsIntroSectionContent {
+    return Intl.message(
+      'Rafeeq is a digital platform designed to connect founders with investors in a professional and secure environment. By accessing or using the platform, you agree to be bound by these Terms and Conditions.',
+      name: 'termsIntroSectionContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User Responsibilities`
+  String get userResponsibilitiesTitle {
+    return Intl.message(
+      'User Responsibilities',
+      name: 'userResponsibilitiesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Users are responsible for providing accurate, complete, and up-to-date information. Each user is fully responsible for the content, data, and materials shared through the platform.`
+  String get userResponsibilitiesContent {
+    return Intl.message(
+      'Users are responsible for providing accurate, complete, and up-to-date information. Each user is fully responsible for the content, data, and materials shared through the platform.',
+      name: 'userResponsibilitiesContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Privacy & Data Protection`
+  String get privacyAndDataTitle {
+    return Intl.message(
+      'Privacy & Data Protection',
+      name: 'privacyAndDataTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rafeeq is committed to protecting user data and privacy. All personal and business information is handled in accordance with our Privacy Policy and will not be shared without proper authorization.`
+  String get privacyAndDataContent {
+    return Intl.message(
+      'Rafeeq is committed to protecting user data and privacy. All personal and business information is handled in accordance with our Privacy Policy and will not be shared without proper authorization.',
+      name: 'privacyAndDataContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Projects & Investments`
+  String get projectsAndInvestmentsTitle {
+    return Intl.message(
+      'Projects & Investments',
+      name: 'projectsAndInvestmentsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The platform allows founders to present projects and investment opportunities. All information provided is for informational purposes only and does not constitute financial, legal, or investment advice.`
+  String get projectsAndInvestmentsContent {
+    return Intl.message(
+      'The platform allows founders to present projects and investment opportunities. All information provided is for informational purposes only and does not constitute financial, legal, or investment advice.',
+      name: 'projectsAndInvestmentsContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Information Accuracy`
+  String get informationAccuracyTitle {
+    return Intl.message(
+      'Information Accuracy',
+      name: 'informationAccuracyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Founders are solely responsible for the accuracy and validity of all financial, technical, and business information related to their projects. Rafeeq does not guarantee the completeness or reliability of any information presented.`
+  String get informationAccuracyContent {
+    return Intl.message(
+      'Founders are solely responsible for the accuracy and validity of all financial, technical, and business information related to their projects. Rafeeq does not guarantee the completeness or reliability of any information presented.',
+      name: 'informationAccuracyContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Limitation of Liability`
+  String get liabilityLimitationTitle {
+    return Intl.message(
+      'Limitation of Liability',
+      name: 'liabilityLimitationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rafeeq shall not be held liable for any direct or indirect losses, damages, or claims arising from the use of the platform or reliance on any information provided by users.`
+  String get liabilityLimitationContent {
+    return Intl.message(
+      'Rafeeq shall not be held liable for any direct or indirect losses, damages, or claims arising from the use of the platform or reliance on any information provided by users.',
+      name: 'liabilityLimitationContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Intellectual Property Rights`
+  String get intellectualPropertyTitle {
+    return Intl.message(
+      'Intellectual Property Rights',
+      name: 'intellectualPropertyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All intellectual property rights related to the platform, including but not limited to content, design, trademarks, and software, are owned by Rafeeq and may not be used without prior written permission.`
+  String get intellectualPropertyContent {
+    return Intl.message(
+      'All intellectual property rights related to the platform, including but not limited to content, design, trademarks, and software, are owned by Rafeeq and may not be used without prior written permission.',
+      name: 'intellectualPropertyContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account Suspension or Termination`
+  String get accountTerminationTitle {
+    return Intl.message(
+      'Account Suspension or Termination',
+      name: 'accountTerminationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rafeeq reserves the right to suspend or terminate any user account at its sole discretion in the event of a violation of these Terms or misuse of the platform.`
+  String get accountTerminationContent {
+    return Intl.message(
+      'Rafeeq reserves the right to suspend or terminate any user account at its sole discretion in the event of a violation of these Terms or misuse of the platform.',
+      name: 'accountTerminationContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Updates to Terms`
+  String get termsUpdatesTitle {
+    return Intl.message(
+      'Updates to Terms',
+      name: 'termsUpdatesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rafeeq reserves the right to modify or update these Terms and Conditions at any time. Continued use of the platform constitutes acceptance of any such changes.`
+  String get termsUpdatesContent {
+    return Intl.message(
+      'Rafeeq reserves the right to modify or update these Terms and Conditions at any time. Continued use of the platform constitutes acceptance of any such changes.',
+      name: 'termsUpdatesContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact & Support`
+  String get supportAndContactTitle {
+    return Intl.message(
+      'Contact & Support',
+      name: 'supportAndContactTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For any inquiries, support requests, or concerns regarding these Terms, users may contact the Rafeeq support team through the official communication channels within the application.`
+  String get supportAndContactContent {
+    return Intl.message(
+      'For any inquiries, support requests, or concerns regarding these Terms, users may contact the Rafeeq support team through the official communication channels within the application.',
+      name: 'supportAndContactContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last updated: February 2025`
+  String get termsLastUpdateLabel {
+    return Intl.message(
+      'Last updated: February 2025',
+      name: 'termsLastUpdateLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `By using Rafeeq, you acknowledge that you have read, understood, and agreed to these Terms and Conditions.`
+  String get termsAcceptanceNote {
+    return Intl.message(
+      'By using Rafeeq, you acknowledge that you have read, understood, and agreed to these Terms and Conditions.',
+      name: 'termsAcceptanceNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `App Theme`
+  String get theme {
+    return Intl.message('App Theme', name: 'theme', desc: '', args: []);
+  }
+
+  /// `FAQ & Chat centre`
+  String get FAQChatcentre {
+    return Intl.message(
+      'FAQ & Chat centre',
+      name: 'FAQChatcentre',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Give the rating`
+  String get givetheRating {
+    return Intl.message(
+      'Give the rating',
+      name: 'givetheRating',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Terms & Condition`
+  String get termsAndCondition {
+    return Intl.message(
+      'Terms & Condition',
+      name: 'termsAndCondition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About Rafeeq team`
+  String get aboutRafeeqteam {
+    return Intl.message(
+      'About Rafeeq team',
+      name: 'aboutRafeeqteam',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Exit the app`
+  String get exittheapp {
+    return Intl.message('Exit the app', name: 'exittheapp', desc: '', args: []);
+  }
+
+  /// `Choose App Theme`
+  String get theme_title {
+    return Intl.message(
+      'Choose App Theme',
+      name: 'theme_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Light Theme`
+  String get theme_light_title {
+    return Intl.message(
+      'Light Theme',
+      name: 'theme_light_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clean and bright interface`
+  String get theme_light_subtitle {
+    return Intl.message(
+      'Clean and bright interface',
+      name: 'theme_light_subtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark Theme`
+  String get theme_dark_title {
+    return Intl.message(
+      'Dark Theme',
+      name: 'theme_dark_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Easy on the eyes in low light`
+  String get theme_dark_subtitle {
+    return Intl.message(
+      'Easy on the eyes in low light',
+      name: 'theme_dark_subtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `System Theme`
+  String get theme_system_title {
+    return Intl.message(
+      'System Theme',
+      name: 'theme_system_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Matches your device settings`
+  String get theme_system_subtitle {
+    return Intl.message(
+      'Matches your device settings',
+      name: 'theme_system_subtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About Rafeeq Team`
+  String get about_team_title {
+    return Intl.message(
+      'About Rafeeq Team',
+      name: 'about_team_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Meet the team behind the design and development of this application.`
+  String get about_team_description {
+    return Intl.message(
+      'Meet the team behind the design and development of this application.',
+      name: 'about_team_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Profile`
+  String get editProfile {
+    return Intl.message(
+      'Edit Profile',
+      name: 'editProfile',
+      desc: '',
+      args: [],
+    );
   }
 }
 

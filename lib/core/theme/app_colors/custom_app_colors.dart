@@ -49,12 +49,6 @@ class CustomAppColors {
     required this.accent700,
     required this.accent600,
     required this.accent300,
-
-    // Gradients
-    required this.greenGradient,
-    required this.orangeGradient,
-    required this.yellowGradient,
-    required this.greenYellowGradient,
   });
 
   // ---------- Primary ----------
@@ -101,12 +95,6 @@ class CustomAppColors {
   final Color accent700;
   final Color accent600;
   final Color accent300;
-
-  // ---------- Gradients ----------
-  final List<Color> greenGradient;
-  final List<Color> orangeGradient;
-  final List<Color> yellowGradient;
-  final List<Color> greenYellowGradient;
 
   // Factory for Light Theme
   factory CustomAppColors.light() {
@@ -155,12 +143,6 @@ class CustomAppColors {
       accent700: LightAppColors.accent700,
       accent600: LightAppColors.accent600,
       accent300: LightAppColors.accent300,
-
-      // Gradients
-      greenGradient: LightAppColors.greenGradient,
-      orangeGradient: LightAppColors.orangeGradient,
-      yellowGradient: LightAppColors.yellowGradient,
-      greenYellowGradient: LightAppColors.greenYellowGradient,
     );
   }
 
@@ -211,12 +193,6 @@ class CustomAppColors {
       accent700: DarkAppColors.accent700,
       accent600: DarkAppColors.accent600,
       accent300: DarkAppColors.accent300,
-
-      // Gradients
-      greenGradient: DarkAppColors.greenGradient,
-      orangeGradient: DarkAppColors.orangeGradient,
-      yellowGradient: DarkAppColors.yellowGradient,
-      greenYellowGradient: DarkAppColors.greenYellowGradient,
     );
   }
 

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 class DarkAppColors {
   // ---------- Primary Palette ----------
-  static const Color primary900 = Color(0xFF022711);
-  static const Color primary800 = Color(0xFF077734);
-  static const Color primary700 = Color(0xFF0AAE4B);
-  static const Color primary600 = Color(0xFF3EC474);
-  static const Color primary500 = Color(0xFF0CD45C);
-  static const Color primary400 = Color(0xFF18F26F);
-  static const Color primary300 = Color(0xFFE7FEF0);
+  static const Color primary900 = Color(0xFF1E3A8A); // Deep Blue
+  static const Color primary800 = Color(0xFF2C5AA0); // Dark Blue
+  static const Color primary700 = Color(0xFF3B82F6); // Strong Blue
+  static const Color primary600 = Color(0xFF4A90E2); // Medium Blue
+  static const Color primary500 = Color(0xFF5BA3F5); // Bright Blue
+  static const Color primary400 = Color(0xFF60A5FA); // Light Blue
+  static const Color primary300 = Color(
+    0xFFE8F4FD,
+  ); // Very Light Blue (backgrounds)
 
   // ---------- Grey Scale ----------
   static const Color grey900 = Color(0xFFFFFFFF);

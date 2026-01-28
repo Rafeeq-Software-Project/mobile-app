@@ -202,7 +202,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                           controller: controller,
                           count: pages.length,
                           effect: ExpandingDotsEffect(
-                            activeDotColor: context.customAppColors.primary700,
+                            activeDotColor: context.customAppColors.primary800,
                             dotHeight: 8.h,
                             dotWidth: 8.w,
                           ),
@@ -225,7 +225,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                             width: 55.w,
                             height: 55.h,
                             decoration: BoxDecoration(
-                              color: context.customAppColors.primary700,
+                              color: context.customAppColors.primary800,
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
