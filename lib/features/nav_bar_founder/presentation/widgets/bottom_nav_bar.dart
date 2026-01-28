@@ -10,13 +10,15 @@ import 'package:rafeeq_app/features/founder_profile/presentation/screens/founder
 import 'package:rafeeq_app/features/nav_bar_founder/presentation/manager/nav_bar_cubit/nav_bar_cubit.dart';
 import 'package:rafeeq_app/generated/l10n.dart';
 
+import '../../../investor_applications/presentation/screens/investor_applications_screen.dart';
+
 class CustomBottomNavBar extends StatelessWidget {
   CustomBottomNavBar({super.key});
 
   final List<Widget> views = [
     Container(),
     Container(),
-    Container(),
+    InvestorApplicationsScreen(),
     ConversationsScreen(),
     FounderProfileScreen(),
   ];
