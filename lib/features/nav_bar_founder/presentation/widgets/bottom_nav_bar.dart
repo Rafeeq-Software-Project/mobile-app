@@ -6,6 +6,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
 import 'package:rafeeq_app/core/utils/app_icons.dart';
 import 'package:rafeeq_app/features/chat/presentation/screens/conversations_screen.dart';
+import 'package:rafeeq_app/features/founder_home/presentation/screens/founder_home_screen.dart';
 import 'package:rafeeq_app/features/founder_profile/presentation/screens/founder_profile_screen.dart';
 import 'package:rafeeq_app/features/founder_projects/presentation/screens/my_projects_screen.dart';
 import 'package:rafeeq_app/features/nav_bar_founder/presentation/manager/nav_bar_cubit/nav_bar_cubit.dart';
@@ -17,7 +18,7 @@ class CustomBottomNavBar extends StatelessWidget {
   CustomBottomNavBar({super.key});
 
   final List<Widget> views = [
-    Container(),
+    DashboardScreen(),
     MyProjectsScreen(),
     InvestorApplicationsScreen(),
     ConversationsScreen(),
