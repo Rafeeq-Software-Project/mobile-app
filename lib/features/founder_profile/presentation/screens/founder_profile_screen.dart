@@ -28,7 +28,9 @@ class _FounderProfileScreenState extends State<FounderProfileScreen> {
       {
         'icon': AppIcons.personIcon,
         'title': S.of(context).editProfile,
-        'onTap': () {},
+        'onTap': () {
+          GoRouter.of(context).push(Routes.founderAccountScreen);
+        },
       },
       {
         'icon': AppIcons.themeIcon,

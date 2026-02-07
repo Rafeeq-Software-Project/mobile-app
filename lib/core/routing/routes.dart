@@ -16,4 +16,7 @@ class Routes {
 
   // Create Project Flow
   static const String createProjectSteps = '/createProjectSteps';
+
+  // Founder Account
+  static const String founderAccountScreen = '/founderAccountScreen';
 }

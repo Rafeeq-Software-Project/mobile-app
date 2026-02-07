@@ -9,6 +9,7 @@ import 'package:rafeeq_app/features/auth/sign_up/presentation/screens/register_s
 import 'package:rafeeq_app/features/auth/sign_up/presentation/screens/verification_screen.dart';
 import 'package:rafeeq_app/features/chat/presentation/screens/chat_screen.dart';
 import 'package:rafeeq_app/features/create_project/presentation/screens/create_project_coordinator.dart';
+import 'package:rafeeq_app/features/founder_account/presentation/screens/founder_account_screen.dart';
 import 'package:rafeeq_app/features/nav_bar_founder/presentation/widgets/bottom_nav_bar.dart';
 import 'package:rafeeq_app/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:rafeeq_app/features/onboarding/presentation/screens/welcome_screen.dart';
@@ -19,7 +20,7 @@ abstract class AppRouter {
 
   static void initRouter() {
     router = GoRouter(
-      initialLocation: Routes.onboarding,
+      initialLocation: Routes.navbar,
       routes: [
         GoRoute(
           path: Routes.onboarding,
@@ -64,6 +65,10 @@ abstract class AppRouter {
         GoRoute(
           path: Routes.createProjectSteps,
           builder: (context, state) => CreateProjectCoordinator(),
+        ),
+        GoRoute(
+          path: Routes.founderAccountScreen,
+          builder: (context, state) => FounderAccountScreen(),
         ),
       ],
     );
