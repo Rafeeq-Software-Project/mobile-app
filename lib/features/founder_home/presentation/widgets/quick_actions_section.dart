@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:rafeeq_app/core/routing/routes.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
 import 'quick_action_button.dart';
 
@@ -14,7 +16,9 @@ class QuickActionsSection extends StatelessWidget {
         icon: Icons.add_rounded,
         label: 'New Project',
         color: colors.primary700,
-        onTap: () {},
+        onTap: () {
+          GoRouter.of(context).push(Routes.createProjectSteps);
+        },
       ),
       QuickActionData(
         icon: Icons.person_add_rounded,

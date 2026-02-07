@@ -13,4 +13,7 @@ class Routes {
   // Popular Questions Screen
   static const String popularQuestionsScreen = '/popularQuestionsScreen';
   static const String chatScreen = '/chatScreen';
+
+  // Create Project Flow
+  static const String createProjectSteps = '/createProjectSteps';
 }
