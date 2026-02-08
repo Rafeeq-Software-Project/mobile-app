@@ -5,7 +5,8 @@ class Routes {
   static const String register = '/register';
   static const String verification = '/verification';
   static const String forgetPassword = '/forgetPassword';
-  static const String navbar = '/navbar';
+  static const String navbarFounder = '/navbarFounder';
+  static const String navbarInvestor = '/navbarInvestor';
 
   // Terms and Condition Screen
   static const String termsAndConditionScreen = '/termsAndConditionScreen';

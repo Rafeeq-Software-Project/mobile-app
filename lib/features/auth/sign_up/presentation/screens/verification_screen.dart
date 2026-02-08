@@ -114,7 +114,7 @@ class VerificationScreen extends StatelessWidget {
             CustomButton(
               text: 'Verify',
               onTap: () {
-                GoRouter.of(context).go(Routes.navbar);
+                GoRouter.of(context).go(Routes.navbarFounder);
               },
             ),
             SizedBox(height: 25.h),

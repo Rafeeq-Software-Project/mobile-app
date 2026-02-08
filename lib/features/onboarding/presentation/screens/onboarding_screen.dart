@@ -127,7 +127,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               right: 20.w,
               child: GestureDetector(
                 onTap: () {
-                  GoRouter.of(context).pushReplacement(Routes.navbar);
+                  GoRouter.of(context).pushReplacement(Routes.navbarFounder);
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(

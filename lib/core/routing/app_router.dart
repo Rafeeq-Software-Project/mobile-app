@@ -10,17 +10,19 @@ import 'package:rafeeq_app/features/auth/sign_up/presentation/screens/verificati
 import 'package:rafeeq_app/features/chat/presentation/screens/chat_screen.dart';
 import 'package:rafeeq_app/features/create_project/presentation/screens/create_project_coordinator.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/screens/founder_account_screen.dart';
-import 'package:rafeeq_app/features/nav_bar_founder/presentation/widgets/bottom_nav_bar.dart';
+import 'package:rafeeq_app/features/nav_bar/presentation/manager/nav_bar_investor_cubit/nav_bar_investor_cubit.dart';
+import 'package:rafeeq_app/features/nav_bar/presentation/widgets/bottom_nav_bar_founder.dart';
+import 'package:rafeeq_app/features/nav_bar/presentation/widgets/bottom_nav_bar_investor.dart';
 import 'package:rafeeq_app/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:rafeeq_app/features/onboarding/presentation/screens/welcome_screen.dart';
-import '../../features/nav_bar_founder/presentation/manager/nav_bar_cubit/nav_bar_cubit.dart';
+import '../../features/nav_bar/presentation/manager/nav_bar_founder_cubit/nav_bar_founder_cubit.dart';
 
 abstract class AppRouter {
   static late final GoRouter router;
 
   static void initRouter() {
     router = GoRouter(
-      initialLocation: Routes.navbar,
+      initialLocation: Routes.navbarInvestor,
       routes: [
         GoRoute(
           path: Routes.onboarding,
@@ -44,10 +46,17 @@ abstract class AppRouter {
           builder: (context, state) => ForgetPasswordScreen(),
         ),
         GoRoute(
-          path: Routes.navbar,
+          path: Routes.navbarFounder,
           builder: (context, state) => BlocProvider(
-            create: (context) => NavBarCubit(),
-            child: CustomBottomNavBar(),
+            create: (context) => NavBarFounderCubit(),
+            child: CustomBottomNavBarFounder(),
+          ),
+        ),
+        GoRoute(
+          path: Routes.navbarInvestor,
+          builder: (context, state) => BlocProvider(
+            create: (context) => NavBarInvestorCubit(),
+            child: BottomNavBarInvestor(),
           ),
         ),
         GoRoute(
