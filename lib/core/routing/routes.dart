@@ -13,4 +13,6 @@ class Routes {
   static const String createProjectSteps = '/createProjectSteps';
   static const String founderAccountScreen = '/founderAccountScreen';
   static const String applyToProjectScreen = '/applyToProjectScreen';
+  static const String investorAccountScreen = '/investorAccountScreen';
+  static const String rateFounderScreen = '/rateFounderScreen';
 }

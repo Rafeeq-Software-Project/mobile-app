@@ -28,7 +28,9 @@ class _InvestorProfileScreenState extends State<InvestorProfileScreen> {
       {
         'icon': AppIcons.personIcon,
         'title': S.of(context).editProfile,
-        'onTap': () {},
+        'onTap': () {
+          GoRouter.of(context).push(Routes.investorAccountScreen);
+        },
       },
       {
         'icon': AppIcons.themeIcon,
