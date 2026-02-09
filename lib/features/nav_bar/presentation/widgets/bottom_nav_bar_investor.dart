@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
 import 'package:rafeeq_app/core/utils/app_icons.dart';
+import 'package:rafeeq_app/features/investor_explore_projects/presentation/screens/explore_projects_screen.dart';
 import 'package:rafeeq_app/features/investor_home/presentation/screens/investor_home_screen.dart';
 import 'package:rafeeq_app/features/investor_profile/presentation/screens/investor_profile_screen.dart';
 import 'package:rafeeq_app/features/nav_bar/presentation/manager/nav_bar_investor_cubit/nav_bar_investor_cubit.dart';
@@ -16,7 +17,7 @@ class BottomNavBarInvestor extends StatelessWidget {
 
   final List<Widget> views = [
     InvestorHomeScreen(),
-    Container(),
+    ExploreProjectsScreen(),
     Container(),
     Container(),
     InvestorProfileScreen(),
