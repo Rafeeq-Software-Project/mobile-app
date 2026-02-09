@@ -15,4 +15,5 @@ class Routes {
   static const String applyToProjectScreen = '/applyToProjectScreen';
   static const String investorAccountScreen = '/investorAccountScreen';
   static const String rateFounderScreen = '/rateFounderScreen';
+  static const String savedProjectsScreen = '/savedProjectsScreen';
 }

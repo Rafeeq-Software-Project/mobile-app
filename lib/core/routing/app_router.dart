@@ -12,6 +12,7 @@ import 'package:rafeeq_app/features/create_project/presentation/screens/create_p
 import 'package:rafeeq_app/features/founder_account/presentation/screens/founder_account_screen.dart';
 import 'package:rafeeq_app/features/investor_account/presentation/screens/investor_account_screen.dart';
 import 'package:rafeeq_app/features/investor_apply_project/presentation/screens/apply_to_project_screen.dart';
+import 'package:rafeeq_app/features/investor_saved_projects/presentation/screens/saved_projects_screen.dart';
 import 'package:rafeeq_app/features/nav_bar/presentation/manager/nav_bar_investor_cubit/nav_bar_investor_cubit.dart';
 import 'package:rafeeq_app/features/nav_bar/presentation/widgets/bottom_nav_bar_founder.dart';
 import 'package:rafeeq_app/features/nav_bar/presentation/widgets/bottom_nav_bar_investor.dart';
@@ -25,7 +26,7 @@ abstract class AppRouter {
 
   static void initRouter() {
     router = GoRouter(
-      initialLocation: Routes.rateFounderScreen,
+      initialLocation: Routes.savedProjectsScreen,
       routes: [
         GoRoute(
           path: Routes.onboarding,
@@ -93,6 +94,10 @@ abstract class AppRouter {
         GoRoute(
           path: Routes.rateFounderScreen,
           builder: (context, state) => RateFounderScreen(),
+        ),
+        GoRoute(
+          path: Routes.savedProjectsScreen,
+          builder: (context, state) => SavedProjectsScreen(),
         ),
       ],
     );
