@@ -10,6 +10,7 @@ import 'package:rafeeq_app/features/auth/sign_up/presentation/screens/verificati
 import 'package:rafeeq_app/features/chat/presentation/screens/chat_screen.dart';
 import 'package:rafeeq_app/features/create_project/presentation/screens/create_project_coordinator.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/screens/founder_account_screen.dart';
+import 'package:rafeeq_app/features/investor_apply_project/presentation/screens/apply_to_project_screen.dart';
 import 'package:rafeeq_app/features/nav_bar/presentation/manager/nav_bar_investor_cubit/nav_bar_investor_cubit.dart';
 import 'package:rafeeq_app/features/nav_bar/presentation/widgets/bottom_nav_bar_founder.dart';
 import 'package:rafeeq_app/features/nav_bar/presentation/widgets/bottom_nav_bar_investor.dart';
@@ -78,6 +79,10 @@ abstract class AppRouter {
         GoRoute(
           path: Routes.founderAccountScreen,
           builder: (context, state) => FounderAccountScreen(),
+        ),
+        GoRoute(
+          path: Routes.applyToProjectScreen,
+          builder: (context, state) => ApplyToProjectScreen(),
         ),
       ],
     );

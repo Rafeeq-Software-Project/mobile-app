@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:rafeeq_app/core/routing/routes.dart';
 import 'package:rafeeq_app/core/theme/app_texts/app_text_styles.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
 import 'package:rafeeq_app/features/investor_explore_projects/data/models/explore_project_model.dart';
@@ -189,12 +191,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
             right: 0,
             child: ApplyButton(
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Application submitted!'),
-                    backgroundColor: colors.accent600,
-                  ),
-                );
+                GoRouter.of(context).push(Routes.applyToProjectScreen);
               },
             ),
           ),

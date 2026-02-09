@@ -7,17 +7,10 @@ class Routes {
   static const String forgetPassword = '/forgetPassword';
   static const String navbarFounder = '/navbarFounder';
   static const String navbarInvestor = '/navbarInvestor';
-
-  // Terms and Condition Screen
   static const String termsAndConditionScreen = '/termsAndConditionScreen';
-
-  // Popular Questions Screen
   static const String popularQuestionsScreen = '/popularQuestionsScreen';
   static const String chatScreen = '/chatScreen';
-
-  // Create Project Flow
   static const String createProjectSteps = '/createProjectSteps';
-
-  // Founder Account
   static const String founderAccountScreen = '/founderAccountScreen';
+  static const String applyToProjectScreen = '/applyToProjectScreen';
 }
