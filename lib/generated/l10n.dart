@@ -693,6 +693,66 @@ class S {
       args: [],
     );
   }
+
+  /// `No internet connection`
+  String get errorNoInternet {
+    return Intl.message(
+      'No internet connection',
+      name: 'errorNoInternet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unauthorized access`
+  String get errorUnauthorized {
+    return Intl.message(
+      'Unauthorized access',
+      name: 'errorUnauthorized',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resource not found`
+  String get errorNotFound {
+    return Intl.message(
+      'Resource not found',
+      name: 'errorNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Server error occurred`
+  String get errorServer {
+    return Intl.message(
+      'Server error occurred',
+      name: 'errorServer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request timed out`
+  String get errorTimeout {
+    return Intl.message(
+      'Request timed out',
+      name: 'errorTimeout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An unexpected error occurred`
+  String get errorUnknown {
+    return Intl.message(
+      'An unexpected error occurred',
+      name: 'errorUnknown',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

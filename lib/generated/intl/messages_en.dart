@@ -41,6 +41,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "applications": MessageLookupByLibrary.simpleMessage("Applications"),
     "chat": MessageLookupByLibrary.simpleMessage("Chat"),
     "editProfile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
+    "errorNoInternet": MessageLookupByLibrary.simpleMessage(
+      "No internet connection",
+    ),
+    "errorNotFound": MessageLookupByLibrary.simpleMessage("Resource not found"),
+    "errorServer": MessageLookupByLibrary.simpleMessage(
+      "Server error occurred",
+    ),
+    "errorTimeout": MessageLookupByLibrary.simpleMessage("Request timed out"),
+    "errorUnauthorized": MessageLookupByLibrary.simpleMessage(
+      "Unauthorized access",
+    ),
+    "errorUnknown": MessageLookupByLibrary.simpleMessage(
+      "An unexpected error occurred",
+    ),
     "exittheapp": MessageLookupByLibrary.simpleMessage("Exit the app"),
     "givetheRating": MessageLookupByLibrary.simpleMessage("Give the rating"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),

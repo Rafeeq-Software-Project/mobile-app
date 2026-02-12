@@ -69,5 +69,11 @@
     "theme_system_subtitle": "Matches your device settings",
     "about_team_title": "About Rafeeq Team",
     "about_team_description": "Meet the team behind the design and development of this application.",
-    "editProfile": "Edit Profile"
+    "editProfile": "Edit Profile",
+    "errorNoInternet": "No internet connection",
+    "errorUnauthorized": "Unauthorized access",
+    "errorNotFound": "Resource not found",
+    "errorServer": "Server error occurred",
+    "errorTimeout": "Request timed out",
+    "errorUnknown": "An unexpected error occurred"
 }

@@ -26,7 +26,7 @@ abstract class AppRouter {
 
   static void initRouter() {
     router = GoRouter(
-      initialLocation: Routes.savedProjectsScreen,
+      initialLocation: Routes.onboarding,
       routes: [
         GoRoute(
           path: Routes.onboarding,
@@ -36,10 +36,7 @@ abstract class AppRouter {
           path: Routes.register,
           builder: (context, state) => RegisterScreen(),
         ),
-        GoRoute(
-          path: Routes.welcome,
-          builder: (context, state) => WelcomeScreen(),
-        ),
+
         GoRoute(path: Routes.login, builder: (context, state) => LoginScreen()),
         GoRoute(
           path: Routes.verification,

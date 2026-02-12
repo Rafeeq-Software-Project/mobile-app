@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rafeeq_app/core/di/service_locator.dart';
 import 'package:rafeeq_app/core/routing/app_router.dart';
+import 'package:rafeeq_app/features/onboarding/presentation/logic/cubit/onboarding_cubit.dart';
 import 'core/theme/theme_data/dark_them_data.dart';
 import 'core/theme/theme_data/light_theme_data.dart';
 import 'core/theme/theme_manager/theme_cubit.dart';
@@ -19,7 +21,11 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (_, child) {
         return MultiBlocProvider(
-          providers: [BlocProvider(create: (_) => ThemeCubit())],
+          providers: [
+            BlocProvider(create: (_) => ThemeCubit()),
+
+            BlocProvider(create: (context) => getIt<OnboardingCubit>()),
+          ],
           child: BlocBuilder<ThemeCubit, ThemeMode>(
             builder: (context, newMode) {
               return MaterialApp.router(
