@@ -2,9 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rafeeq_app/core/common/screens/popular_questions_screen.dart';
 import 'package:rafeeq_app/core/common/screens/terms_and_condition_screen.dart';
+import 'package:rafeeq_app/core/di/service_locator.dart';
 import 'package:rafeeq_app/core/routing/routes.dart';
 import 'package:rafeeq_app/features/auth/forget_password/presentation/screens/forget_password_screen.dart';
+import 'package:rafeeq_app/features/auth/login/presentation/logic/login_cubit/login_cubit.dart';
 import 'package:rafeeq_app/features/auth/login/presentation/screens/login_screen.dart';
+import 'package:rafeeq_app/features/auth/sign_up/presentation/logic/register_cubit/register_cubit.dart';
 import 'package:rafeeq_app/features/auth/sign_up/presentation/screens/register_screen.dart';
 import 'package:rafeeq_app/features/auth/sign_up/presentation/screens/verification_screen.dart';
 import 'package:rafeeq_app/features/chat/presentation/screens/chat_screen.dart';
@@ -17,7 +20,6 @@ import 'package:rafeeq_app/features/nav_bar/presentation/manager/nav_bar_investo
 import 'package:rafeeq_app/features/nav_bar/presentation/widgets/bottom_nav_bar_founder.dart';
 import 'package:rafeeq_app/features/nav_bar/presentation/widgets/bottom_nav_bar_investor.dart';
 import 'package:rafeeq_app/features/onboarding/presentation/screens/onboarding_screen.dart';
-import 'package:rafeeq_app/features/onboarding/presentation/screens/welcome_screen.dart';
 import 'package:rafeeq_app/features/rate_founder/presentation/screens/rate_founder_screen.dart';
 import '../../features/nav_bar/presentation/manager/nav_bar_founder_cubit/nav_bar_founder_cubit.dart';
 
@@ -34,10 +36,19 @@ abstract class AppRouter {
         ),
         GoRoute(
           path: Routes.register,
-          builder: (context, state) => RegisterScreen(),
+          builder: (context, state) => BlocProvider(
+            create: (context) => getIt<RegisterCubit>(),
+            child: RegisterScreen(),
+          ),
         ),
 
-        GoRoute(path: Routes.login, builder: (context, state) => LoginScreen()),
+        GoRoute(
+          path: Routes.login,
+          builder: (context, state) => BlocProvider(
+            create: (context) => getIt<LoginCubit>(),
+            child: LoginScreen(),
+          ),
+        ),
         GoRoute(
           path: Routes.verification,
           builder: (context, state) => VerificationScreen(),

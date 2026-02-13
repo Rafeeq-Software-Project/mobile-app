@@ -8,6 +8,10 @@ import 'package:rafeeq_app/core/network/api_client.dart';
 import 'package:rafeeq_app/core/network/api_handler.dart';
 import 'package:rafeeq_app/core/network/dio_factory.dart';
 import 'package:rafeeq_app/core/network/network_manager.dart';
+import 'package:rafeeq_app/features/auth/login/data/repos/login_repo.dart';
+import 'package:rafeeq_app/features/auth/login/presentation/logic/login_cubit/login_cubit.dart';
+import 'package:rafeeq_app/features/auth/sign_up/data/repos/register_repo.dart';
+import 'package:rafeeq_app/features/auth/sign_up/presentation/logic/register_cubit/register_cubit.dart';
 import 'package:rafeeq_app/features/onboarding/presentation/logic/cubit/onboarding_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,9 +38,22 @@ Future<void> initServiceLocator() async {
   final dio = await getIt<DioFactory>().createDio();
   getIt.registerLazySingleton<Dio>(() => dio);
 
-  // getIt.registerLazySingleton<ApiClient>(() => ApiClient(getIt<Dio>()));
+  getIt.registerLazySingleton<ApiClient>(() => ApiClient(getIt<Dio>()));
 
   getIt.registerLazySingleton<ApiHandler>(() => ApiHandler());
 
   getIt.registerLazySingleton<OnboardingCubit>(() => OnboardingCubit());
+
+  getIt.registerLazySingleton<LoginRepo>(
+    () => LoginRepo(getIt<ApiClient>(), getIt<ApiHandler>()),
+  );
+
+  getIt.registerLazySingleton<RegisterRepo>(
+    () => RegisterRepo(getIt<ApiClient>(), getIt<ApiHandler>()),
+  );
+
+  getIt.registerFactory<LoginCubit>(() => LoginCubit(getIt<LoginRepo>()));
+  getIt.registerFactory<RegisterCubit>(
+    () => RegisterCubit(getIt<RegisterRepo>()),
+  );
 }
