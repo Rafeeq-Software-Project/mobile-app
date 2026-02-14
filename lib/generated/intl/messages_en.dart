@@ -80,11 +80,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "login_email_hint": MessageLookupByLibrary.simpleMessage(
       "Enter your email",
     ),
+    "login_facebook_signin": MessageLookupByLibrary.simpleMessage(
+      "Continue with Facebook",
+    ),
     "login_forgot_password": MessageLookupByLibrary.simpleMessage(
       "Forgot password?",
     ),
     "login_google_signin": MessageLookupByLibrary.simpleMessage(
-      "Sign in with Google",
+      "Continue with Google",
     ),
     "login_no_account": MessageLookupByLibrary.simpleMessage(
       "Don\'t have an account?",
@@ -96,7 +99,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "login_sign_in": MessageLookupByLibrary.simpleMessage("Sign in"),
     "login_sign_up": MessageLookupByLibrary.simpleMessage("Sign up"),
-    "login_welcome_back": MessageLookupByLibrary.simpleMessage("Welcome Back"),
+    "login_welcome_back": MessageLookupByLibrary.simpleMessage(
+      "Welcome back to Rafeeq",
+    ),
     "login_welcome_subtitle": MessageLookupByLibrary.simpleMessage(
       "Please enter your details to sign in.",
     ),
@@ -192,6 +197,18 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "userResponsibilitiesTitle": MessageLookupByLibrary.simpleMessage(
       "User Responsibilities",
+    ),
+    "validation_email_invalid": MessageLookupByLibrary.simpleMessage(
+      "Enter a valid email",
+    ),
+    "validation_email_required": MessageLookupByLibrary.simpleMessage(
+      "Email is required",
+    ),
+    "validation_password_invalid": MessageLookupByLibrary.simpleMessage(
+      "Password must contain upper, lower, number, special char and min 8 chars",
+    ),
+    "validation_password_required": MessageLookupByLibrary.simpleMessage(
+      "Password is required",
     ),
     "welcome_button_start": MessageLookupByLibrary.simpleMessage("Get Started"),
     "welcome_subtitle": MessageLookupByLibrary.simpleMessage(

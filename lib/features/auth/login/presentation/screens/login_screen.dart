@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rafeeq_app/core/common/widgets/custom_button.dart';
 import 'package:rafeeq_app/core/common/widgets/custom_text_form_field.dart';
+import 'package:rafeeq_app/core/common/widgets/social_button.dart';
 import 'package:rafeeq_app/core/helpers/app_regex.dart';
 import 'package:rafeeq_app/core/helpers/extensions.dart';
 import 'package:rafeeq_app/core/routing/routes.dart';
 import 'package:rafeeq_app/core/theme/app_texts/app_text_styles.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
 import 'package:rafeeq_app/core/utils/app_icons.dart';
+import 'package:rafeeq_app/features/auth/login/data/models/login_request_model.dart';
+import 'package:rafeeq_app/features/auth/login/presentation/logic/login_cubit/login_cubit.dart';
+import 'package:rafeeq_app/features/auth/login/presentation/widgets/login_bloc_listener.dart';
 import 'package:rafeeq_app/generated/l10n.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -67,15 +71,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Email is required";
+                        return S.of(context).validation_email_required;
                       }
                       if (!AppRegex.isEmailValid(value)) {
-                        return "Enter a valid email";
+                        return S.of(context).validation_email_invalid;
                       }
                       return null;
                     },
                   ),
-                  15.h.ph,
+                  20.h.ph,
                   AppTextFormField(
                     controller: passwordController,
                     hintText: S.of(context).login_password_hint,
@@ -94,10 +98,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Password is required";
+                        return S.of(context).validation_password_required;
                       }
                       if (!AppRegex.isPasswordValid(value)) {
-                        return "Password must contain upper, lower, number, special char and min 8 chars";
+                        return S.of(context).validation_password_invalid;
                       }
                       return null;
                     },
@@ -121,9 +125,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   CustomButton(
                     text: S.of(context).login_sign_in,
                     onTap: () {
-                      if (_formKey.currentState!.validate()) {}
+                      validateThenDoLogin(context);
                     },
                   ),
+                  LoginBlocListener(),
                   15.h.ph,
                   Row(
                     children: [
@@ -141,24 +146,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                   15.h.ph,
-                  OutlinedButton.icon(
-                    onPressed: () {},
-                    icon: SvgPicture.asset(
-                      AppIcons.googleIcon,
-                      width: 20.w,
-                      height: 20.h,
-                    ),
-                    label: Text(S.of(context).login_google_signin),
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: Colors.grey.shade400),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        vertical: 16.h,
-                        horizontal: 32.w,
-                      ),
-                    ),
+                  SocialButton(
+                    text: S.of(context).login_google_signin,
+                    iconPath: AppIcons.googleIcon,
+                    onTap: () {
+                      // Call Google Sign In
+                    },
+                  ),
+                  10.h.ph,
+                  SocialButton(
+                    text: S.of(context).login_facebook_signin,
+                    iconPath: AppIcons.facebookIcon,
+                    onTap: () {},
                   ),
                   20.h.ph,
                   Row(
@@ -189,5 +188,16 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void validateThenDoLogin(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      context.read<LoginCubit>().login(
+        LoginRequestModel(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        ),
+      );
+    }
   }
 }

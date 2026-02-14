@@ -13,7 +13,7 @@ class CustomLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Lottie.asset(
-        loadingAnimation ?? AppAnimations.animationsSandyLoading,
+        loadingAnimation ?? AppAnimations.animationsLoading,
         width: size.w,
         height: size.h,
       ),

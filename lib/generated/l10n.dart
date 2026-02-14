@@ -189,10 +189,10 @@ class S {
     );
   }
 
-  /// `Welcome Back`
+  /// `Welcome back to Rafeeq`
   String get login_welcome_back {
     return Intl.message(
-      'Welcome Back',
+      'Welcome back to Rafeeq',
       name: 'login_welcome_back',
       desc: '',
       args: [],
@@ -264,11 +264,21 @@ class S {
     return Intl.message('OR', name: 'login_or', desc: '', args: []);
   }
 
-  /// `Sign in with Google`
+  /// `Continue with Google`
   String get login_google_signin {
     return Intl.message(
-      'Sign in with Google',
+      'Continue with Google',
       name: 'login_google_signin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue with Facebook`
+  String get login_facebook_signin {
+    return Intl.message(
+      'Continue with Facebook',
+      name: 'login_facebook_signin',
       desc: '',
       args: [],
     );
@@ -749,6 +759,46 @@ class S {
     return Intl.message(
       'An unexpected error occurred',
       name: 'errorUnknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email is required`
+  String get validation_email_required {
+    return Intl.message(
+      'Email is required',
+      name: 'validation_email_required',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a valid email`
+  String get validation_email_invalid {
+    return Intl.message(
+      'Enter a valid email',
+      name: 'validation_email_invalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password is required`
+  String get validation_password_required {
+    return Intl.message(
+      'Password is required',
+      name: 'validation_password_required',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must contain upper, lower, number, special char and min 8 chars`
+  String get validation_password_invalid {
+    return Intl.message(
+      'Password must contain upper, lower, number, special char and min 8 chars',
+      name: 'validation_password_invalid',
       desc: '',
       args: [],
     );
