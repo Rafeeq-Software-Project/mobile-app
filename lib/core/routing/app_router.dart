@@ -5,6 +5,8 @@ import 'package:rafeeq_app/core/common/screens/terms_and_condition_screen.dart';
 import 'package:rafeeq_app/core/di/service_locator.dart';
 import 'package:rafeeq_app/core/routing/routes.dart';
 import 'package:rafeeq_app/features/auth/forget_password/presentation/screens/forget_password_screen.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/screens/reset_password_screen.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/screens/verify_otp_screen.dart';
 import 'package:rafeeq_app/features/auth/login/presentation/logic/login_cubit/login_cubit.dart';
 import 'package:rafeeq_app/features/auth/login/presentation/screens/login_screen.dart';
 import 'package:rafeeq_app/features/auth/sign_up/presentation/logic/register_cubit/register_cubit.dart';
@@ -28,7 +30,7 @@ abstract class AppRouter {
 
   static void initRouter() {
     router = GoRouter(
-      initialLocation: Routes.onboarding,
+      initialLocation: Routes.virfyOtpScreen,
       routes: [
         GoRoute(
           path: Routes.onboarding,
@@ -56,6 +58,14 @@ abstract class AppRouter {
         GoRoute(
           path: Routes.forgetPassword,
           builder: (context, state) => ForgetPasswordScreen(),
+        ),
+        GoRoute(
+          path: Routes.resetPasswordScreen,
+          builder: (context, state) => ResetPasswordScreen(),
+        ),
+        GoRoute(
+          path: Routes.virfyOtpScreen,
+          builder: (context, state) => VerifyOtpScreen(),
         ),
         GoRoute(
           path: Routes.navbarFounder,
