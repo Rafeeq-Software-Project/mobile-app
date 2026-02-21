@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rafeeq_app/core/routing/routes.dart';
 import 'package:rafeeq_app/core/theme/app_colors/custom_app_colors.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/resend_otp/resend_otp_cubit.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/widgets/resend_otp_bloc_listener.dart';
 import '../widgets/otp_app_bar.dart';
 import '../widgets/otp_header.dart';
 import '../widgets/otp_input_fields.dart';
@@ -12,7 +15,7 @@ import '../widgets/verify_button.dart';
 class VerifyOtpScreen extends StatefulWidget {
   final String email;
 
-  const VerifyOtpScreen({super.key, this.email = 'user@example.com'});
+  const VerifyOtpScreen({super.key, required this.email});
 
   @override
   State<VerifyOtpScreen> createState() => _VerifyOtpScreenState();
@@ -95,19 +98,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   void _resendCode() {
     if (!_canResend) return;
 
-    setState(() {
-      _canResend = false;
-      _resendCountdown = 60;
-    });
-
-    _startCountdown();
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Verification code sent!'),
-        backgroundColor: CustomAppColors.of(context).accent600,
-      ),
-    );
+    context.read<ResendOtpCubit>().resendOtp(widget.email);
   }
 
   @override
@@ -130,22 +121,15 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // App Bar
             OtpAppBar(onBackTap: () => Navigator.pop(context)),
-
-            // Content
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.all(20.w),
                 child: Column(
                   children: [
                     SizedBox(height: 20.h),
-
-                    // Header
                     OtpHeader(email: widget.email),
                     SizedBox(height: 40.h),
-
-                    // OTP Input Fields
                     OtpInputFields(
                       controllers: _controllers,
                       focusNodes: _focusNodes,
@@ -154,11 +138,19 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     ),
                     SizedBox(height: 32.h),
 
-                    // Resend Code
-                    ResendCodeButton(
-                      canResend: _canResend,
-                      countdown: _resendCountdown,
-                      onResend: _resendCode,
+                    ResendOtpBlocListener(
+                      onSuccess: () {
+                        setState(() {
+                          _canResend = false;
+                          _resendCountdown = 60;
+                        });
+                        _startCountdown();
+                      },
+                      child: ResendCodeButton(
+                        canResend: _canResend,
+                        countdown: _resendCountdown,
+                        onResend: _resendCode,
+                      ),
                     ),
                   ],
                 ),

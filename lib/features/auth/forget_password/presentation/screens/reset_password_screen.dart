@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rafeeq_app/core/routing/routes.dart';
 import 'package:rafeeq_app/core/theme/app_colors/custom_app_colors.dart';
-import '../widgets/reset_app_bar.dart';
 import '../widgets/reset_header.dart';
 import '../widgets/password_field.dart';
 import '../widgets/password_requirements.dart';
@@ -20,12 +19,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final _newPasswordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
   bool _obscureNewPassword = true;
   bool _obscureConfirmPassword = true;
   bool _isResetting = false;
-
-  // Password requirements state
   bool get _hasMinLength => _newPasswordController.text.length >= 8;
   bool get _hasNumberAndSymbol {
     final password = _newPasswordController.text;
@@ -46,8 +42,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     setState(() {
       _isResetting = true;
     });
-
-    // Simulate API call
     await Future.delayed(const Duration(seconds: 2));
 
     if (mounted) {
@@ -55,7 +49,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         _isResetting = false;
       });
 
-      // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Password reset successfully!'),
@@ -83,10 +76,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // App Bar
-            ResetAppBar(onBackTap: () => Navigator.pop(context)),
-
-            // Content
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.all(20.w),

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rafeeq_app/core/network/api_result.dart';
 import 'package:rafeeq_app/features/auth/forget_password/data/repos/send_otp_repo.dart';
-import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/cubit/send_otp_state.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/send_otp/send_otp_state.dart';
 
 class SendOtpCubit extends Cubit<SendOtpState> {
   SendOtpCubit(this.sendOtpRepo) : super(SendOtpState.initial());

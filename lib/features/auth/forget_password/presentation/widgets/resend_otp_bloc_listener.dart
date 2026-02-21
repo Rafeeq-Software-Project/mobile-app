@@ -3,18 +3,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rafeeq_app/core/common/widgets/custom_alert_dialog.dart';
 import 'package:rafeeq_app/core/common/widgets/custom_loading.dart';
-import 'package:rafeeq_app/core/routing/routes.dart';
-import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/send_otp/send_otp_cubit.dart';
-import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/send_otp/send_otp_state.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/resend_otp/resend_otp_cubit.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/resend_otp/resend_otp_state.dart';
 
-class SendOtpBlocListener extends StatelessWidget {
-  const SendOtpBlocListener({super.key, required this.child});
+class ResendOtpBlocListener extends StatelessWidget {
+  const ResendOtpBlocListener({
+    super.key,
+    required this.child,
+    required this.onSuccess,
+  });
 
   final Widget child;
-
+  final VoidCallback onSuccess;
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SendOtpCubit, SendOtpState>(
+    return BlocListener<ResendOtpCubit, ResendOtpState>(
       listenWhen: (previous, current) =>
           current is Loading || current is Success || current is Error,
       listener: (context, state) {
@@ -26,9 +29,10 @@ class SendOtpBlocListener extends StatelessWidget {
               builder: (_) => const Center(child: CustomLoading(size: 100)),
             );
           },
-          success: (email) {
+
+          success: (_) {
             context.pop();
-            context.push(Routes.virfyOtpScreen, extra: email);
+            onSuccess();
           },
           failure: (error) {
             context.pop();

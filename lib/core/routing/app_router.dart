@@ -4,6 +4,8 @@ import 'package:rafeeq_app/core/common/screens/popular_questions_screen.dart';
 import 'package:rafeeq_app/core/common/screens/terms_and_condition_screen.dart';
 import 'package:rafeeq_app/core/di/service_locator.dart';
 import 'package:rafeeq_app/core/routing/routes.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/resend_otp/resend_otp_cubit.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/send_otp/send_otp_cubit.dart';
 import 'package:rafeeq_app/features/auth/forget_password/presentation/screens/forget_password_screen.dart';
 import 'package:rafeeq_app/features/auth/forget_password/presentation/screens/reset_password_screen.dart';
 import 'package:rafeeq_app/features/auth/forget_password/presentation/screens/verify_otp_screen.dart';
@@ -30,7 +32,7 @@ abstract class AppRouter {
 
   static void initRouter() {
     router = GoRouter(
-      initialLocation: Routes.virfyOtpScreen,
+      initialLocation: Routes.onboarding,
       routes: [
         GoRoute(
           path: Routes.onboarding,
@@ -57,7 +59,10 @@ abstract class AppRouter {
         ),
         GoRoute(
           path: Routes.forgetPassword,
-          builder: (context, state) => ForgetPasswordScreen(),
+          builder: (context, state) => BlocProvider(
+            create: (context) => getIt<SendOtpCubit>(),
+            child: ForgetPasswordScreen(),
+          ),
         ),
         GoRoute(
           path: Routes.resetPasswordScreen,
@@ -65,7 +70,14 @@ abstract class AppRouter {
         ),
         GoRoute(
           path: Routes.virfyOtpScreen,
-          builder: (context, state) => VerifyOtpScreen(),
+
+          builder: (context, state) {
+            final email = state.extra as String;
+            return BlocProvider(
+              create: (context) => getIt<ResendOtpCubit>(),
+              child: VerifyOtpScreen(email: email),
+            );
+          },
         ),
         GoRoute(
           path: Routes.navbarFounder,

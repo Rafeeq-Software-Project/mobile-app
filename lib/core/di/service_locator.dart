@@ -8,6 +8,10 @@ import 'package:rafeeq_app/core/network/api_client.dart';
 import 'package:rafeeq_app/core/network/api_handler.dart';
 import 'package:rafeeq_app/core/network/dio_factory.dart';
 import 'package:rafeeq_app/core/network/network_manager.dart';
+import 'package:rafeeq_app/features/auth/forget_password/data/repos/resend_otp_repo.dart';
+import 'package:rafeeq_app/features/auth/forget_password/data/repos/send_otp_repo.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/resend_otp/resend_otp_cubit.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/send_otp/send_otp_cubit.dart';
 import 'package:rafeeq_app/features/auth/login/data/repos/login_repo.dart';
 import 'package:rafeeq_app/features/auth/login/presentation/logic/login_cubit/login_cubit.dart';
 import 'package:rafeeq_app/features/auth/sign_up/data/repos/register_repo.dart';
@@ -55,5 +59,15 @@ Future<void> initServiceLocator() async {
   getIt.registerFactory<LoginCubit>(() => LoginCubit(getIt<LoginRepo>()));
   getIt.registerFactory<RegisterCubit>(
     () => RegisterCubit(getIt<RegisterRepo>()),
+  );
+  getIt.registerFactory<SendOtpCubit>(() => SendOtpCubit(getIt<SendOtpRepo>()));
+  getIt.registerLazySingleton<SendOtpRepo>(
+    () => SendOtpRepo(getIt<ApiClient>(), getIt<ApiHandler>()),
+  );
+  getIt.registerFactory<ResendOtpCubit>(
+    () => ResendOtpCubit(getIt<ResendOtpRepo>()),
+  );
+  getIt.registerLazySingleton<ResendOtpRepo>(
+    () => ResendOtpRepo(getIt<ApiClient>(), getIt<ApiHandler>()),
   );
 }
