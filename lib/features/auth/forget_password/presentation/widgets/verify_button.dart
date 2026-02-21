@@ -34,7 +34,7 @@ class VerifyButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isEnabled ? onTap : null,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isEnabled ? colors.primary700 : colors.grey300,
+          backgroundColor: isEnabled ? colors.primary800 : colors.grey300,
           padding: EdgeInsets.symmetric(vertical: 16.h),
           minimumSize: Size(double.infinity, 52.h),
           shape: RoundedRectangleBorder(

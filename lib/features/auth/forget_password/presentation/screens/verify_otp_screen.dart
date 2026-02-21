@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:rafeeq_app/core/routing/routes.dart';
 import 'package:rafeeq_app/core/theme/app_colors/custom_app_colors.dart';
 import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/resend_otp/resend_otp_cubit.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/verify_otp/verify_otp_cubit.dart';
 import 'package:rafeeq_app/features/auth/forget_password/presentation/widgets/resend_otp_bloc_listener.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/widgets/verify_otp_bloc_listener.dart';
 import '../widgets/otp_app_bar.dart';
 import '../widgets/otp_header.dart';
 import '../widgets/otp_input_fields.dart';
@@ -27,8 +27,6 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
     (index) => TextEditingController(),
   );
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
-
-  bool _isVerifying = false;
   int _resendCountdown = 60;
   bool _canResend = false;
 
@@ -78,21 +76,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
   void _verifyOtp() async {
     if (!_isOtpComplete) return;
-
-    setState(() {
-      _isVerifying = true;
-    });
-
-    // Simulate API call
-    await Future.delayed(const Duration(seconds: 2));
-
-    if (mounted) {
-      setState(() {
-        _isVerifying = false;
-      });
-
-      GoRouter.of(context).go(Routes.resetPasswordScreen);
-    }
+    context.read<VerifyOtpCubit>().verifyOtp(_otpCode);
   }
 
   void _resendCode() {
@@ -116,54 +100,54 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   Widget build(BuildContext context) {
     final colors = CustomAppColors.of(context);
 
-    return Scaffold(
-      backgroundColor: colors.grey50,
-      body: SafeArea(
-        child: Column(
-          children: [
-            OtpAppBar(onBackTap: () => Navigator.pop(context)),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.all(20.w),
-                child: Column(
-                  children: [
-                    SizedBox(height: 20.h),
-                    OtpHeader(email: widget.email),
-                    SizedBox(height: 40.h),
-                    OtpInputFields(
-                      controllers: _controllers,
-                      focusNodes: _focusNodes,
-                      onChanged: _onOtpChanged,
-                      onBackspace: _onOtpBackspace,
-                    ),
-                    SizedBox(height: 32.h),
-
-                    ResendOtpBlocListener(
-                      onSuccess: () {
-                        setState(() {
-                          _canResend = false;
-                          _resendCountdown = 60;
-                        });
-                        _startCountdown();
-                      },
-                      child: ResendCodeButton(
-                        canResend: _canResend,
-                        countdown: _resendCountdown,
-                        onResend: _resendCode,
+    return VerifyOtpBlocListener(
+      child: Scaffold(
+        backgroundColor: colors.grey50,
+        body: SafeArea(
+          child: Column(
+            children: [
+              OtpAppBar(onBackTap: () => Navigator.pop(context)),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.all(20.w),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20.h),
+                      OtpHeader(email: widget.email),
+                      SizedBox(height: 40.h),
+                      OtpInputFields(
+                        controllers: _controllers,
+                        focusNodes: _focusNodes,
+                        onChanged: _onOtpChanged,
+                        onBackspace: _onOtpBackspace,
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 32.h),
+
+                      ResendOtpBlocListener(
+                        onSuccess: () {
+                          setState(() {
+                            _canResend = false;
+                            _resendCountdown = 60;
+                          });
+                          _startCountdown();
+                        },
+                        child: ResendCodeButton(
+                          canResend: _canResend,
+                          countdown: _resendCountdown,
+                          onResend: _resendCode,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-
-            // Verify Button
-            VerifyButton(
-              isEnabled: _isOtpComplete && !_isVerifying,
-              isLoading: _isVerifying,
-              onTap: _verifyOtp,
-            ),
-          ],
+              VerifyButton(
+                isEnabled: _isOtpComplete,
+                isLoading: false,
+                onTap: _verifyOtp,
+              ),
+            ],
+          ),
         ),
       ),
     );

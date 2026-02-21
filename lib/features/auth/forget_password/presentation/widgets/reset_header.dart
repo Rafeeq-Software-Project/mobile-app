@@ -18,14 +18,14 @@ class ResetHeader extends StatelessWidget {
           height: 80.h,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [const Color(0xFF00838F), const Color(0xFF00ACC1)],
+              colors: [colors.primary700, colors.primary500],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
             borderRadius: BorderRadius.circular(16.r),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF00ACC1).withOpacity(0.3),
+                color: colors.primary800.withValues(alpha: 0.3),
                 blurRadius: 12,
                 offset: const Offset(0, 4),
               ),
@@ -34,15 +34,11 @@ class ResetHeader extends StatelessWidget {
           child: Icon(Icons.lock_reset, size: 40.sp, color: colors.white),
         ),
         SizedBox(height: 24.h),
-
-        // Title
         Text(
           'Create new password',
-          style: AppTextStyles.font20Bold.copyWith(color: colors.black),
+          style: AppTextStyles.font20Bold.copyWith(color: colors.grey900),
         ),
         SizedBox(height: 8.h),
-
-        // Description
         Text(
           'Your new password must be different from\npreviously used passwords.',
           style: AppTextStyles.font14Regular.copyWith(

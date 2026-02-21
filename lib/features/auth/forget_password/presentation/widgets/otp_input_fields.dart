@@ -33,7 +33,7 @@ class OtpInputFields extends StatelessWidget {
             borderRadius: BorderRadius.circular(12.r),
             border: Border.all(
               color: controllers[index].text.isNotEmpty
-                  ? colors.primary700
+                  ? colors.primary800
                   : colors.grey300,
               width: controllers[index].text.isNotEmpty ? 2 : 1,
             ),

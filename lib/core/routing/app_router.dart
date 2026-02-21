@@ -5,7 +5,9 @@ import 'package:rafeeq_app/core/common/screens/terms_and_condition_screen.dart';
 import 'package:rafeeq_app/core/di/service_locator.dart';
 import 'package:rafeeq_app/core/routing/routes.dart';
 import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/resend_otp/resend_otp_cubit.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/reset_password/reset_password_cubit.dart';
 import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/send_otp/send_otp_cubit.dart';
+import 'package:rafeeq_app/features/auth/forget_password/presentation/logic/verify_otp/verify_otp_cubit.dart';
 import 'package:rafeeq_app/features/auth/forget_password/presentation/screens/forget_password_screen.dart';
 import 'package:rafeeq_app/features/auth/forget_password/presentation/screens/reset_password_screen.dart';
 import 'package:rafeeq_app/features/auth/forget_password/presentation/screens/verify_otp_screen.dart';
@@ -66,15 +68,24 @@ abstract class AppRouter {
         ),
         GoRoute(
           path: Routes.resetPasswordScreen,
-          builder: (context, state) => ResetPasswordScreen(),
+          builder: (context, state) {
+            final resetToken = state.extra as String;
+            return BlocProvider(
+              create: (_) => getIt<ResetPasswordCubit>(),
+              child: ResetPasswordScreen(resetToken: resetToken),
+            );
+          },
         ),
         GoRoute(
           path: Routes.virfyOtpScreen,
 
           builder: (context, state) {
             final email = state.extra as String;
-            return BlocProvider(
-              create: (context) => getIt<ResendOtpCubit>(),
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => getIt<ResendOtpCubit>()),
+                BlocProvider(create: (context) => getIt<VerifyOtpCubit>()),
+              ],
               child: VerifyOtpScreen(email: email),
             );
           },
