@@ -1,16 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:rafeeq_app/core/routing/routes.dart';
-import 'package:rafeeq_app/core/theme/app_texts/app_text_styles.dart';
-import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
-import 'package:rafeeq_app/features/founder_account/data/models/user_profile_model.dart';
+import 'package:rafeeq_app/core/common/widgets/custom_loading.dart';
+import 'package:rafeeq_app/core/utils/common_imports.dart';
+import 'package:rafeeq_app/features/founder_account/presentation/widgets/profile_info_section.dart';
+import 'package:rafeeq_app/features/founder_profile/data/models/founder_profile.dart';
+import 'package:rafeeq_app/features/founder_profile/presentation/logic/cubit/founder_profile_cubit.dart';
+import 'package:rafeeq_app/features/founder_profile/presentation/logic/cubit/founder_profile_state.dart';
 import '../widgets/profile_header.dart';
-import '../widgets/stats_row.dart';
 import '../widgets/about_section.dart';
-import '../widgets/current_venture_card.dart';
-import '../widgets/portfolio_section.dart';
-import '../widgets/reputation_section.dart';
 import '../widgets/action_buttons_row.dart';
 
 class FounderAccountScreen extends StatefulWidget {
@@ -21,50 +16,12 @@ class FounderAccountScreen extends StatefulWidget {
 }
 
 class _FounderAccountScreenState extends State<FounderAccountScreen> {
-  late UserProfileModel userProfile;
   bool isFollowing = false;
 
   @override
   void initState() {
     super.initState();
-    userProfile = UserProfileModel.sample();
-  }
-
-  void _toggleFollow() {
-    setState(() {
-      isFollowing = !isFollowing;
-      if (isFollowing) {
-        userProfile = UserProfileModel(
-          name: userProfile.name,
-          location: userProfile.location,
-          isVerified: userProfile.isVerified,
-          profileImageUrl: userProfile.profileImageUrl,
-          followers: userProfile.followers + 1,
-          projectsCount: userProfile.projectsCount,
-          successRate: userProfile.successRate,
-          aboutMe: userProfile.aboutMe,
-          skills: userProfile.skills,
-          currentVenture: userProfile.currentVenture,
-          portfolio: userProfile.portfolio,
-          reputation: userProfile.reputation,
-        );
-      } else {
-        userProfile = UserProfileModel(
-          name: userProfile.name,
-          location: userProfile.location,
-          isVerified: userProfile.isVerified,
-          profileImageUrl: userProfile.profileImageUrl,
-          followers: userProfile.followers - 1,
-          projectsCount: userProfile.projectsCount,
-          successRate: userProfile.successRate,
-          aboutMe: userProfile.aboutMe,
-          skills: userProfile.skills,
-          currentVenture: userProfile.currentVenture,
-          portfolio: userProfile.portfolio,
-          reputation: userProfile.reputation,
-        );
-      }
-    });
+    context.read<FounderProfileCubit>().fetchFounderProfile();
   }
 
   void _shareProfile() {
@@ -85,99 +42,88 @@ class _FounderAccountScreenState extends State<FounderAccountScreen> {
   Widget build(BuildContext context) {
     final colors = context.customAppColors;
 
-    return Scaffold(
-      backgroundColor: colors.grey0,
-      body: CustomScrollView(
-        slivers: [
-          // App Bar
-          SliverAppBar(
-            backgroundColor: colors.grey0,
-            elevation: 0,
-            pinned: false,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: colors.grey900),
-              onPressed: () => Navigator.pop(context),
-            ),
-            title: Text(
-              'My Profile',
-              style: AppTextStyles.font18Bold.copyWith(color: colors.grey900),
-            ),
-            centerTitle: true,
-            actions: [
-              IconButton(
-                icon: Icon(Icons.settings_outlined, color: colors.grey900),
-                onPressed: () {},
+    return BlocBuilder<FounderProfileCubit, FounderProfileState>(
+      builder: (context, state) {
+        return state.when(
+          initial: () {
+            return SizedBox.shrink();
+          },
+          loading: () {
+            return Scaffold(
+              backgroundColor: context.customAppColors.grey0,
+              body: const Center(child: CustomLoading(size: 100)),
+            );
+          },
+          loaded: (FounderProfile profile) {
+            return Scaffold(
+              backgroundColor: colors.grey0,
+              body: CustomScrollView(
+                slivers: [
+                  // App Bar
+                  SliverAppBar(
+                    backgroundColor: colors.grey0,
+                    elevation: 0,
+                    pinned: false,
+                    leading: IconButton(
+                      icon: Icon(Icons.arrow_back, color: colors.grey900),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    title: Text(
+                      'My Profile',
+                      style: AppTextStyles.font18Bold.copyWith(
+                        color: colors.grey900,
+                      ),
+                    ),
+                    centerTitle: true,
+                    actions: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.settings_outlined,
+                          color: colors.grey900,
+                        ),
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.edit_outlined, color: colors.grey900),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+
+                  // Content
+                  SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        Container(
+                          color: colors.grey0,
+                          child: ProfileHeader(founderProfile: profile),
+                        ),
+                        AboutSection(
+                          aboutMe: profile.bio ?? 'Not provided',
+                          role: profile.roleTitle ?? "Not provided",
+                          industry: profile.industry ?? 'Not provided',
+                          company: profile.companyName ?? 'Not provided',
+                        ),
+                        ProfileInfoSection(profile: profile),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              IconButton(
-                icon: Icon(Icons.edit_outlined, color: colors.grey900),
-                onPressed: () {},
+              bottomNavigationBar: ActionButtonsRow(
+                onShare: _shareProfile,
+                onNewProject: _createNewProject,
               ),
-            ],
-          ),
-
-          // Content
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                // Profile Header
-                Container(
-                  color: colors.grey0,
-                  child: ProfileHeader(
-                    profileImageUrl: userProfile.profileImageUrl,
-                    name: userProfile.name,
-                    location: userProfile.location,
-                    isVerified: userProfile.isVerified,
-                    followers: userProfile.followers,
-                    isFollowing: isFollowing,
-                    onFollowToggle: _toggleFollow,
-                  ),
-                ),
-                SizedBox(height: 1.h),
-
-                // Stats Row
-                Container(
-                  color: colors.grey0,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.w,
-                    vertical: 16.h,
-                  ),
-                  child: StatsRow(
-                    projectsCount: userProfile.projectsCount,
-                    successRate: userProfile.successRate,
-                  ),
-                ),
-                SizedBox(height: 12.h),
-
-                // About Me Section
-                AboutSection(
-                  aboutMe: userProfile.aboutMe,
-                  skills: userProfile.skills,
-                ),
-                SizedBox(height: 12.h),
-
-                // Current Venture
-                if (userProfile.currentVenture != null)
-                  CurrentVentureCard(venture: userProfile.currentVenture!),
-                if (userProfile.currentVenture != null) SizedBox(height: 12.h),
-
-                // Portfolio
-                PortfolioSection(portfolio: userProfile.portfolio),
-                SizedBox(height: 12.h),
-
-                // Reputation
-                ReputationSection(reputation: userProfile.reputation),
-                SizedBox(height: 80.h), // Space for floating buttons
-              ],
-            ),
-          ),
-        ],
-      ),
-
-      // Floating Action Buttons
-      bottomNavigationBar: ActionButtonsRow(
-        onShare: _shareProfile,
-        onNewProject: _createNewProject,
-      ),
+            );
+          },
+          error: (String message) {
+            return Scaffold(
+              backgroundColor: context.customAppColors.grey0,
+              body: Center(child: Text('Error loading profile: $message')),
+            );
+          },
+        );
+      },
     );
   }
 }

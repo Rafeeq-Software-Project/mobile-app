@@ -1,4 +1,6 @@
 import 'package:rafeeq_app/core/utils/common_imports.dart';
+import 'package:rafeeq_app/features/founder_profile/data/repos/get_my_founder_profile_repo.dart';
+import 'package:rafeeq_app/features/founder_profile/presentation/logic/cubit/founder_profile_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -70,5 +72,11 @@ Future<void> initServiceLocator() async {
   );
   getIt.registerFactory<ResetPasswordCubit>(
     () => ResetPasswordCubit(getIt<ResetPasswordRepo>()),
+  );
+  getIt.registerLazySingleton<GetMyFounderProfileRepo>(
+    () => GetMyFounderProfileRepo(getIt<ApiClient>(), getIt<ApiHandler>()),
+  );
+  getIt.registerFactory<FounderProfileCubit>(
+    () => FounderProfileCubit(getIt<GetMyFounderProfileRepo>()),
   );
 }

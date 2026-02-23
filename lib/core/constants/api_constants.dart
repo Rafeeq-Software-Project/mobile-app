@@ -12,4 +12,5 @@ class ApiConstants {
   static const String resendOtp = '/auth/resend-otp';
   static const String resetPassword = '/auth/reset-password';
   static const String refreshToken = '/auth/refresh-token';
+  static const String founderProfile = '/founders/me';
 }

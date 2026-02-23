@@ -55,6 +55,14 @@ class AboutTeamBottomSheet extends StatelessWidget {
         github: 'https://github.com/',
         twitter: 'https://twitter.com/',
       ),
+      Developer(
+        name: 'Eng : Mohamed Elnegomy',
+        role: 'Backend Developer',
+        linkedin: 'https://www.linkedin.com/in/',
+        whatsapp: 'https://wa.me/20',
+        github: 'https://github.com/',
+        twitter: 'https://twitter.com/ ',
+      ),
     ];
 
     return SlideInUp(

@@ -54,3 +54,5 @@ export 'package:rafeeq_app/features/nav_bar/presentation/widgets/bottom_nav_bar_
 export 'package:rafeeq_app/features/onboarding/presentation/screens/onboarding_screen.dart';
 export 'package:rafeeq_app/features/rate_founder/presentation/screens/rate_founder_screen.dart';
 export '../../features/nav_bar/presentation/manager/nav_bar_founder_cubit/nav_bar_founder_cubit.dart';
+export 'package:rafeeq_app/core/theme/app_texts/app_text_styles.dart';
+export 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';

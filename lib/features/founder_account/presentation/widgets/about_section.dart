@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rafeeq_app/core/helpers/extensions.dart';
 import 'package:rafeeq_app/core/theme/app_texts/app_text_styles.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
 
 class AboutSection extends StatefulWidget {
   final String aboutMe;
-  final List<String> skills;
+  final String? role;
+  final String? industry;
+  final String? company;
 
-  const AboutSection({super.key, required this.aboutMe, required this.skills});
+  const AboutSection({
+    super.key,
+    required this.aboutMe,
+    this.role,
+    this.industry,
+    this.company,
+  });
 
   @override
   State<AboutSection> createState() => _AboutSectionState();
@@ -26,38 +35,11 @@ class _AboutSectionState extends State<AboutSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Section Header
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'About Me',
-                style: AppTextStyles.font16Bold.copyWith(color: colors.grey900),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: Row(
-                  children: [
-                    Text(
-                      'Edit',
-                      style: AppTextStyles.font14SemiBold.copyWith(
-                        color: colors.primary800,
-                      ),
-                    ),
-                    SizedBox(width: 4.w),
-                    Icon(
-                      Icons.edit_outlined,
-                      size: 16.sp,
-                      color: colors.primary800,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          Text(
+            'About Me',
+            style: AppTextStyles.font16Bold.copyWith(color: colors.grey900),
           ),
-          SizedBox(height: 12.h),
-
-          // About Text
+          10.h.ph,
           Text(
             widget.aboutMe,
             style: AppTextStyles.font14Regular.copyWith(
@@ -85,30 +67,33 @@ class _AboutSectionState extends State<AboutSection> {
           ],
           SizedBox(height: 16.h),
 
-          // Skills Tags
           Wrap(
             spacing: 8.w,
             runSpacing: 8.h,
-            children: widget.skills.map((skill) {
-              return Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-                decoration: BoxDecoration(
-                  color: colors.primary800.withValues(alpha: .1),
-                  borderRadius: BorderRadius.circular(20.r),
-                  border: Border.all(
-                    color: colors.primary800.withValues(alpha: .3),
-                  ),
-                ),
-                child: Text(
-                  skill,
-                  style: AppTextStyles.font12SemiBold.copyWith(
-                    color: colors.primary800,
-                  ),
-                ),
-              );
-            }).toList(),
+            children: [
+              if (widget.role != null) _chip(widget.role!, context),
+              if (widget.industry != null) _chip(widget.industry!, context),
+              if (widget.company != null) _chip(widget.company!, context),
+            ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _chip(String text, BuildContext context) {
+    final colors = context.customAppColors;
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+      decoration: BoxDecoration(
+        color: colors.primary800.withValues(alpha: .1),
+        borderRadius: BorderRadius.circular(20.r),
+        border: Border.all(color: colors.primary800.withValues(alpha: .3)),
+      ),
+      child: Text(
+        text,
+        style: AppTextStyles.font12SemiBold.copyWith(color: colors.primary800),
       ),
     );
   }
