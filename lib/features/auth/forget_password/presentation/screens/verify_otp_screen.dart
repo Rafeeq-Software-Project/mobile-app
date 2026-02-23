@@ -102,7 +102,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
     return VerifyOtpBlocListener(
       child: Scaffold(
-        backgroundColor: colors.grey50,
+        backgroundColor: colors.grey0,
         body: SafeArea(
           child: Column(
             children: [

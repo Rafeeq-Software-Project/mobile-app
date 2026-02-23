@@ -22,10 +22,10 @@ class VerifyButton extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
-        color: colors.white,
+        color: colors.grey0,
         boxShadow: [
           BoxShadow(
-            color: colors.grey300.withOpacity(0.3),
+            color: colors.grey300.withValues(alpha: .3),
             blurRadius: 8,
             offset: const Offset(0, -2),
           ),

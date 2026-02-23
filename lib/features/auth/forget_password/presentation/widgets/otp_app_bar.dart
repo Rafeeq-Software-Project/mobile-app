@@ -13,10 +13,10 @@ class OtpAppBar extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
       decoration: BoxDecoration(
-        color: colors.white,
+        color: colors.grey0,
         boxShadow: [
           BoxShadow(
-            color: colors.grey300.withOpacity(0.1),
+            color: colors.grey300.withValues(alpha: .1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -25,13 +25,13 @@ class OtpAppBar extends StatelessWidget {
       child: Row(
         children: [
           IconButton(
-            icon: Icon(Icons.arrow_back, color: colors.black),
+            icon: Icon(Icons.arrow_back, color: colors.grey900),
             onPressed: onBackTap,
           ),
           SizedBox(width: 8.w),
           Text(
             'Verify OTP',
-            style: AppTextStyles.font18Bold.copyWith(color: colors.black),
+            style: AppTextStyles.font18Bold.copyWith(color: colors.grey900),
           ),
         ],
       ),

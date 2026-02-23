@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rafeeq_app/core/theme/app_texts/app_text_styles.dart';
+import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
 
 class SocialButton extends StatelessWidget {
   final String text;
@@ -27,7 +29,12 @@ class SocialButton extends StatelessWidget {
       child: OutlinedButton.icon(
         onPressed: onTap,
         icon: SvgPicture.asset(iconPath, width: 20.w, height: 20.h),
-        label: Text(text, style: TextStyle(color: textColor ?? Colors.black)),
+        label: Text(
+          text,
+          style: AppTextStyles.font14Regular.copyWith(
+            color: textColor ?? context.customAppColors.grey900,
+          ),
+        ),
         style: OutlinedButton.styleFrom(
           backgroundColor: backgroundColor,
           side: BorderSide(color: borderColor),

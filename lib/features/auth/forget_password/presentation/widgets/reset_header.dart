@@ -9,10 +9,8 @@ class ResetHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = CustomAppColors.of(context);
-
     return Column(
       children: [
-        // Lock Icon with gradient background
         Container(
           width: 80.w,
           height: 80.h,

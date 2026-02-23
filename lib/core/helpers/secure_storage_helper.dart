@@ -2,13 +2,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:rafeeq_app/core/utils/secure_storage_keys.dart';
 
 class SecureStorageHelper {
-  // Create a single instance of FlutterSecureStorage
   final FlutterSecureStorage _secureStorage;
 
   SecureStorageHelper(this._secureStorage);
 
-  // Common Keys
-  static const String _tokenKey = SecureStorageKeys.token;
+  // Keys
+  static const String _tokenKey = SecureStorageKeys.accessToken;
+  static const String _refreshTokenKey = SecureStorageKeys.refreshToken;
 
   // Write Data
   Future<void> writeData(String key, String value) async {
@@ -30,18 +30,29 @@ class SecureStorageHelper {
     await _secureStorage.deleteAll();
   }
 
-  // Token Helpers
+  // Access Token Helpers
   Future<void> saveToken(String token) async {
     await _secureStorage.write(key: _tokenKey, value: token);
   }
 
-  // Get Token
   Future<String?> getToken() async {
     return await _secureStorage.read(key: _tokenKey);
   }
 
-  // Delete Token
   Future<void> deleteToken() async {
     await _secureStorage.delete(key: _tokenKey);
+  }
+
+  // 🔹 Refresh Token Helpers
+  Future<void> saveRefreshToken(String refreshToken) async {
+    await _secureStorage.write(key: _refreshTokenKey, value: refreshToken);
+  }
+
+  Future<String?> getRefreshToken() async {
+    return await _secureStorage.read(key: _refreshTokenKey);
+  }
+
+  Future<void> deleteRefreshToken() async {
+    await _secureStorage.delete(key: _refreshTokenKey);
   }
 }

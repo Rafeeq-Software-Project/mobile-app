@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rafeeq_app/core/local_data/current_user.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
 import 'package:rafeeq_app/features/founder_home/presentation/widgets/active_projects_section.dart'
     show ActiveProjectsSection;
@@ -17,7 +18,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.customAppColors;
-
+    final info = CurrentUser.data;
     // Sample data
     final stats = [
       StatsModel(
@@ -81,7 +82,7 @@ class DashboardScreen extends StatelessWidget {
           children: [
             // App Bar
             DashboardAppBar(
-              userName: 'Alex',
+              userName: info.firstName,
               onNotificationTap: () {},
               onProfileTap: () {},
             ),
@@ -96,7 +97,7 @@ class DashboardScreen extends StatelessWidget {
                     SizedBox(height: 24.h),
 
                     // Welcome Section
-                    WelcomeSection(userName: 'Alex'),
+                    WelcomeSection(userName: info.firstName),
                     SizedBox(height: 24.h),
 
                     // Stats Grid

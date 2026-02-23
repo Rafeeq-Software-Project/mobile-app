@@ -62,7 +62,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
     return ResetPasswordBlocListener(
       child: Scaffold(
-        backgroundColor: colors.grey50,
+        backgroundColor: colors.grey0,
         body: SafeArea(
           child: Column(
             children: [
@@ -117,8 +117,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   ),
                 ),
               ),
-
-              // Reset Button
               ResetPasswordButton(
                 isEnabled: _isFormValid,
                 isLoading: false,

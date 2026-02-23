@@ -29,7 +29,7 @@ class OtpInputFields extends StatelessWidget {
           width: 48.w,
           height: 56.h,
           decoration: BoxDecoration(
-            color: colors.white,
+            color: colors.grey50,
             borderRadius: BorderRadius.circular(12.r),
             border: Border.all(
               color: controllers[index].text.isNotEmpty
@@ -40,7 +40,7 @@ class OtpInputFields extends StatelessWidget {
             boxShadow: controllers[index].text.isNotEmpty
                 ? [
                     BoxShadow(
-                      color: colors.primary700.withOpacity(0.1),
+                      color: colors.primary700.withValues(alpha: 0.1),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -53,7 +53,8 @@ class OtpInputFields extends StatelessWidget {
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
             maxLength: 1,
-            style: AppTextStyles.font20Bold.copyWith(color: colors.black),
+
+            style: AppTextStyles.font20Bold.copyWith(color: colors.grey900),
             decoration: const InputDecoration(
               counterText: '',
               border: InputBorder.none,

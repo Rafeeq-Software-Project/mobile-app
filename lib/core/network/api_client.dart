@@ -8,6 +8,8 @@ import 'package:rafeeq_app/features/auth/forget_password/data/models/verify_otp/
 import 'package:rafeeq_app/features/auth/forget_password/data/models/verify_otp/verify_otp_response_model.dart';
 import 'package:rafeeq_app/features/auth/login/data/models/login_request_model.dart';
 import 'package:rafeeq_app/features/auth/login/data/models/login_response_model.dart';
+import 'package:rafeeq_app/features/auth/sign_up/data/models/refresh_token_request_model.dart';
+import 'package:rafeeq_app/features/auth/sign_up/data/models/refresh_token_response_model.dart';
 import 'package:rafeeq_app/features/auth/sign_up/data/models/register_request_model.dart';
 import 'package:rafeeq_app/features/auth/sign_up/data/models/register_response_model.dart';
 import 'package:retrofit/retrofit.dart';
@@ -35,5 +37,10 @@ abstract class ApiClient {
   @POST(ApiConstants.resetPassword)
   Future<ResetPasswordResponseModel> resetPassword(
     @Body() ResetPasswordRequestModel body,
+  );
+
+  @POST(ApiConstants.refreshToken)
+  Future<RefreshTokenResponseModel> refreshToken(
+    @Body() RefreshTokenRequest body,
   );
 }

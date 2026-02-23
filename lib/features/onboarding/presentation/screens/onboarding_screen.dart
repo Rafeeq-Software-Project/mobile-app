@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rafeeq_app/core/helpers/extensions.dart';
+import 'package:rafeeq_app/core/helpers/role_navigation.dart';
 import 'package:rafeeq_app/core/routing/routes.dart';
 import 'package:rafeeq_app/core/theme/app_texts/app_text_styles.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
@@ -113,8 +114,14 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     return BlocListener<OnboardingCubit, OnboardingState>(
       listener: (context, state) {
         state.whenOrNull(
-          onboardingCompleted: () {
-            context.go(Routes.login);
+          onboardingCompleted: () async {
+            final loggedIn = await RoleNavigation.isLoggedIn();
+            if (loggedIn) {
+              final roleId = await RoleNavigation.getRoleId();
+              await RoleNavigation.goByRole(context, roleId);
+            } else {
+              context.go(Routes.login);
+            }
           },
         );
       },

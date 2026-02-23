@@ -30,12 +30,12 @@ class PasswordField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: AppTextStyles.font14SemiBold.copyWith(color: colors.black),
+          style: AppTextStyles.font14SemiBold.copyWith(color: colors.grey900),
         ),
         SizedBox(height: 8.h),
         Container(
           decoration: BoxDecoration(
-            color: colors.white,
+            color: colors.grey50,
             borderRadius: BorderRadius.circular(12.r),
             border: Border.all(
               color: controller.text.isNotEmpty

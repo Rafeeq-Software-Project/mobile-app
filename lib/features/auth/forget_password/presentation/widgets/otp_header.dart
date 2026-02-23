@@ -38,7 +38,7 @@ class OtpHeader extends StatelessWidget {
         // Title
         Text(
           'Verify your email',
-          style: AppTextStyles.font24Bold.copyWith(color: colors.black),
+          style: AppTextStyles.font24Bold.copyWith(color: colors.grey900),
         ),
         SizedBox(height: 12.h),
 
