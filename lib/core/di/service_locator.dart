@@ -2,7 +2,11 @@ import 'package:rafeeq_app/core/utils/common_imports.dart';
 import 'package:rafeeq_app/features/founder_account/data/repos/get_my_founder_profile_repo.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/logic/cubit/founder_profile_cubit.dart';
 import 'package:rafeeq_app/features/investor_account/data/repos/get_my_investor_profile_repo.dart';
+import 'package:rafeeq_app/features/investor_account/data/repos/update_investor_profile_repo.dart';
+import 'package:rafeeq_app/features/investor_account/data/repos/upload_investor_picture_repo.dart';
 import 'package:rafeeq_app/features/investor_account/presentation/logic/my_investor_profile/my_investor_profile_cubit.dart';
+import 'package:rafeeq_app/features/investor_account/presentation/logic/update_investor_profile/update_investor_profile_cubit.dart';
+import 'package:rafeeq_app/features/investor_account/presentation/logic/upload_investor_profile_picture/upload_investor_profile_picture_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -87,5 +91,19 @@ Future<void> initServiceLocator() async {
   );
   getIt.registerFactory<MyInvestorProfileCubit>(
     () => MyInvestorProfileCubit(getIt<GetMyInvestorProfileRepo>()),
+  );
+
+  getIt.registerLazySingleton<UpdateInvestorProfileRepo>(
+    () => UpdateInvestorProfileRepo(getIt<ApiClient>(), getIt<ApiHandler>()),
+  );
+  getIt.registerFactory<UpdateInvestorProfileCubit>(
+    () => UpdateInvestorProfileCubit(getIt<UpdateInvestorProfileRepo>()),
+  );
+
+  getIt.registerLazySingleton<UploadInvestorPictureRepo>(
+    () => UploadInvestorPictureRepo(getIt<ApiClient>()),
+  );
+  getIt.registerFactory<UploadInvestorProfilePictureCubit>(
+    () => UploadInvestorProfilePictureCubit(getIt<UploadInvestorPictureRepo>()),
   );
 }

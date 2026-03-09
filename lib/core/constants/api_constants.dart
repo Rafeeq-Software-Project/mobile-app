@@ -14,4 +14,6 @@ class ApiConstants {
   static const String refreshToken = '/auth/refresh-token';
   static const String founderProfile = '/founders/me';
   static const String investorProfile = '/investors/me';
+  static const String uploadInvestorProfile = '/investors/me/profile-picture';
+  static const String updateInvestorProfile = '/investors/me';
 }

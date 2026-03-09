@@ -14,6 +14,9 @@ import 'package:rafeeq_app/features/auth/sign_up/data/models/register_request_mo
 import 'package:rafeeq_app/features/auth/sign_up/data/models/register_response_model.dart';
 import 'package:rafeeq_app/features/founder_account/data/models/founder_profile.dart';
 import 'package:rafeeq_app/features/investor_account/data/models/investor_profile_model.dart';
+import 'package:rafeeq_app/features/investor_account/data/models/investor_profile_picture/upload/upload_investor_profile_picture_response.dart';
+import 'package:rafeeq_app/features/investor_account/data/models/update_investor_profile/update_investor_profile_request.dart';
+import 'package:rafeeq_app/features/investor_account/data/models/update_investor_profile/update_investor_profile_response.dart';
 import 'package:retrofit/retrofit.dart';
 part 'api_client.g.dart';
 
@@ -51,4 +54,15 @@ abstract class ApiClient {
 
   @GET(ApiConstants.investorProfile)
   Future<InvestorProfileModel> getMyInvestorProfile();
+
+  @POST(ApiConstants.uploadInvestorProfile)
+  @MultiPart()
+  Future<UploadInvestorProfilePictureResponse> uploadInvestorProfilePicture(
+    @Part(name: "file") MultipartFile file,
+  );
+
+  @POST(ApiConstants.updateInvestorProfile)
+  Future<UpdateInvestorProfileResponse> updateInvestorProfile(
+    @Body() UpdateInvestorProfileRequest request,
+  );
 }
