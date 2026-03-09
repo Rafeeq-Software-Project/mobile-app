@@ -16,4 +16,5 @@ class ApiConstants {
   static const String investorProfile = '/investors/me';
   static const String uploadInvestorProfile = '/investors/me/profile-picture';
   static const String updateInvestorProfile = '/investors/me';
+  static const String updateFounderProfile = '/founders/me';
 }

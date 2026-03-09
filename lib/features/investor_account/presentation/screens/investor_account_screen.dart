@@ -1,4 +1,5 @@
 import 'package:rafeeq_app/core/common/widgets/custom_loading.dart';
+import 'package:rafeeq_app/core/helpers/extensions.dart';
 import 'package:rafeeq_app/core/utils/common_imports.dart';
 import 'package:rafeeq_app/features/investor_account/data/models/investor_profile_model.dart';
 import 'package:rafeeq_app/features/investor_account/presentation/logic/my_investor_profile/my_investor_profile_cubit.dart';
@@ -47,20 +48,20 @@ class _InvestorAccountScreenState extends State<InvestorAccountScreen> {
               body: SafeArea(
                 child: Column(
                   children: [
-                    // App Bar
                     ProfileAppBar(
                       onBackTap: () => Navigator.pop(context),
-                      onEditTap: () {},
+                      onEditTap: () {
+                        context.push(
+                          Routes.updateInvestorProfile,
+                          extra: profile,
+                        );
+                      },
                     ),
-
-                    // Content
                     Expanded(
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
                             SizedBox(height: 20.h),
-
-                            // Profile Header
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20.w),
                               child: ProfileHeaderCard(
@@ -72,18 +73,12 @@ class _InvestorAccountScreenState extends State<InvestorAccountScreen> {
                                 bio: profile.bio ?? '',
                               ),
                             ),
-                            SizedBox(height: 20.h),
-
-                            SizedBox(height: 24.h),
-
-                            // Tabs
+                            40.h.ph,
                             ProfileTabs(
                               selectedTab: selectedTab,
                               onTabChanged: _onTabChanged,
                             ),
                             SizedBox(height: 20.h),
-
-                            // Content based on selected tab
                             if (selectedTab == 'Interests')
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 20.w),

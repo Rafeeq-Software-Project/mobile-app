@@ -1,6 +1,8 @@
 import 'package:rafeeq_app/core/utils/common_imports.dart';
-import 'package:rafeeq_app/features/founder_account/presentation/logic/cubit/founder_profile_cubit.dart';
+import 'package:rafeeq_app/features/founder_account/presentation/logic/get_founder_data/founder_profile_cubit.dart';
+import 'package:rafeeq_app/features/investor_account/data/models/investor_profile_model.dart';
 import 'package:rafeeq_app/features/investor_account/presentation/logic/my_investor_profile/my_investor_profile_cubit.dart';
+import 'package:rafeeq_app/features/investor_account/presentation/screens/update_investor_profile_screen.dart';
 
 abstract class AppRouter {
   static late final GoRouter router;
@@ -119,6 +121,13 @@ abstract class AppRouter {
         GoRoute(
           path: Routes.savedProjectsScreen,
           builder: (context, state) => SavedProjectsScreen(),
+        ),
+        GoRoute(
+          path: Routes.updateInvestorProfile,
+          builder: (context, state) {
+            final profile = state.extra as InvestorProfileModel;
+            return UpdateInvestorProfileScreen(profile: profile);
+          },
         ),
       ],
     );

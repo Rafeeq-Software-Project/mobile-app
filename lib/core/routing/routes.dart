@@ -17,4 +17,5 @@ class Routes {
   static const String savedProjectsScreen = '/savedProjectsScreen';
   static const String virfyOtpScreen = '/virfyOtpScreen';
   static const String resetPasswordScreen = '/resetPasswordScreen';
+  static const String updateInvestorProfile = '/updateInvestorProfile';
 }
