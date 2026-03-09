@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rafeeq_app/core/network/api_result.dart';
 import 'package:rafeeq_app/features/investor_account/data/models/update_investor_profile/update_investor_profile_request.dart';
 import 'package:rafeeq_app/features/investor_account/data/repos/update_investor_profile_repo.dart';
-
 import 'update_investor_profile_state.dart';
 
 class UpdateInvestorProfileCubit extends Cubit<UpdateInvestorProfileState> {

@@ -1,6 +1,8 @@
 import 'package:rafeeq_app/core/utils/common_imports.dart';
 import 'package:rafeeq_app/features/founder_account/data/repos/get_my_founder_profile_repo.dart';
+import 'package:rafeeq_app/features/founder_account/data/repos/update_founder_profile_repo.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/logic/get_founder_data/founder_profile_cubit.dart';
+import 'package:rafeeq_app/features/founder_account/presentation/logic/update_founder_profile/update_founder_profile_cubit.dart';
 import 'package:rafeeq_app/features/investor_account/data/repos/get_my_investor_profile_repo.dart';
 import 'package:rafeeq_app/features/investor_account/data/repos/update_investor_profile_repo.dart';
 import 'package:rafeeq_app/features/investor_account/data/repos/upload_investor_picture_repo.dart';
@@ -105,5 +107,12 @@ Future<void> initServiceLocator() async {
   );
   getIt.registerFactory<UploadInvestorProfilePictureCubit>(
     () => UploadInvestorProfilePictureCubit(getIt<UploadInvestorPictureRepo>()),
+  );
+
+  getIt.registerLazySingleton<UpdateFounderProfileRepo>(
+    () => UpdateFounderProfileRepo(getIt<ApiClient>(), getIt<ApiHandler>()),
+  );
+  getIt.registerFactory<UpdateFounderProfileCubit>(
+    () => UpdateFounderProfileCubit(getIt<UpdateFounderProfileRepo>()),
   );
 }
