@@ -12,7 +12,8 @@ import 'package:rafeeq_app/features/auth/sign_up/data/models/refresh_token_reque
 import 'package:rafeeq_app/features/auth/sign_up/data/models/refresh_token_response_model.dart';
 import 'package:rafeeq_app/features/auth/sign_up/data/models/register_request_model.dart';
 import 'package:rafeeq_app/features/auth/sign_up/data/models/register_response_model.dart';
-import 'package:rafeeq_app/features/founder_profile/data/models/founder_profile.dart';
+import 'package:rafeeq_app/features/founder_account/data/models/founder_profile.dart';
+import 'package:rafeeq_app/features/investor_account/data/models/investor_profile_model.dart';
 import 'package:retrofit/retrofit.dart';
 part 'api_client.g.dart';
 
@@ -47,4 +48,7 @@ abstract class ApiClient {
 
   @GET(ApiConstants.founderProfile)
   Future<FounderProfile> getMyFounderProfile();
+
+  @GET(ApiConstants.investorProfile)
+  Future<InvestorProfileModel> getMyInvestorProfile();
 }

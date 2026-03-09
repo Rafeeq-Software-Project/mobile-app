@@ -1,5 +1,6 @@
 import 'package:rafeeq_app/core/utils/common_imports.dart';
-import 'package:rafeeq_app/features/founder_profile/presentation/logic/cubit/founder_profile_cubit.dart';
+import 'package:rafeeq_app/features/founder_account/presentation/logic/cubit/founder_profile_cubit.dart';
+import 'package:rafeeq_app/features/investor_account/presentation/logic/my_investor_profile/my_investor_profile_cubit.dart';
 
 abstract class AppRouter {
   static late final GoRouter router;
@@ -105,7 +106,11 @@ abstract class AppRouter {
         ),
         GoRoute(
           path: Routes.investorAccountScreen,
-          builder: (context, state) => InvestorAccountScreen(),
+          builder: (context, state) => BlocProvider(
+            create: (context) =>
+                getIt<MyInvestorProfileCubit>()..fetchInvestorProfile(),
+            child: InvestorAccountScreen(),
+          ),
         ),
         GoRoute(
           path: Routes.rateFounderScreen,

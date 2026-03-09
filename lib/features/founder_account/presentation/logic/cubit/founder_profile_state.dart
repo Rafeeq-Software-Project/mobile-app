@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:rafeeq_app/features/founder_profile/data/models/founder_profile.dart';
+import 'package:rafeeq_app/features/founder_account/data/models/founder_profile.dart';
 part 'founder_profile_state.freezed.dart';
 
 @freezed

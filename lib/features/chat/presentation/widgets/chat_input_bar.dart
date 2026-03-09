@@ -47,15 +47,14 @@ class _ChatInputBarState extends State<ChatInputBar> {
             Expanded(
               child: AppTextFormField(
                 controller: widget.controller,
-                textAlign: TextAlign.right,
+                textAlign: TextAlign.left,
                 hintStyle: AppTextStyles.font14Regular.copyWith(
                   color: colors.primary800,
                 ),
-                hintText: 'اكتب رسالتك...',
+                hintText: 'type your massege',
               ),
             ),
             SizedBox(width: 12.w),
-
             if (widget.onVoice != null) ...[
               buildCircleButton(
                 icon: Icons.mic_outlined,

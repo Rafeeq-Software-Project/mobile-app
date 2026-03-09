@@ -13,4 +13,5 @@ class ApiConstants {
   static const String resetPassword = '/auth/reset-password';
   static const String refreshToken = '/auth/refresh-token';
   static const String founderProfile = '/founders/me';
+  static const String investorProfile = '/investors/me';
 }

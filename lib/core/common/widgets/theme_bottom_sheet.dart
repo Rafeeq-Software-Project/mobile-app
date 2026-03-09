@@ -54,7 +54,7 @@ class ThemeBottomSheet extends StatelessWidget {
                     width: 24.w,
                     height: 24.h,
                     colorFilter: ColorFilter.mode(
-                      context.customAppColors.primary500,
+                      context.customAppColors.primary800,
                       BlendMode.srcIn,
                     ),
                   ),

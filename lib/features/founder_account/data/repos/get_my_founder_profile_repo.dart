@@ -1,7 +1,7 @@
 import 'package:rafeeq_app/core/network/api_client.dart';
 import 'package:rafeeq_app/core/network/api_handler.dart';
 import 'package:rafeeq_app/core/network/api_result.dart';
-import 'package:rafeeq_app/features/founder_profile/data/models/founder_profile.dart';
+import 'package:rafeeq_app/features/founder_account/data/models/founder_profile.dart';
 
 class GetMyFounderProfileRepo {
   final ApiClient apiClient;

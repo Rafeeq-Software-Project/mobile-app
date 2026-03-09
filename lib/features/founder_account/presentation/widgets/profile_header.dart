@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafeeq_app/core/theme/app_texts/app_text_styles.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
-import 'package:rafeeq_app/features/founder_profile/data/models/founder_profile.dart';
+import 'package:rafeeq_app/features/founder_account/data/models/founder_profile.dart';
 
 class ProfileHeader extends StatelessWidget {
   final FounderProfile founderProfile;

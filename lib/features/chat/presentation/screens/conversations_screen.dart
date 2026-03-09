@@ -18,47 +18,46 @@ class ConversationsScreen extends StatefulWidget {
 class _ConversationsScreenState extends State<ConversationsScreen> {
   final TextEditingController _searchController = TextEditingController();
 
-  // Sample conversations
   final List<Map<String, dynamic>> _conversations = [
     {
-      'name': 'أستاذ أحمد',
-      'lastMessage': 'أهلا، كيف حالك',
-      'time': '10:00 م',
+      'name': 'Mr. Ahmed',
+      'lastMessage': 'Hello, how are you?',
+      'time': '10:00 PM',
       'avatarUrl': 'assets/placeholder/test.jpg',
       'hasUnread': true,
     },
     {
-      'name': 'أستاذ أحمد',
-      'lastMessage': 'أهلا، كيف حالك',
-      'time': '10:00 م',
+      'name': 'Mr. Ahmed',
+      'lastMessage': 'Hello, how are you?',
+      'time': '10:00 PM',
       'avatarUrl': 'assets/placeholder/test.jpg',
       'hasUnread': false,
     },
     {
-      'name': 'أستاذ أحمد',
-      'lastMessage': 'أهلا، كيف حالك',
-      'time': '10:00 م',
+      'name': 'Mr. Ahmed',
+      'lastMessage': 'Hello, how are you?',
+      'time': '10:00 PM',
       'avatarUrl': 'assets/placeholder/test.jpg',
       'hasUnread': false,
     },
     {
-      'name': 'أستاذ أحمد',
-      'lastMessage': 'أهلا، كيف حالك',
-      'time': '10:00 م',
+      'name': 'Mr. Ahmed',
+      'lastMessage': 'Hello, how are you?',
+      'time': '10:00 PM',
       'avatarUrl': 'assets/placeholder/test.jpg',
       'hasUnread': false,
     },
     {
-      'name': 'أستاذ أحمد',
-      'lastMessage': 'أهلا، كيف حالك',
-      'time': '10:00 م',
+      'name': 'Mr. Ahmed',
+      'lastMessage': 'Hello, how are you?',
+      'time': '10:00 PM',
       'avatarUrl': 'assets/placeholder/test.jpg',
       'hasUnread': false,
     },
     {
-      'name': 'أستاذ أحمد',
-      'lastMessage': 'أهلا، كيف حالك',
-      'time': '10:00 م',
+      'name': 'Mr. Ahmed',
+      'lastMessage': 'Hello, how are you?',
+      'time': '10:00 PM',
       'avatarUrl': 'assets/placeholder/test.jpg',
       'hasUnread': false,
     },
@@ -79,8 +78,8 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
       child: Scaffold(
         backgroundColor: colors.background,
         appBar: CustomAppBar(
-          title: 'المحادثات',
-          subtitle: 'سيحفظ جميع محادثاتك هنا',
+          title: 'Conversations',
+          subtitle: 'All your conversations will be saved here',
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -89,10 +88,7 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
               24.h.ph,
               CustomSearchBar(
                 controller: _searchController,
-                hintText: 'ابحث من هنا',
-                onChanged: (value) {
-                  // Handle search
-                },
+                hintText: 'Search here',
               ),
               24.h.ph,
               Expanded(

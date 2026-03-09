@@ -1,9 +1,9 @@
 import 'package:rafeeq_app/core/common/widgets/custom_loading.dart';
 import 'package:rafeeq_app/core/utils/common_imports.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/widgets/profile_info_section.dart';
-import 'package:rafeeq_app/features/founder_profile/data/models/founder_profile.dart';
-import 'package:rafeeq_app/features/founder_profile/presentation/logic/cubit/founder_profile_cubit.dart';
-import 'package:rafeeq_app/features/founder_profile/presentation/logic/cubit/founder_profile_state.dart';
+import 'package:rafeeq_app/features/founder_account/data/models/founder_profile.dart';
+import 'package:rafeeq_app/features/founder_account/presentation/logic/cubit/founder_profile_cubit.dart';
+import 'package:rafeeq_app/features/founder_account/presentation/logic/cubit/founder_profile_state.dart';
 import '../widgets/profile_header.dart';
 import '../widgets/about_section.dart';
 import '../widgets/action_buttons_row.dart';

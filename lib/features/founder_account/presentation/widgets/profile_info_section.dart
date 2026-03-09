@@ -1,6 +1,6 @@
 import 'package:rafeeq_app/core/utils/common_imports.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/widgets/profile_info_tile.dart';
-import 'package:rafeeq_app/features/founder_profile/data/models/founder_profile.dart';
+import 'package:rafeeq_app/features/founder_account/data/models/founder_profile.dart';
 
 class ProfileInfoSection extends StatelessWidget {
   final FounderProfile profile;

@@ -21,26 +21,26 @@ class _ChatScreenState extends State<ChatScreen> {
   final List<Map<String, dynamic>> _messages = [
     {
       'message':
-          'لعلك قد تسأل السؤال عليك أن تسأل سؤالا قبل مدة هنا تعلق على سؤالك للحديث مرة اخرى',
-      'time': '10:00 م',
+          'You may want to ask a question. You should ask it earlier so it can be answered and discussed again.',
+      'time': '10:00 PM',
       'isMyMessage': false,
     },
     {
       'message':
-          'لعلك قد يسأل السؤال، السؤال عليك أن تسأل، سؤالا قبلها يعد هنا تعلق على سؤالك للحديث مرة اخرى',
-      'time': '10:00 م',
+          'Sometimes you may have a question. Try asking it clearly so it can be answered and discussed again.',
+      'time': '10:00 PM',
       'isMyMessage': true,
     },
     {
       'message':
-          'لعلك قد تسأل السؤال عليك أن تسأل سؤالا قبل مدة هنا تعلق على سؤالك للحديث مرة اخرى',
-      'time': '10:00 م',
+          'You may want to ask a question. You should ask it earlier so it can be answered and discussed again.',
+      'time': '10:00 PM',
       'isMyMessage': false,
     },
     {
       'message':
-          'لعلك قد يسأل السؤال، السؤال عليك أن تسأل، سؤالا قبلها يعد هنا تعلق على سؤالك للحديث مرة اخرى',
-      'time': '10:00 م',
+          'Sometimes you may have a question. Try asking it clearly so it can be answered and discussed again.',
+      'time': '10:00 PM',
       'isMyMessage': true,
     },
   ];
@@ -98,8 +98,8 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Column(
           children: [
             ChatHeader(
-              name: 'أستاذ أحمد',
-              subtitle: 'نشط قبل ساعة واحدة',
+              name: 'Mr. Ahmed',
+              subtitle: 'Active 1 hour ago',
               avatarUrl: 'assets/placeholder/test.jpg',
             ),
             Expanded(
