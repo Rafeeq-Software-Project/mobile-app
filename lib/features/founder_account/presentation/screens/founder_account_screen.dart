@@ -85,7 +85,15 @@ class _FounderAccountScreenState extends State<FounderAccountScreen> {
                       ),
                       IconButton(
                         icon: Icon(Icons.edit_outlined, color: colors.grey900),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push(
+                            Routes.updateFounderProfile,
+                            extra: {
+                              "profile": profile,
+                              "cubit": context.read<FounderProfileCubit>(),
+                            },
+                          );
+                        },
                       ),
                     ],
                   ),

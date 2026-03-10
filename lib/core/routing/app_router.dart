@@ -1,5 +1,8 @@
 import 'package:rafeeq_app/core/utils/common_imports.dart';
+import 'package:rafeeq_app/features/founder_account/data/models/founder_profile.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/logic/get_founder_data/founder_profile_cubit.dart';
+import 'package:rafeeq_app/features/founder_account/presentation/logic/update_founder_profile/update_founder_profile_cubit.dart';
+import 'package:rafeeq_app/features/founder_account/presentation/screens/update_founder_profile_screen.dart';
 import 'package:rafeeq_app/features/investor_account/data/models/investor_profile_model.dart';
 import 'package:rafeeq_app/features/investor_account/presentation/logic/my_investor_profile/my_investor_profile_cubit.dart';
 import 'package:rafeeq_app/features/investor_account/presentation/screens/update_investor_profile_screen.dart';
@@ -98,7 +101,8 @@ abstract class AppRouter {
         GoRoute(
           path: Routes.founderAccountScreen,
           builder: (context, state) => BlocProvider(
-            create: (context) => getIt<FounderProfileCubit>(),
+            create: (context) =>
+                getIt<FounderProfileCubit>()..fetchFounderProfile(),
             child: FounderAccountScreen(),
           ),
         ),
@@ -127,6 +131,22 @@ abstract class AppRouter {
           builder: (context, state) {
             final profile = state.extra as InvestorProfileModel;
             return UpdateInvestorProfileScreen(profile: profile);
+          },
+        ),
+        GoRoute(
+          path: Routes.updateFounderProfile,
+          builder: (context, state) {
+            final data = state.extra as Map<String, dynamic>;
+            final profile = data["profile"] as FounderProfile;
+            final cubit = data["cubit"] as FounderProfileCubit;
+
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (_) => getIt<UpdateFounderProfileCubit>()),
+                BlocProvider.value(value: cubit),
+              ],
+              child: UpdateFounderProfileScreen(profile: profile),
+            );
           },
         ),
       ],

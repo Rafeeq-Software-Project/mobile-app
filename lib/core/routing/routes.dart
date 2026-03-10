@@ -18,4 +18,5 @@ class Routes {
   static const String virfyOtpScreen = '/virfyOtpScreen';
   static const String resetPasswordScreen = '/resetPasswordScreen';
   static const String updateInvestorProfile = '/updateInvestorProfile';
+  static const String updateFounderProfile = '/updateFounderProfile';
 }
