@@ -10,7 +10,10 @@ class InvestorProfileModel {
   final double? minInvestment;
   final double? maxInvestment;
   final String? stage;
+
+  @JsonKey(fromJson: _interestsFromJson)
   final List<String>? investmentInterests;
+
   final String? bio;
   final int? experienceYears;
   final String createdAt;
@@ -43,4 +46,18 @@ class InvestorProfileModel {
       _$InvestorProfileModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$InvestorProfileModelToJson(this);
+
+  static List<String>? _interestsFromJson(dynamic value) {
+    if (value == null) return [];
+
+    if (value is String) {
+      return value.split(',');
+    }
+
+    if (value is List) {
+      return value.map((e) => e.toString()).toList();
+    }
+
+    return [];
+  }
 }

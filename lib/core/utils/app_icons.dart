@@ -65,4 +65,8 @@ class AppIcons {
   static const String callIcon = 'assets/icons/call.svg';
   static const String videoIcon = 'assets/icons/video-camera-alt.svg';
   static const String videosIcon = 'assets/icons/videos.svg';
+  static const String cameraIcon = 'assets/icons/camera.svg';
+  static const String trashIcon = 'assets/icons/trash.svg';
+  static const String galleryAddIcon = 'assets/icons/gallery-add.svg';
+  static const String documentUploadIcon = 'assets/icons/document-upload.svg';
 }

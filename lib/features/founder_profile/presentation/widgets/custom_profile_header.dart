@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rafeeq_app/core/common/widgets/upload_card.dart';
 import 'package:rafeeq_app/core/theme/app_texts/app_text_styles.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
 
@@ -23,49 +24,8 @@ class CustomProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          children: [
-            Container(
-              width: 100.w,
-              height: 100.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: context.customAppColors.grey300,
-                image: imageUrl.isNotEmpty
-                    ? DecorationImage(
-                        image: NetworkImage(imageUrl),
-                        fit: BoxFit.cover,
-                      )
-                    : null,
-              ),
-            ),
-            Positioned(
-              right: 0,
-              bottom: 0,
-              child: Container(
-                width: 32.w,
-                height: 32.w,
-                decoration: BoxDecoration(
-                  color: context.customAppColors.primary800,
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: context.customAppColors.grey0,
-                    width: 2,
-                  ),
-                ),
-                child: Icon(
-                  Icons.edit,
-                  color: context.customAppColors.grey0,
-                  size: 16.sp,
-                ),
-              ),
-            ),
-          ],
-        ),
-
+        UploadCard(onImageSelected: (String? p1) {}),
         SizedBox(height: 12.h),
-
-        // Name with Verification Badge
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

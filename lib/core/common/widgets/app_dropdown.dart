@@ -30,7 +30,7 @@ class AppDropdown<T> extends StatelessWidget {
             isExpanded: true,
             valueListenable: valueListanble,
             hint: Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.centerLeft,
               child: Text(
                 hint,
                 style: AppTextStyles.font14Regular.copyWith(
@@ -42,7 +42,7 @@ class AppDropdown<T> extends StatelessWidget {
               return DropdownItem<T>(
                 value: item,
                 child: Align(
-                  alignment: Alignment.centerRight,
+                  alignment: Alignment.centerLeft,
                   child: Text(
                     labelBuilder(item),
                     style: AppTextStyles.font14Regular.copyWith(
@@ -57,12 +57,12 @@ class AppDropdown<T> extends StatelessWidget {
               height: 55.h,
               padding: EdgeInsets.symmetric(horizontal: 8.w),
               decoration: BoxDecoration(
-                color: context.customAppColors.grey500,
+                color: context.customAppColors.grey50,
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(
                   color: errorText != null
                       ? context.customAppColors.error500
-                      : Colors.transparent,
+                      : context.customAppColors.grey400,
                 ),
               ),
             ),
@@ -74,7 +74,7 @@ class AppDropdown<T> extends StatelessWidget {
               maxHeight: 250.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: context.customAppColors.grey500,
+                color: context.customAppColors.grey50,
                 boxShadow: [BoxShadow(blurRadius: 12, color: Colors.black12)],
               ),
             ),

@@ -8,8 +8,8 @@ class UpdateInvestorProfileRequest {
   final String lastName;
   final String investorType;
   final String location;
-  final int minInvestment;
-  final int maxInvestment;
+  final double minInvestment;
+  final double maxInvestment;
   final String stage;
   final String investmentInterests;
   final String bio;

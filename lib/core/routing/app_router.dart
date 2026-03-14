@@ -5,6 +5,7 @@ import 'package:rafeeq_app/features/founder_account/presentation/logic/update_fo
 import 'package:rafeeq_app/features/founder_account/presentation/screens/update_founder_profile_screen.dart';
 import 'package:rafeeq_app/features/investor_account/data/models/investor_profile_model.dart';
 import 'package:rafeeq_app/features/investor_account/presentation/logic/my_investor_profile/my_investor_profile_cubit.dart';
+import 'package:rafeeq_app/features/investor_account/presentation/logic/update_investor_profile/update_investor_profile_cubit.dart';
 import 'package:rafeeq_app/features/investor_account/presentation/screens/update_investor_profile_screen.dart';
 
 abstract class AppRouter {
@@ -129,8 +130,18 @@ abstract class AppRouter {
         GoRoute(
           path: Routes.updateInvestorProfile,
           builder: (context, state) {
-            final profile = state.extra as InvestorProfileModel;
-            return UpdateInvestorProfileScreen(profile: profile);
+            final data = state.extra as Map<String, dynamic>;
+            final cubit = data["cubit"] as MyInvestorProfileCubit;
+            final profile = data["profile"] as InvestorProfileModel;
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => getIt<UpdateInvestorProfileCubit>(),
+                ),
+                BlocProvider.value(value: cubit),
+              ],
+              child: UpdateInvestorProfileScreen(profile: profile),
+            );
           },
         ),
         GoRoute(
@@ -139,7 +150,6 @@ abstract class AppRouter {
             final data = state.extra as Map<String, dynamic>;
             final profile = data["profile"] as FounderProfile;
             final cubit = data["cubit"] as FounderProfileCubit;
-
             return MultiBlocProvider(
               providers: [
                 BlocProvider(create: (_) => getIt<UpdateFounderProfileCubit>()),

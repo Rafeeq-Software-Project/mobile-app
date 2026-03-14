@@ -53,7 +53,10 @@ class _InvestorAccountScreenState extends State<InvestorAccountScreen> {
                       onEditTap: () {
                         context.push(
                           Routes.updateInvestorProfile,
-                          extra: profile,
+                          extra: {
+                            "profile": profile,
+                            "cubit": context.read<MyInvestorProfileCubit>(),
+                          },
                         );
                       },
                     ),
@@ -66,7 +69,7 @@ class _InvestorAccountScreenState extends State<InvestorAccountScreen> {
                               padding: EdgeInsets.symmetric(horizontal: 20.w),
                               child: ProfileHeaderCard(
                                 name: profile.userFirstName,
-                                title: profile.stage ?? 'No Bio',
+                                title: profile.investorType ?? 'No Bio',
                                 location: profile.location ?? ' No Location',
                                 imageUrl: profile.userProfilePictureUrl ?? '',
                                 isVerified: true,

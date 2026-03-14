@@ -16,9 +16,9 @@ InvestorProfileModel _$InvestorProfileModelFromJson(
   minInvestment: (json['minInvestment'] as num?)?.toDouble(),
   maxInvestment: (json['maxInvestment'] as num?)?.toDouble(),
   stage: json['stage'] as String?,
-  investmentInterests: (json['investmentInterests'] as List<dynamic>?)
-      ?.map((e) => e as String)
-      .toList(),
+  investmentInterests: InvestorProfileModel._interestsFromJson(
+    json['investmentInterests'],
+  ),
   bio: json['bio'] as String?,
   experienceYears: (json['experienceYears'] as num?)?.toInt(),
   createdAt: json['createdAt'] as String,
