@@ -5,6 +5,7 @@ import 'package:rafeeq_app/core/common/widgets/about_team_bottom_sheet.dart';
 import 'package:rafeeq_app/core/common/widgets/snackbar_helper.dart';
 import 'package:rafeeq_app/core/common/widgets/theme_bottom_sheet.dart';
 import 'package:rafeeq_app/core/helpers/shared_pref_helper.dart';
+import 'package:rafeeq_app/core/local_data/current_user.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
 import 'package:rafeeq_app/features/founder_profile/presentation/widgets/custom_profile_header.dart';
 import '../../../../core/common/widgets/custom_profile_list_tile.dart';
@@ -22,6 +23,7 @@ class FounderProfileScreen extends StatefulWidget {
 
 class _FounderProfileScreenState extends State<FounderProfileScreen> {
   bool isPushNotificationsEnabled = true;
+  final userData = CurrentUser.data;
   @override
   Widget build(BuildContext context) {
     final items = [
@@ -101,9 +103,9 @@ class _FounderProfileScreenState extends State<FounderProfileScreen> {
               padding: EdgeInsets.symmetric(vertical: 24.h),
               child: CustomProfileHeader(
                 imageUrl: 'https://example.com/profile.jpg',
-                name: 'Ahmed Al-Fayed',
-                subtitle: 'Founder & Entrepreneur',
-                memberSince: 'Member since 2021',
+                name: '${userData.firstName} ${userData.lastName}',
+                subtitle: userData.roleName,
+                memberSince: 'Member since ${userData.expiresAt.year}',
                 isVerified: true,
               ),
             ),

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rafeeq_app/core/common/widgets/custom_button.dart';
 import 'package:rafeeq_app/core/helpers/extensions.dart';
+import 'package:rafeeq_app/core/helpers/shared_pref_helper.dart';
 import 'package:rafeeq_app/core/routing/routes.dart';
 import 'package:rafeeq_app/core/theme/app_texts/app_text_styles.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
 import 'package:rafeeq_app/core/utils/app_images.dart';
-import 'package:rafeeq_app/features/onboarding/presentation/logic/cubit/onboarding_cubit.dart';
-import 'package:rafeeq_app/features/onboarding/presentation/logic/cubit/onboarding_state.dart';
+import 'package:rafeeq_app/core/utils/shared_pref_keys.dart';
 import 'package:rafeeq_app/generated/l10n.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -60,84 +59,77 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<OnboardingCubit, OnboardingState>(
-      listener: (context, state) {
-        state.whenOrNull(
-          onboardingCompleted: () {
-            context.go(Routes.login);
-          },
-        );
-      },
-      child: Scaffold(
-        body: SafeArea(
-          child: Stack(
-            children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.75,
-                  width: double.infinity,
-                  child: Image.asset(AppImages.onboarding5, fit: BoxFit.fill),
-                ),
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.75,
+                width: double.infinity,
+                child: Image.asset(AppImages.onboarding5, fit: BoxFit.fill),
               ),
+            ),
 
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: 260.h,
-                  padding: EdgeInsets.all(25.h),
-                  decoration: BoxDecoration(
-                    color: context.customAppColors.grey0,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(50.r),
-                      topRight: Radius.circular(50.r),
-                    ),
-                    boxShadow: [
-                      BoxShadow(color: Colors.black12, blurRadius: 20),
-                    ],
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 260.h,
+                padding: EdgeInsets.all(25.h),
+                decoration: BoxDecoration(
+                  color: context.customAppColors.grey0,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(50.r),
+                    topRight: Radius.circular(50.r),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      FadeTransition(
-                        opacity: fadeAnimation,
-                        child: SlideTransition(
-                          position: slideAnimation,
-                          child: Column(
-                            children: [
-                              20.h.ph,
-                              Text(
-                                S.of(context).welcome_title,
-                                style: AppTextStyles.font24Bold.copyWith(
-                                  color: context.customAppColors.grey900,
-                                ),
-                                textAlign: TextAlign.center,
+                  boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 20)],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    FadeTransition(
+                      opacity: fadeAnimation,
+                      child: SlideTransition(
+                        position: slideAnimation,
+                        child: Column(
+                          children: [
+                            20.h.ph,
+                            Text(
+                              S.of(context).welcome_title,
+                              style: AppTextStyles.font24Bold.copyWith(
+                                color: context.customAppColors.grey900,
                               ),
-                              15.h.ph,
-                              Text(
-                                S.of(context).welcome_subtitle,
-                                style: AppTextStyles.font16Regular.copyWith(
-                                  color: context.customAppColors.grey600,
-                                ),
-                                textAlign: TextAlign.center,
+                              textAlign: TextAlign.center,
+                            ),
+                            15.h.ph,
+                            Text(
+                              S.of(context).welcome_subtitle,
+                              style: AppTextStyles.font16Regular.copyWith(
+                                color: context.customAppColors.grey600,
                               ),
-                            ],
-                          ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
                       ),
-                      const Spacer(),
-                      CustomButton(
-                        text: S.of(context).welcome_button_start,
-                        onTap: () {
-                          context.read<OnboardingCubit>().completeOnboarding();
-                        },
-                      ),
-                    ],
-                  ),
+                    ),
+                    const Spacer(),
+                    CustomButton(
+                      text: S.of(context).welcome_button_start,
+                      onTap: () async {
+                        await SharedPrefHelper.setData(
+                          key: SharedPrefKeys.isOnBoardingSeen,
+                          value: true,
+                        );
+                        GoRouter.of(context).go(Routes.login);
+                      },
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

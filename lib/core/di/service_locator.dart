@@ -41,8 +41,6 @@ Future<void> initServiceLocator() async {
     () => AuthRepository(getIt<ApiClient>(), getIt<AuthLocalStorage>()),
   );
 
-  getIt.registerLazySingleton<OnboardingCubit>(() => OnboardingCubit());
-
   getIt.registerLazySingleton<LoginRepo>(
     () => LoginRepo(getIt<ApiClient>(), getIt<ApiHandler>()),
   );

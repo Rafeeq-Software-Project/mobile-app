@@ -2,7 +2,7 @@ class SharedPrefKeys {
   SharedPrefKeys._();
 
   // Onboarding Keys
-  static const String onboardingCompleted = 'onboardingCompleted';
+  static const String isOnBoardingSeen = "is_onboarding_seen";
   static const String isLoggedIn = 'isLoggedIn';
   static const String userId = 'userId';
   static const String email = 'email';

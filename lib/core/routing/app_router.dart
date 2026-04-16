@@ -7,17 +7,27 @@ import 'package:rafeeq_app/features/investor_account/data/models/investor_profil
 import 'package:rafeeq_app/features/investor_account/presentation/logic/my_investor_profile/my_investor_profile_cubit.dart';
 import 'package:rafeeq_app/features/investor_account/presentation/logic/update_investor_profile/update_investor_profile_cubit.dart';
 import 'package:rafeeq_app/features/investor_account/presentation/screens/update_investor_profile_screen.dart';
+import 'package:rafeeq_app/features/onboarding/presentation/screens/splash_screen.dart';
+import 'package:rafeeq_app/features/onboarding/presentation/screens/welcome_screen.dart';
 
 abstract class AppRouter {
   static late final GoRouter router;
 
   static void initRouter() {
     router = GoRouter(
-      initialLocation: Routes.onboarding,
+      initialLocation: Routes.splash,
       routes: [
+        GoRoute(
+          path: Routes.splash,
+          builder: (context, state) => const SplashScreen(),
+        ),
         GoRoute(
           path: Routes.onboarding,
           builder: (context, state) => OnboardingScreen(),
+        ),
+        GoRoute(
+          path: Routes.welcome,
+          builder: (context, state) => WelcomeScreen(),
         ),
         GoRoute(
           path: Routes.register,
@@ -26,13 +36,20 @@ abstract class AppRouter {
             child: RegisterScreen(),
           ),
         ),
-
         GoRoute(
           path: Routes.login,
-          builder: (context, state) => BlocProvider(
-            create: (context) => getIt<LoginCubit>(),
-            child: LoginScreen(),
-          ),
+          pageBuilder: (context, state) {
+            return CustomTransitionPage(
+              child: BlocProvider(
+                create: (context) => getIt<LoginCubit>(),
+                child: const LoginScreen(),
+              ),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
+            );
+          },
         ),
         GoRoute(
           path: Routes.verification,

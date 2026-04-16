@@ -28,7 +28,6 @@ export 'package:rafeeq_app/features/auth/sign_up/data/repos/auth_repository.dart
 export 'package:rafeeq_app/features/auth/sign_up/data/repos/register_repo.dart';
 export 'package:rafeeq_app/features/auth/sign_up/presentation/logic/register_cubit/register_cubit.dart';
 export 'package:rafeeq_app/features/auth/sign_up/presentation/logic/token_manager.dart';
-export 'package:rafeeq_app/features/onboarding/presentation/logic/cubit/onboarding_cubit.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:flutter/foundation.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';

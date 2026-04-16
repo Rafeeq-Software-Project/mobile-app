@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -50,136 +51,174 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   20.h.ph,
-                  Text(
-                    S.of(context).login_welcome_back,
-                    style: AppTextStyles.font24Bold.copyWith(
-                      color: context.customAppColors.grey900,
+                  FadeInDown(
+                    duration: Duration(milliseconds: 600),
+                    child: Text(
+                      S.of(context).login_welcome_back,
+                      style: AppTextStyles.font24Bold.copyWith(
+                        color: context.customAppColors.grey900,
+                      ),
                     ),
                   ),
                   10.h.ph,
-                  Text(
-                    S.of(context).login_welcome_subtitle,
-                    style: AppTextStyles.font16Regular.copyWith(
-                      color: context.customAppColors.grey600,
+                  FadeIn(
+                    delay: Duration(milliseconds: 150),
+                    duration: Duration(milliseconds: 600),
+                    child: Text(
+                      S.of(context).login_welcome_subtitle,
+                      style: AppTextStyles.font16Regular.copyWith(
+                        color: context.customAppColors.grey600,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                   30.h.ph,
-                  AppTextFormField(
-                    controller: emailController,
-                    hintText: S.of(context).login_email_hint,
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return S.of(context).validation_email_required;
-                      }
-                      if (!AppRegex.isEmailValid(value)) {
-                        return S.of(context).validation_email_invalid;
-                      }
-                      return null;
-                    },
-                  ),
-                  20.h.ph,
-                  AppTextFormField(
-                    controller: passwordController,
-                    hintText: S.of(context).login_password_hint,
-                    isObscureText: obscurePassword,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        obscurePassword
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          obscurePassword = !obscurePassword;
-                        });
+                  FadeInLeft(
+                    delay: Duration(milliseconds: 300),
+                    duration: Duration(milliseconds: 500),
+                    child: AppTextFormField(
+                      controller: emailController,
+                      hintText: S.of(context).login_email_hint,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return S.of(context).validation_email_required;
+                        }
+                        if (!AppRegex.isEmailValid(value)) {
+                          return S.of(context).validation_email_invalid;
+                        }
+                        return null;
                       },
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return S.of(context).validation_password_required;
-                      }
-                      if (!AppRegex.isPasswordValid(value)) {
-                        return S.of(context).validation_password_invalid;
-                      }
-                      return null;
-                    },
                   ),
                   20.h.ph,
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {
-                        GoRouter.of(context).push(Routes.forgetPassword);
-                      },
-                      child: Text(
-                        S.of(context).login_forgot_password,
-                        style: TextStyle(
-                          color: context.customAppColors.primary700,
+                  FadeInRight(
+                    delay: Duration(milliseconds: 450),
+                    duration: Duration(milliseconds: 500),
+                    child: AppTextFormField(
+                      controller: passwordController,
+                      hintText: S.of(context).login_password_hint,
+                      isObscureText: obscurePassword,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                         ),
-                      ),
-                    ),
-                  ),
-                  20.h.ph,
-                  CustomButton(
-                    text: S.of(context).login_sign_in,
-                    onTap: () {
-                      validateThenDoLogin(context);
-                    },
-                  ),
-                  LoginBlocListener(),
-                  15.h.ph,
-                  Row(
-                    children: [
-                      Expanded(child: Divider(color: Colors.grey.shade400)),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.w),
-                        child: Text(
-                          S.of(context).login_or,
-                          style: AppTextStyles.font14Regular,
-                        ),
-                      ),
-                      Expanded(
-                        child: Divider(color: context.customAppColors.grey400),
-                      ),
-                    ],
-                  ),
-                  15.h.ph,
-                  SocialButton(
-                    text: S.of(context).login_google_signin,
-                    iconPath: AppIcons.googleIcon,
-                    onTap: () {
-                      // Call Google Sign In
-                    },
-                  ),
-                  10.h.ph,
-                  SocialButton(
-                    text: S.of(context).login_facebook_signin,
-                    iconPath: AppIcons.facebookIcon,
-                    onTap: () {},
-                  ),
-                  20.h.ph,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        S.of(context).login_no_account,
-                        style: AppTextStyles.font14Regular,
-                      ),
-                      TextButton(
                         onPressed: () {
-                          GoRouter.of(context).push(Routes.register);
+                          setState(() {
+                            obscurePassword = !obscurePassword;
+                          });
+                        },
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return S.of(context).validation_password_required;
+                        }
+                        if (!AppRegex.isPasswordValid(value)) {
+                          return S.of(context).validation_password_invalid;
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  20.h.ph,
+                  FadeIn(
+                    delay: Duration(milliseconds: 600),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          GoRouter.of(context).push(Routes.forgetPassword);
                         },
                         child: Text(
-                          S.of(context).login_sign_up,
+                          S.of(context).login_forgot_password,
                           style: TextStyle(
                             color: context.customAppColors.primary700,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                    ],
+                    ),
+                  ),
+                  20.h.ph,
+                  ElasticIn(
+                    delay: Duration(milliseconds: 700),
+                    duration: Duration(milliseconds: 600),
+                    child: CustomButton(
+                      text: S.of(context).login_sign_in,
+                      onTap: () {
+                        validateThenDoLogin(context);
+                      },
+                    ),
+                  ),
+                  LoginBlocListener(),
+                  15.h.ph,
+                  FadeIn(
+                    delay: Duration(milliseconds: 850),
+                    duration: Duration(milliseconds: 500),
+                    child: Row(
+                      children: [
+                        Expanded(child: Divider(color: Colors.grey.shade400)),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          child: Text(
+                            S.of(context).login_or,
+                            style: AppTextStyles.font14Regular,
+                          ),
+                        ),
+                        Expanded(
+                          child: Divider(
+                            color: context.customAppColors.grey400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  15.h.ph,
+                  FadeInUp(
+                    delay: Duration(milliseconds: 1000),
+                    duration: Duration(milliseconds: 500),
+                    child: SocialButton(
+                      text: S.of(context).login_google_signin,
+                      iconPath: AppIcons.googleIcon,
+                      onTap: () {},
+                    ),
+                  ),
+                  10.h.ph,
+                  FadeInUp(
+                    delay: Duration(milliseconds: 1300),
+                    duration: Duration(milliseconds: 500),
+                    child: SocialButton(
+                      text: S.of(context).login_facebook_signin,
+                      iconPath: AppIcons.facebookIcon,
+                      onTap: () {},
+                    ),
+                  ),
+                  20.h.ph,
+                  FadeInUp(
+                    delay: Duration(milliseconds: 1150),
+                    duration: Duration(milliseconds: 400),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          S.of(context).login_no_account,
+                          style: AppTextStyles.font14Regular,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            GoRouter.of(context).push(Routes.register);
+                          },
+                          child: Text(
+                            S.of(context).login_sign_up,
+                            style: TextStyle(
+                              color: context.customAppColors.primary700,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

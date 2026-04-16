@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafeeq_app/core/helpers/extensions.dart';
@@ -11,18 +12,26 @@ class RegisterHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          "Create Your Account",
-          style: AppTextStyles.font24Bold.copyWith(
-            color: context.customAppColors.grey900,
+        FadeInDown(
+          duration: const Duration(milliseconds: 700),
+          curve: Curves.easeOutBack,
+          child: Text(
+            "Create Your Account",
+            style: AppTextStyles.font24Bold.copyWith(
+              color: context.customAppColors.grey900,
+            ),
           ),
         ),
         10.h.ph,
-        Text(
-          "Join the network and start your journey",
-          textAlign: TextAlign.center,
-          style: AppTextStyles.font16Regular.copyWith(
-            color: context.customAppColors.grey600,
+        FadeIn(
+          delay: const Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 600),
+          child: Text(
+            "Join the network and start your journey",
+            textAlign: TextAlign.center,
+            style: AppTextStyles.font16Regular.copyWith(
+              color: context.customAppColors.grey600,
+            ),
           ),
         ),
       ],

@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -60,86 +61,142 @@ class _RegisterFormState extends State<RegisterForm> {
               Row(
                 children: [
                   Expanded(
-                    child: RegisterInput(controller: first, hint: "First Name"),
+                    child: FadeInLeft(
+                      delay: const Duration(milliseconds: 200),
+                      duration: const Duration(milliseconds: 500),
+                      child: RegisterInput(
+                        controller: first,
+                        hint: "First Name",
+                      ),
+                    ),
                   ),
                   12.w.pw,
                   Expanded(
-                    child: RegisterInput(controller: last, hint: "Last Name"),
+                    child: FadeInRight(
+                      delay: const Duration(milliseconds: 200),
+                      duration: const Duration(milliseconds: 500),
+                      child: RegisterInput(controller: last, hint: "Last Name"),
+                    ),
                   ),
                 ],
               ),
 
               15.h.ph,
-              RegisterInput(controller: user, hint: "Username"),
 
-              15.h.ph,
-              RegisterInput(
-                controller: email,
-                hint: "Email",
-                keyboard: TextInputType.emailAddress,
-                validator: (v) {
-                  if (v!.isEmpty) return "Required";
-                  if (!AppRegex.isEmailValid(v)) return "Invalid email";
-                  return null;
-                },
+              FadeInLeft(
+                delay: const Duration(milliseconds: 350),
+                duration: const Duration(milliseconds: 500),
+                child: RegisterInput(controller: user, hint: "Username"),
               ),
 
               15.h.ph,
-              RegisterInput(
-                controller: pass,
-                hint: "Password",
-                obscure: obscure,
-                suffix: IconButton(
-                  icon: Icon(obscure ? Icons.visibility_off : Icons.visibility),
-                  onPressed: () => setState(() => obscure = !obscure),
+
+              FadeInRight(
+                delay: const Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 500),
+                child: RegisterInput(
+                  controller: email,
+                  hint: "Email",
+                  keyboard: TextInputType.emailAddress,
+                  validator: (v) {
+                    if (v!.isEmpty) return "Required";
+                    if (!AppRegex.isEmailValid(v)) return "Invalid email";
+                    return null;
+                  },
+                ),
+              ),
+
+              15.h.ph,
+
+              FadeInLeft(
+                delay: const Duration(milliseconds: 650),
+                duration: const Duration(milliseconds: 500),
+                child: RegisterInput(
+                  controller: pass,
+                  hint: "Password",
+                  obscure: obscure,
+                  suffix: IconButton(
+                    icon: Icon(
+                      obscure ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    onPressed: () => setState(() => obscure = !obscure),
+                  ),
                 ),
               ),
 
               20.h.ph,
 
-              Row(
-                children: [
-                  Expanded(
-                    child: RoleCard(
-                      title: "Founder",
-                      icon: Icons.rocket_launch,
-                      selected: roleId == 2,
-                      onTap: () => setState(() => roleId = 2),
+              FadeInUp(
+                delay: const Duration(milliseconds: 800),
+                duration: const Duration(milliseconds: 500),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: RoleCard(
+                        title: "Founder",
+                        icon: Icons.rocket_launch,
+                        selected: roleId == 2,
+                        onTap: () => setState(() => roleId = 2),
+                      ),
                     ),
-                  ),
-                  15.w.pw,
-                  Expanded(
-                    child: RoleCard(
-                      title: "Investor",
-                      icon: Icons.trending_up,
-                      selected: roleId == 3,
-                      onTap: () => setState(() => roleId = 3),
+                    15.w.pw,
+                    Expanded(
+                      child: RoleCard(
+                        title: "Investor",
+                        icon: Icons.trending_up,
+                        selected: roleId == 3,
+                        onTap: () => setState(() => roleId = 3),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
 
               25.h.ph,
 
-              CustomButton(text: "Sign Up", onTap: _register),
+              ElasticIn(
+                delay: const Duration(milliseconds: 950),
+                duration: const Duration(milliseconds: 600),
+                child: CustomButton(text: "Sign Up", onTap: _register),
+              ),
+
               25.h.ph,
-              const RegisterDivider(),
+
+              FadeIn(
+                delay: const Duration(milliseconds: 1100),
+                child: const RegisterDivider(),
+              ),
+
               20.h.ph,
-              SocialButton(
-                text: S.of(context).login_google_signin,
-                iconPath: AppIcons.googleIcon,
-                onTap: () {},
+
+              FadeInUp(
+                delay: const Duration(milliseconds: 1100),
+                child: SocialButton(
+                  text: S.of(context).login_google_signin,
+                  iconPath: AppIcons.googleIcon,
+                  onTap: () {},
+                ),
               ),
+
               10.h.ph,
-              SocialButton(
-                text: S.of(context).login_facebook_signin,
-                iconPath: AppIcons.facebookIcon,
-                onTap: () {},
+
+              FadeInUp(
+                delay: const Duration(milliseconds: 1250),
+                child: SocialButton(
+                  text: S.of(context).login_facebook_signin,
+                  iconPath: AppIcons.facebookIcon,
+                  onTap: () {},
+                ),
               ),
+
               const SignupBlocListener(),
 
               20.h.ph,
-              const RegisterLoginText(),
+
+              FadeInUp(
+                delay: const Duration(milliseconds: 1500),
+                child: const RegisterLoginText(),
+              ),
             ],
           ),
         ),
