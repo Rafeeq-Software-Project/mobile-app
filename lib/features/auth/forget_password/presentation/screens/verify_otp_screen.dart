@@ -29,11 +29,19 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
   int _resendCountdown = 60;
   bool _canResend = false;
+  bool _showContent = false;
 
   @override
   void initState() {
     super.initState();
     _startCountdown();
+    Future.delayed(const Duration(milliseconds: 150), () {
+      if (mounted) {
+        setState(() {
+          _showContent = true;
+        });
+      }
+    });
   }
 
   void _startCountdown() {
@@ -110,41 +118,58 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               Expanded(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.all(20.w),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 20.h),
-                      OtpHeader(email: widget.email),
-                      SizedBox(height: 40.h),
-                      OtpInputFields(
-                        controllers: _controllers,
-                        focusNodes: _focusNodes,
-                        onChanged: _onOtpChanged,
-                        onBackspace: _onOtpBackspace,
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 400),
+                    opacity: _showContent ? 1 : 0,
+                    child: AnimatedSlide(
+                      duration: const Duration(milliseconds: 400),
+                      offset: _showContent
+                          ? Offset.zero
+                          : const Offset(0, 0.05),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 20.h),
+                          OtpHeader(email: widget.email),
+                          SizedBox(height: 40.h),
+                          OtpInputFields(
+                            controllers: _controllers,
+                            focusNodes: _focusNodes,
+                            onChanged: _onOtpChanged,
+                            onBackspace: _onOtpBackspace,
+                          ),
+                          SizedBox(height: 32.h),
+                          ResendOtpBlocListener(
+                            onSuccess: () {
+                              setState(() {
+                                _canResend = false;
+                                _resendCountdown = 60;
+                              });
+                              _startCountdown();
+                            },
+                            child: ResendCodeButton(
+                              canResend: _canResend,
+                              countdown: _resendCountdown,
+                              onResend: _resendCode,
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 32.h),
-
-                      ResendOtpBlocListener(
-                        onSuccess: () {
-                          setState(() {
-                            _canResend = false;
-                            _resendCountdown = 60;
-                          });
-                          _startCountdown();
-                        },
-                        child: ResendCodeButton(
-                          canResend: _canResend,
-                          countdown: _resendCountdown,
-                          onResend: _resendCode,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-              VerifyButton(
-                isEnabled: _isOtpComplete,
-                isLoading: false,
-                onTap: _verifyOtp,
+              AnimatedSlide(
+                duration: const Duration(milliseconds: 400),
+                offset: _showContent ? Offset.zero : const Offset(0, 0.2),
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 400),
+                  opacity: _showContent ? 1 : 0,
+                  child: VerifyButton(
+                    isEnabled: _isOtpComplete,
+                    isLoading: false,
+                    onTap: _verifyOtp,
+                  ),
+                ),
               ),
             ],
           ),

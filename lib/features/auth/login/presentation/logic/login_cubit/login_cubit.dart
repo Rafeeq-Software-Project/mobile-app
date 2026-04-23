@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rafeeq_app/core/helpers/shared_pref_helper.dart';
 import 'package:rafeeq_app/core/network/api_result.dart';
 import 'package:rafeeq_app/core/services/storage/auth_local_storage.dart';
+import 'package:rafeeq_app/core/utils/shared_pref_keys.dart';
 import 'package:rafeeq_app/features/auth/login/data/models/login_request_model.dart';
 import 'package:rafeeq_app/features/auth/login/data/repos/login_repo.dart';
 import 'package:rafeeq_app/features/auth/login/presentation/logic/login_cubit/login_state.dart';
@@ -29,6 +31,7 @@ class LoginCubit extends Cubit<LoginState> {
           roleNameValue: response.roleName,
           isRegisterCompletedValue: true,
         );
+        SharedPrefHelper.setData(key: SharedPrefKeys.isLoggedIn, value: true);
         emit(LoginState.success(response));
       },
       failure: (error) => emit(LoginState.failure(error.toString())),

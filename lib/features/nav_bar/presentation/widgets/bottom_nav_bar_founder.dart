@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rafeeq_app/core/di/service_locator.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
 import 'package:rafeeq_app/core/utils/app_icons.dart';
 import 'package:rafeeq_app/features/chat/presentation/screens/conversations_screen.dart';
 import 'package:rafeeq_app/features/founder_home/presentation/screens/founder_home_screen.dart';
 import 'package:rafeeq_app/features/founder_profile/presentation/screens/founder_profile_screen.dart';
+import 'package:rafeeq_app/features/founder_projects/presentation/logic/get_projects/get_projects_cubit.dart';
 import 'package:rafeeq_app/features/founder_projects/presentation/screens/my_projects_screen.dart';
 import 'package:rafeeq_app/features/nav_bar/presentation/manager/nav_bar_founder_cubit/nav_bar_founder_cubit.dart';
 import 'package:rafeeq_app/generated/l10n.dart';
@@ -17,7 +19,10 @@ class CustomBottomNavBarFounder extends StatelessWidget {
 
   final List<Widget> views = [
     DashboardScreen(),
-    MyProjectsScreen(),
+    BlocProvider(
+      create: (_) => getIt<GetProjectsCubit>()..getProjects(),
+      child: MyProjectsScreen(),
+    ),
     InvestorApplicationsScreen(),
     ConversationsScreen(),
     FounderProfileScreen(),

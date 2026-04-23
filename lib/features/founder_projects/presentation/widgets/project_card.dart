@@ -17,9 +17,9 @@ class ProjectCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.customAppColors;
 
-    if (project.isDraft) {
-      return _buildDraftCard(context, colors);
-    }
+    // if (project.isDraft) {
+    //   return _buildDraftCard(context, colors);
+    // }
 
     return Container(
       padding: EdgeInsets.all(16.w),
@@ -42,7 +42,7 @@ class ProjectCard extends StatelessWidget {
             children: [
               StatusBadge(
                 label: project.status,
-                color: _getStatusColor(project.statusColor, colors),
+                color: _getStatusColor(project.status, colors),
               ),
               SizedBox(width: 8.w),
               StatusBadge(
@@ -51,34 +51,34 @@ class ProjectCard extends StatelessWidget {
                 textColor: colors.grey700,
               ),
               const Spacer(),
-              // Project Image
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12.r),
-                child: Image.network(
-                  project.imageUrl,
-                  width: 60.w,
-                  height: 60.h,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      width: 60.w,
-                      height: 60.h,
-                      decoration: BoxDecoration(
-                        color: colors.grey200,
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: Icon(Icons.image, color: colors.grey500),
-                    );
-                  },
-                ),
-              ),
+              //ProjectImage
+              // ClipRRect(
+              //   borderRadius: BorderRadius.circular(12.r),
+              //   child: Image.network(
+              //     project.imageUrl,
+              //     width: 60.w,
+              //     height: 60.h,
+              //     fit: BoxFit.cover,
+              //     errorBuilder: (context, error, stackTrace) {
+              //       return Container(
+              //         width: 60.w,
+              //         height: 60.h,
+              //         decoration: BoxDecoration(
+              //           color: colors.grey200,
+              //           borderRadius: BorderRadius.circular(12.r),
+              //         ),
+              //         child: Icon(Icons.image, color: colors.grey500),
+              //       );
+              //     },
+              //   ),
+              // ),
             ],
           ),
           SizedBox(height: 12.h),
 
           // Title
           Text(
-            project.title,
+            project.name,
             style: AppTextStyles.font18Bold.copyWith(color: colors.grey900),
           ),
           SizedBox(height: 6.h),
@@ -95,41 +95,40 @@ class ProjectCard extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
 
-          // Funding Info
-          if (!project.isDraft) ...[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '\$${_formatAmount(project.raisedAmount)}',
-                  style: AppTextStyles.font14Bold.copyWith(color: colors.black),
-                ),
-                Text(
-                  'Goal: \$${_formatAmount(project.goalAmount)}',
-                  style: AppTextStyles.font12Regular.copyWith(
-                    color: colors.grey600,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 8.h),
+          // // Funding Info
+          // if (!project.isDraft) ...[
+          //   Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Text(
+          //         '\$${_formatAmount(project.raisedAmount)}',
+          //         style: AppTextStyles.font14Bold.copyWith(color: colors.black),
+          //       ),
+          //       Text(
+          //         'Goal: \$${_formatAmount(project.goalAmount)}',
+          //         style: AppTextStyles.font12Regular.copyWith(
+          //           color: colors.grey600,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          SizedBox(height: 8.h),
 
-            // Progress Bar
-            ProgressBar(
-              percentage: project.fundingPercentage,
-              color: _getStatusColor(project.statusColor, colors),
-            ),
-            SizedBox(height: 12.h),
-          ],
+          // Progress Bar
+          ProgressBar(
+            percentage: project.fundingGoal,
+            color: _getStatusColor(project.status, colors),
+          ),
+          SizedBox(height: 12.h),
 
           // Bottom Section
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                project.statusLabel,
+                project.status,
                 style: AppTextStyles.font14SemiBold.copyWith(
-                  color: _getStatusColor(project.statusColor, colors),
+                  color: _getStatusColor(project.status, colors),
                 ),
               ),
               ActionLink(
@@ -189,7 +188,7 @@ class ProjectCard extends StatelessWidget {
           ),
           SizedBox(height: 12.h),
           Text(
-            project.title,
+            project.name,
             style: AppTextStyles.font18Bold.copyWith(color: colors.grey700),
           ),
           SizedBox(height: 6.h),
@@ -202,7 +201,7 @@ class ProjectCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                project.statusLabel,
+                project.status,
                 style: AppTextStyles.font12Regular.copyWith(
                   color: colors.grey500,
                 ),
@@ -215,13 +214,13 @@ class ProjectCard extends StatelessWidget {
     );
   }
 
-  Color _getStatusColor(String colorName, CustomAppColors colors) {
-    switch (colorName) {
-      case 'green':
+  Color _getStatusColor(String stutsName, CustomAppColors colors) {
+    switch (stutsName.toLowerCase()) {
+      case 'approved':
         return colors.accent600;
-      case 'orange':
+      case 'rejected':
         return colors.warning500;
-      case 'blue':
+      case 'pending':
         return colors.primary800;
       default:
         return colors.grey500;

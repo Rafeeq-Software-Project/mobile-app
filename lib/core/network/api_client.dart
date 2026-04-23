@@ -15,6 +15,7 @@ import 'package:rafeeq_app/features/auth/sign_up/data/models/register_response_m
 import 'package:rafeeq_app/features/founder_account/data/models/founder_profile.dart';
 import 'package:rafeeq_app/features/founder_account/data/models/update_founder_profile/update_founder_profile_request.dart';
 import 'package:rafeeq_app/features/founder_account/data/models/update_founder_profile/update_founder_profile_response.dart';
+import 'package:rafeeq_app/features/founder_projects/data/model/project_model.dart';
 import 'package:rafeeq_app/features/investor_account/data/models/investor_profile_model.dart';
 import 'package:rafeeq_app/features/investor_account/data/models/investor_profile_picture/upload/upload_investor_profile_picture_response.dart';
 import 'package:rafeeq_app/features/investor_account/data/models/update_investor_profile/update_investor_profile_request.dart';
@@ -72,4 +73,7 @@ abstract class ApiClient {
   Future<UpdateFounderProfileResponse> updateFounderProfile(
     @Body() UpdateFounderProfileRequest request,
   );
+
+  @GET(ApiConstants.getAllProjects)
+  Future<List<ProjectModel>> getAllProjects();
 }
