@@ -4,45 +4,6 @@ import 'package:rafeeq_app/features/founder_projects/data/model/project_model.da
 import 'package:rafeeq_app/features/founder_projects/presentation/logic/project_details/project_details_cubit.dart';
 import 'package:rafeeq_app/features/founder_projects/presentation/logic/project_details/project_details_state.dart';
 
-class _AppColors {
-  // Page & card backgrounds
-  static const Color pageBg = Color(0xFFF0F8FF); // blueLighter
-  static const Color cardBg = Color(0xFFFFFFFF); // white
-
-  // Primary blue (replaces purple #6C63FF)
-  static const Color primary = Color(0xFF4A90E2); // primary600
-  static const Color primaryLight = Color(0xFF5BA3F5); // primary500
-  static const Color primaryDeep = Color(0xFF1E3A8A); // primary900
-
-  // Secondary blue (replaces teal #00D4AA)
-  static const Color secondary = Color(0xFF60A5FA); // primary400
-
-  // Accent / info (replaces cyan #00D2FF)
-  static const Color accent = Color(0xFF529EEA); // primary800
-
-  // Warning (kept close – amber)
-  static const Color warning = Color(0xFFF59E0B); // warning500
-
-  // Error (kept close – red)
-  static const Color error = Color(0xFFEF4444); // error500
-
-  // Purple tint (replaces #8B5CF6 timeline)
-  static const Color violet = Color(0xFF8B5CF6); // info300
-
-  // Text
-  static const Color textPrimary = Color(0xFF1E3A8A); // primary900
-  static const Color textBody = Color(0xFF4D4D4D); // neutral700
-  static const Color textMuted = Color(0xFF757575); // grey600
-  static const Color textFaint = Color(0xFF9E9E9E); // grey500
-
-  // Hero card (dark gradient header keeps white text readable)
-  static const Color heroGradientStart = Color(0xFF1E3A8A); // primary900
-  static const Color heroGradientEnd = Color(0xFF2C5AA0); // deep blue mid
-
-  // Border tints
-  static Color borderBlue = const Color(0xFF4A90E2).withOpacity(0.15);
-}
-
 class ProjectDetailsScreen extends StatefulWidget {
   final int projectId;
 
@@ -62,7 +23,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _AppColors.pageBg,
+      backgroundColor: Color(0xFFF0F8FF),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -72,13 +33,16 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
           child: Container(
             margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              // Solid white with subtle shadow so it pops over any background
-              color: Colors.white,
+              color: context.customAppColors.grey0,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: _AppColors.borderBlue),
+              border: Border.all(
+                color: Color(0xFF4A90E2).withValues(alpha: .15),
+              ),
               boxShadow: [
                 BoxShadow(
-                  color: _AppColors.primary.withOpacity(0.12),
+                  color: context.customAppColors.primary600.withValues(
+                    alpha: .12,
+                  ),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -87,7 +51,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
             child: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios_new_rounded,
-                color: _AppColors.primaryDeep,
+                color: context.customAppColors.primary900,
                 size: 18,
               ),
               onPressed: () => Navigator.pop(context),
@@ -99,7 +63,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
           child: Text(
             'Project Details',
             style: TextStyle(
-              color: _AppColors.primaryDeep,
+              color: context.customAppColors.primary900,
               fontSize: 18,
               fontWeight: FontWeight.w600,
               letterSpacing: 0.3,
@@ -127,13 +91,18 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(_AppColors.primary),
+            valueColor: AlwaysStoppedAnimation<Color>(
+              context.customAppColors.primary600,
+            ),
             strokeWidth: 2.5,
           ),
           const SizedBox(height: 16),
           Text(
             'Loading project...',
-            style: TextStyle(color: _AppColors.textMuted, fontSize: 14),
+            style: TextStyle(
+              color: context.customAppColors.grey600,
+              fontSize: 14,
+            ),
           ),
         ],
       ),
@@ -149,19 +118,22 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: _AppColors.error.withOpacity(0.08),
+                color: context.customAppColors.error500.withValues(alpha: .08),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.error_outline_rounded,
-                color: _AppColors.error,
+                color: context.customAppColors.error500,
                 size: 48,
               ),
             ),
             const SizedBox(height: 16),
             Text(
               message,
-              style: TextStyle(color: _AppColors.textBody, fontSize: 15),
+              style: TextStyle(
+                color: context.customAppColors.neutral700,
+                fontSize: 15,
+              ),
               textAlign: TextAlign.center,
             ),
           ],
@@ -233,7 +205,7 @@ class _BackgroundDecoration extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  _AppColors.primary.withValues(alpha: 0.18),
+                  context.customAppColors.primary600.withValues(alpha: 0.18),
                   Colors.transparent,
                 ],
               ),
@@ -251,7 +223,7 @@ class _BackgroundDecoration extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  _AppColors.secondary.withValues(alpha: 0.14),
+                  context.customAppColors.primary400.withValues(alpha: 0.14),
                   Colors.transparent,
                 ],
               ),
@@ -270,14 +242,14 @@ class _HeroHeader extends StatelessWidget {
 
   const _HeroHeader({required this.project});
 
-  Color _statusColor(String status) {
+  Color _statusColor(String status, BuildContext context) {
     switch (status.toLowerCase()) {
       case 'active':
-        return _AppColors.primaryLight;
+        return context.customAppColors.primary500;
       case 'completed':
-        return _AppColors.primary;
+        return context.customAppColors.primary600;
       case 'pending':
-        return _AppColors.warning;
+        return context.customAppColors.warning500;
       default:
         return const Color(0xFF9E9E9E); // grey500
     }
@@ -285,7 +257,7 @@ class _HeroHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final statusColor = _statusColor(project.status);
+    final statusColor = _statusColor(project.status, context);
 
     return FadeInDown(
       duration: const Duration(milliseconds: 600),
@@ -294,16 +266,16 @@ class _HeroHeader extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
           // Deep blue gradient hero card – white text stays readable
-          gradient: const LinearGradient(
+          gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [_AppColors.heroGradientStart, _AppColors.heroGradientEnd],
+            colors: [context.customAppColors.primary900, Color(0xFF2C5AA0)],
           ),
           borderRadius: BorderRadius.circular(24),
           border: Border.all(color: Colors.white.withValues(alpha: 0.10)),
           boxShadow: [
             BoxShadow(
-              color: _AppColors.primaryDeep.withValues(alpha: 0.28),
+              color: context.customAppColors.primary900.withValues(alpha: 0.28),
               blurRadius: 24,
               offset: const Offset(0, 8),
             ),
@@ -322,8 +294,11 @@ class _HeroHeader extends StatelessWidget {
                     height: 56,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: const LinearGradient(
-                        colors: [_AppColors.primary, _AppColors.primaryDeep],
+                      gradient: LinearGradient(
+                        colors: [
+                          context.customAppColors.primary600,
+                          context.customAppColors.primary900,
+                        ],
                       ),
                       border: Border.all(
                         color: Colors.white.withValues(alpha: .3),
@@ -516,7 +491,7 @@ class _StatsRow extends StatelessWidget {
               icon: Icons.attach_money_rounded,
               label: 'Funding Goal',
               value: '\$${_formatAmount(project.fundingGoal)}',
-              color: _AppColors.primary,
+              color: context.customAppColors.primary600,
             ),
           ),
         ),
@@ -528,7 +503,7 @@ class _StatsRow extends StatelessWidget {
               icon: Icons.calendar_today_rounded,
               label: 'Duration',
               value: '$duration days',
-              color: _AppColors.warning,
+              color: context.customAppColors.warning500,
             ),
           ),
         ),
@@ -540,7 +515,7 @@ class _StatsRow extends StatelessWidget {
               icon: Icons.rocket_launch_rounded,
               label: 'Status',
               value: project.status,
-              color: _AppColors.accent,
+              color: context.customAppColors.primary800,
             ),
           ),
         ),
@@ -573,7 +548,7 @@ class _StatCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: _AppColors.cardBg,
+        color: context.customAppColors.grey0,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: color.withValues(alpha: 0.14)),
         boxShadow: [
@@ -599,7 +574,7 @@ class _StatCard extends StatelessWidget {
           Text(
             value,
             style: TextStyle(
-              color: _AppColors.textPrimary,
+              color: context.customAppColors.primary900,
               fontSize: 14,
               fontWeight: FontWeight.w700,
             ),
@@ -609,7 +584,10 @@ class _StatCard extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             label,
-            style: TextStyle(color: _AppColors.textFaint, fontSize: 11),
+            style: TextStyle(
+              color: context.customAppColors.grey500,
+              fontSize: 11,
+            ),
           ),
         ],
       ),
@@ -639,22 +617,21 @@ class _AnimatedSection extends StatelessWidget {
 
 class _GlassCard extends StatelessWidget {
   final Widget child;
-  final EdgeInsets? padding;
 
-  const _GlassCard({required this.child, this.padding});
+  const _GlassCard({required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: padding ?? const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: _AppColors.cardBg,
+        color: context.customAppColors.grey0,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: _AppColors.borderBlue),
+        border: Border.all(color: Color(0xFF4A90E2).withValues(alpha: .15)),
         boxShadow: [
           BoxShadow(
-            color: _AppColors.primary.withValues(alpha: 0.06),
+            color: context.customAppColors.primary600.withValues(alpha: 0.06),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -694,7 +671,7 @@ class _SectionTitle extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            color: _AppColors.textPrimary,
+            color: context.customAppColors.primary900,
             fontSize: 15,
             fontWeight: FontWeight.w600,
             letterSpacing: 0.2,
@@ -731,7 +708,7 @@ class _DescriptionSectionState extends State<_DescriptionSection> {
           _SectionTitle(
             title: 'About the Project',
             icon: Icons.info_outline_rounded,
-            color: _AppColors.accent,
+            color: context.customAppColors.primary800,
           ),
           const SizedBox(height: 14),
           AnimatedCrossFade(
@@ -744,7 +721,7 @@ class _DescriptionSectionState extends State<_DescriptionSection> {
               maxLines: 4,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: _AppColors.textBody,
+                color: context.customAppColors.neutral700,
                 fontSize: 14,
                 height: 1.6,
               ),
@@ -752,7 +729,7 @@ class _DescriptionSectionState extends State<_DescriptionSection> {
             secondChild: Text(
               text,
               style: TextStyle(
-                color: _AppColors.textBody,
+                color: context.customAppColors.neutral700,
                 fontSize: 14,
                 height: 1.6,
               ),
@@ -765,7 +742,7 @@ class _DescriptionSectionState extends State<_DescriptionSection> {
               child: Text(
                 _expanded ? 'Show less' : 'Read more',
                 style: TextStyle(
-                  color: _AppColors.primary,
+                  color: context.customAppColors.primary600,
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                 ),
@@ -794,7 +771,7 @@ class _FundingSection extends StatelessWidget {
           _SectionTitle(
             title: 'Funding',
             icon: Icons.account_balance_wallet_outlined,
-            color: _AppColors.primary,
+            color: context.customAppColors.primary600,
           ),
           const SizedBox(height: 18),
           // Funding Goal Display
@@ -803,18 +780,24 @@ class _FundingSection extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  _AppColors.primary.withValues(alpha: 0.08),
-                  _AppColors.secondary.withValues(alpha: 0.04),
+                  context.customAppColors.primary600.withValues(alpha: 0.08),
+                  context.customAppColors.primary400.withValues(alpha: 0.04),
                 ],
               ),
               borderRadius: BorderRadius.circular(14),
               border: Border.all(
-                color: _AppColors.primary.withValues(alpha: .18),
+                color: context.customAppColors.primary600.withValues(
+                  alpha: .18,
+                ),
               ),
             ),
             child: Row(
               children: [
-                Icon(Icons.flag_rounded, color: _AppColors.primary, size: 20),
+                Icon(
+                  Icons.flag_rounded,
+                  color: context.customAppColors.primary600,
+                  size: 20,
+                ),
                 const SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -822,14 +805,14 @@ class _FundingSection extends StatelessWidget {
                     Text(
                       'Funding Goal',
                       style: TextStyle(
-                        color: _AppColors.textFaint,
+                        color: context.customAppColors.grey500,
                         fontSize: 12,
                       ),
                     ),
                     Text(
                       '\$${project.fundingGoal.toStringAsFixed(0)}',
                       style: TextStyle(
-                        color: _AppColors.primary,
+                        color: context.customAppColors.primary600,
                         fontSize: 22,
                         fontWeight: FontWeight.w700,
                         letterSpacing: -0.5,
@@ -844,7 +827,7 @@ class _FundingSection extends StatelessWidget {
           Text(
             'Use of Funds',
             style: TextStyle(
-              color: _AppColors.textFaint,
+              color: context.customAppColors.grey500,
               fontSize: 12,
               letterSpacing: 0.5,
             ),
@@ -853,7 +836,7 @@ class _FundingSection extends StatelessWidget {
           Text(
             project.useOfFunds,
             style: TextStyle(
-              color: _AppColors.textBody,
+              color: context.customAppColors.neutral700,
               fontSize: 14,
               height: 1.55,
             ),
@@ -880,27 +863,27 @@ class _TimelineSection extends StatelessWidget {
           _SectionTitle(
             title: 'Timeline',
             icon: Icons.timeline_rounded,
-            color: _AppColors.warning,
+            color: context.customAppColors.warning500,
           ),
           const SizedBox(height: 18),
           _TimelineTile(
             icon: Icons.play_circle_outline_rounded,
             label: 'Start Date',
             date: project.startDate,
-            color: _AppColors.primaryLight, // bright blue
+            color: context.customAppColors.primary500, // bright blue
             isFirst: true,
           ),
           _TimelineTile(
             icon: Icons.stop_circle_outlined,
             label: 'End Date',
             date: project.endDate,
-            color: _AppColors.error, // red
+            color: context.customAppColors.error500, // red
           ),
           _TimelineTile(
             icon: Icons.add_circle_outline_rounded,
             label: 'Created At',
             date: project.createdAt,
-            color: _AppColors.violet, // soft purple
+            color: context.customAppColors.info300, // soft purple
             isLast: true,
           ),
         ],
@@ -960,7 +943,9 @@ class _TimelineTile extends StatelessWidget {
                     child: Center(
                       child: Container(
                         width: 1.5,
-                        color: _AppColors.primary.withOpacity(0.18),
+                        color: context.customAppColors.primary600.withValues(
+                          alpha: .18,
+                        ),
                       ),
                     ),
                   ),
@@ -968,10 +953,10 @@ class _TimelineTile extends StatelessWidget {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.10),
+                    color: color.withValues(alpha: .10),
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: color.withOpacity(0.30),
+                      color: color.withValues(alpha: .30),
                       width: 1.5,
                     ),
                   ),
@@ -983,7 +968,9 @@ class _TimelineTile extends StatelessWidget {
                     child: Center(
                       child: Container(
                         width: 1.5,
-                        color: _AppColors.primary.withOpacity(0.18),
+                        color: context.customAppColors.primary600.withValues(
+                          alpha: 0.18,
+                        ),
                       ),
                     ),
                   ),
@@ -999,12 +986,15 @@ class _TimelineTile extends StatelessWidget {
                 children: [
                   Text(
                     label,
-                    style: TextStyle(color: _AppColors.textMuted, fontSize: 13),
+                    style: TextStyle(
+                      color: context.customAppColors.grey600,
+                      fontSize: 13,
+                    ),
                   ),
                   Text(
                     _formatDate(date.toLocal()),
                     style: TextStyle(
-                      color: _AppColors.textPrimary,
+                      color: context.customAppColors.primary900,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),
