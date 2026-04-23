@@ -76,4 +76,7 @@ abstract class ApiClient {
 
   @GET(ApiConstants.getAllProjects)
   Future<List<ProjectModel>> getAllProjects();
+
+  @GET(ApiConstants.getProjectDetails)
+  Future<ProjectModel> getProjectDetails(@Path("id") int id);
 }

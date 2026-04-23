@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafeeq_app/core/theme/app_colors/custom_app_colors.dart';
-import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
+import 'package:rafeeq_app/core/utils/common_imports.dart';
 import 'package:rafeeq_app/features/founder_projects/data/model/project_model.dart';
-import '../../../../core/theme/app_texts/app_text_styles.dart';
 import 'status_badge.dart';
 import 'progress_bar.dart';
 import 'action_link.dart';
@@ -133,7 +130,11 @@ class ProjectCard extends StatelessWidget {
               ),
               ActionLink(
                 label: project.status == 'Funded' ? 'Manage' : 'Details',
-                onTap: () {},
+                onTap: () {
+                  GoRouter.of(
+                    context,
+                  ).push(Routes.projectDetailsScreen, extra: project.id);
+                },
               ),
             ],
           ),

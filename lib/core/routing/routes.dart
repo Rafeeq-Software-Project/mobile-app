@@ -21,4 +21,5 @@ class Routes {
   static const String resetPasswordScreen = '/resetPasswordScreen';
   static const String updateInvestorProfile = '/updateInvestorProfile';
   static const String updateFounderProfile = '/updateFounderProfile';
+  static const String projectDetailsScreen = '/projectDetailsScreen';
 }

@@ -3,10 +3,13 @@ import 'package:rafeeq_app/features/founder_account/data/models/founder_profile.
 import 'package:rafeeq_app/features/founder_account/presentation/logic/get_founder_data/founder_profile_cubit.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/logic/update_founder_profile/update_founder_profile_cubit.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/screens/update_founder_profile_screen.dart';
+import 'package:rafeeq_app/features/founder_projects/presentation/logic/project_details/project_details_cubit.dart';
+import 'package:rafeeq_app/features/founder_projects/presentation/screens/project_details_screen.dart';
 import 'package:rafeeq_app/features/investor_account/data/models/investor_profile_model.dart';
 import 'package:rafeeq_app/features/investor_account/presentation/logic/my_investor_profile/my_investor_profile_cubit.dart';
 import 'package:rafeeq_app/features/investor_account/presentation/logic/update_investor_profile/update_investor_profile_cubit.dart';
 import 'package:rafeeq_app/features/investor_account/presentation/screens/update_investor_profile_screen.dart';
+
 import 'package:rafeeq_app/features/onboarding/presentation/screens/splash_screen.dart';
 import 'package:rafeeq_app/features/onboarding/presentation/screens/welcome_screen.dart';
 
@@ -173,6 +176,16 @@ abstract class AppRouter {
                 BlocProvider.value(value: cubit),
               ],
               child: UpdateFounderProfileScreen(profile: profile),
+            );
+          },
+        ),
+        GoRoute(
+          path: Routes.projectDetailsScreen,
+          builder: (context, state) {
+            final projectId = state.extra as int;
+            return BlocProvider(
+              create: (context) => getIt<ProjectDetailsCubit>(),
+              child: ProjectDetailsScreen(projectId: projectId),
             );
           },
         ),
