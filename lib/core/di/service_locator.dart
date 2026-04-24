@@ -1,7 +1,9 @@
 import 'package:rafeeq_app/core/utils/common_imports.dart';
 import 'package:rafeeq_app/features/create_project/data/repos/create_project_repo.dart';
+import 'package:rafeeq_app/features/create_project/data/repos/delete_project_repo.dart';
 import 'package:rafeeq_app/features/create_project/data/repos/update_project_repo.dart';
 import 'package:rafeeq_app/features/create_project/presentation/logic/create_project/create_project_cubit.dart';
+import 'package:rafeeq_app/features/create_project/presentation/logic/delete_project/delete_project_cubit.dart';
 import 'package:rafeeq_app/features/create_project/presentation/logic/update_project/update_project_cubit.dart';
 import 'package:rafeeq_app/features/founder_account/data/repos/get_my_founder_profile_repo.dart';
 import 'package:rafeeq_app/features/founder_account/data/repos/update_founder_profile_repo.dart';
@@ -150,5 +152,13 @@ Future<void> initServiceLocator() async {
 
   getIt.registerFactory<UpdateProjectCubit>(
     () => UpdateProjectCubit(getIt<UpdateProjectRepo>()),
+  );
+
+  getIt.registerLazySingleton<DeleteProjectRepo>(
+    () => DeleteProjectRepo(getIt<ApiClient>(), getIt<ApiHandler>()),
+  );
+
+  getIt.registerFactory<DeleteProjectCubit>(
+    () => DeleteProjectCubit(getIt<DeleteProjectRepo>()),
   );
 }

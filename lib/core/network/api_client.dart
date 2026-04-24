@@ -13,6 +13,7 @@ import 'package:rafeeq_app/features/auth/sign_up/data/models/refresh_token_respo
 import 'package:rafeeq_app/features/auth/sign_up/data/models/register_request_model.dart';
 import 'package:rafeeq_app/features/auth/sign_up/data/models/register_response_model.dart';
 import 'package:rafeeq_app/features/create_project/data/models/create_project_request.dart';
+import 'package:rafeeq_app/features/create_project/data/models/delete_project_response.dart';
 import 'package:rafeeq_app/features/create_project/data/models/update_project_response.dart';
 import 'package:rafeeq_app/features/founder_account/data/models/founder_profile.dart';
 import 'package:rafeeq_app/features/founder_account/data/models/update_founder_profile/update_founder_profile_request.dart';
@@ -89,5 +90,10 @@ abstract class ApiClient {
   Future<UpdateProjectResponse> updateProject(
     @Path("project_id") int projectId,
     @Body() CreateProjectRequest request,
+  );
+
+  @DELETE(ApiConstants.deleteProject)
+  Future<DeleteProjectResponse> deleteProject(
+    @Path("project_id") int projectId,
   );
 }

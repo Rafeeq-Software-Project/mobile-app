@@ -1,4 +1,5 @@
 import 'package:rafeeq_app/core/utils/common_imports.dart';
+import 'package:rafeeq_app/features/create_project/presentation/logic/delete_project/delete_project_cubit.dart';
 import 'package:rafeeq_app/features/founder_account/data/models/founder_profile.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/logic/get_founder_data/founder_profile_cubit.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/logic/update_founder_profile/update_founder_profile_cubit.dart';
@@ -183,8 +184,11 @@ abstract class AppRouter {
           path: Routes.projectDetailsScreen,
           builder: (context, state) {
             final projectId = state.extra as int;
-            return BlocProvider(
-              create: (context) => getIt<ProjectDetailsCubit>(),
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => getIt<ProjectDetailsCubit>()),
+                BlocProvider(create: (context) => getIt<DeleteProjectCubit>()),
+              ],
               child: ProjectDetailsScreen(projectId: projectId),
             );
           },
