@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafeeq_app/core/theme/app_texts/app_text_styles.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
@@ -23,6 +24,9 @@ class AppTextFormField extends StatelessWidget {
   final bool isUnderline;
   final TextInputType? keyboardType;
   final TextAlign? textAlign;
+  final int? maxLength;
+  final TextInputAction? textInputAction;
+  final List<TextInputFormatter>? inputFormatters;
 
   const AppTextFormField({
     super.key,
@@ -45,6 +49,9 @@ class AppTextFormField extends StatelessWidget {
     this.isUnderline = false,
     this.keyboardType,
     this.textAlign,
+    this.maxLength,
+    this.textInputAction,
+    this.inputFormatters,
   });
 
   @override
@@ -73,9 +80,13 @@ class AppTextFormField extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
+              inputFormatters: inputFormatters,
+              textInputAction: textInputAction,
+              maxLength: maxLength,
+
               keyboardType: keyboardType,
               textAlign: textAlign ?? TextAlign.start,
-              maxLines: 1,
+              maxLines: maxLines ?? 1,
               controller: controller,
               onChanged: (value) {
                 state.didChange(value);

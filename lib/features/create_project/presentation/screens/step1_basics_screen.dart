@@ -1,12 +1,12 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rafeeq_app/core/common/widgets/custom_text_form_field.dart';
 import 'package:rafeeq_app/core/theme/app_texts/app_text_styles.dart';
 import 'package:rafeeq_app/core/theme/theme_manager/theme_extensions.dart';
 import 'package:rafeeq_app/features/create_project/data/models/project_data_model.dart';
 import '../widgets/step_progress_bar.dart';
-import '../widgets/stage_selection_card.dart';
 import '../widgets/primary_button.dart';
-import '../widgets/image_upload_card.dart';
 
 class Step1BasicsScreen extends StatefulWidget {
   final ProjectDataModel projectData;
@@ -26,48 +26,23 @@ class _Step1BasicsScreenState extends State<Step1BasicsScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   String? _selectedCategory;
-  String? _selectedStage;
 
   final List<Map<String, dynamic>> _categories = [
-    {'label': 'Technology', 'icon': Icons.computer},
-    {'label': 'Healthcare', 'icon': Icons.medical_services},
-    {'label': 'Education', 'icon': Icons.school},
-    {'label': 'Agriculture', 'icon': Icons.eco},
-    {'label': 'Finance', 'icon': Icons.account_balance},
-    {'label': 'Other', 'icon': Icons.category},
-  ];
-
-  final List<Map<String, dynamic>> _stages = [
-    {
-      'title': 'Idea',
-      'subtitle': 'Just a concept, looking for validation',
-      'icon': Icons.lightbulb_outline,
-      'color': Color(0xFFFFA726),
-    },
-    {
-      'title': 'MVP',
-      'subtitle': 'Prototype ready, early testing',
-      'icon': Icons.construction,
-      'color': Color(0xFF42A5F5),
-    },
-    {
-      'title': 'Scaling',
-      'subtitle': 'Revenue generating, looking to grow',
-      'icon': Icons.trending_up,
-      'color': Color(0xFF66BB6A),
-    },
+    {'label': 'Technology', 'icon': Icons.computer_rounded},
+    {'label': 'Healthcare', 'icon': Icons.medical_services_rounded},
+    {'label': 'Education', 'icon': Icons.school_rounded},
+    {'label': 'Agriculture', 'icon': Icons.eco_rounded},
+    {'label': 'Finance', 'icon': Icons.account_balance_rounded},
+    {'label': 'Other', 'icon': Icons.category_rounded},
   ];
 
   @override
   void initState() {
     super.initState();
-    _nameController.text = widget.projectData.projectName;
+    _nameController.text = widget.projectData.name;
     _selectedCategory = widget.projectData.category.isEmpty
         ? null
         : widget.projectData.category;
-    _selectedStage = widget.projectData.currentStage.isEmpty
-        ? null
-        : widget.projectData.currentStage;
   }
 
   @override
@@ -77,18 +52,19 @@ class _Step1BasicsScreenState extends State<Step1BasicsScreen> {
   }
 
   void _handleContinue() {
-    if (_formKey.currentState!.validate() &&
-        _selectedCategory != null &&
-        _selectedStage != null) {
-      widget.projectData.projectName = _nameController.text;
+    if (_formKey.currentState!.validate() && _selectedCategory != null) {
+      widget.projectData.name = _nameController.text.trim();
       widget.projectData.category = _selectedCategory!;
-      widget.projectData.currentStage = _selectedStage!;
       widget.onNext();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Please fill all required fields'),
           backgroundColor: context.customAppColors.error500,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
         ),
       );
     }
@@ -104,220 +80,252 @@ class _Step1BasicsScreenState extends State<Step1BasicsScreen> {
         backgroundColor: colors.grey0,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: colors.grey600),
+          icon: Icon(Icons.close_rounded, color: colors.grey600),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          'Create Project',
-          style: AppTextStyles.font18Bold.copyWith(color: colors.grey800),
+        title: FadeInDown(
+          duration: const Duration(milliseconds: 400),
+          child: Text(
+            'Create Project',
+            style: AppTextStyles.font18Bold.copyWith(color: colors.grey800),
+          ),
         ),
         centerTitle: true,
       ),
       body: Column(
         children: [
-          // Progress Bar
-          StepProgressBar(currentStep: 1, totalSteps: 4),
-
-          // Content
+          FadeInDown(
+            duration: const Duration(milliseconds: 500),
+            child: StepProgressBar(currentStep: 1, totalSteps: 4),
+          ),
           Expanded(
             child: SingleChildScrollView(
-              padding: EdgeInsets.all(20.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Cover Image
-                    ImageUploadCard(
-                      imagePath: widget.projectData.coverImagePath,
-                      onImageSelected: (path) {
-                        setState(() {
-                          widget.projectData.coverImagePath = path;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 24.h),
+                    SizedBox(height: 28.h),
 
-                    // Section Title
-                    Text(
-                      'Let\'s start with the basics',
-                      style: AppTextStyles.font24Bold.copyWith(
-                        color: colors.grey900,
-                      ),
-                    ),
-                    SizedBox(height: 8.h),
-                    Text(
-                      'Tell us a little about what you are building to help us find the right matches.',
-                      style: AppTextStyles.font14Regular.copyWith(
-                        color: colors.grey600,
-                        height: 1.4,
-                      ),
-                    ),
-                    SizedBox(height: 24.h),
-
-                    // Project Name
-                    Text(
-                      'Project Name',
-                      style: AppTextStyles.font14SemiBold.copyWith(
-                        color: colors.grey900,
-                      ),
-                    ),
-                    SizedBox(height: 8.h),
-                    TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        hintText: 'e.g. RetailAI',
-                        hintStyle: AppTextStyles.font14Regular.copyWith(
-                          color: colors.grey400,
+                    // Header
+                    FadeInDown(
+                      duration: const Duration(milliseconds: 500),
+                      delay: const Duration(milliseconds: 100),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.w,
+                          vertical: 6.h,
                         ),
-                        filled: true,
-                        fillColor: colors.grey50,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: BorderSide(color: colors.grey300),
+                        decoration: BoxDecoration(
+                          color: colors.primary700.withValues(alpha: .1),
+                          borderRadius: BorderRadius.circular(20.r),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: BorderSide(color: colors.grey300),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: BorderSide(
-                            color: colors.primary700,
-                            width: 2,
+                        child: Text(
+                          'Step 1 of 4',
+                          style: AppTextStyles.font12SemiBold.copyWith(
+                            color: colors.primary800,
                           ),
                         ),
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 14.h,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a project name';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 24.h),
-
-                    // Industry/Category
-                    Text(
-                      'Industry/Category',
-                      style: AppTextStyles.font14SemiBold.copyWith(
-                        color: colors.grey900,
-                      ),
-                    ),
-                    SizedBox(height: 8.h),
-                    DropdownButtonFormField<String>(
-                      value: _selectedCategory,
-                      decoration: InputDecoration(
-                        hintText: 'Select a category',
-                        hintStyle: AppTextStyles.font14Regular.copyWith(
-                          color: colors.grey400,
-                        ),
-                        filled: true,
-                        fillColor: colors.grey50,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: BorderSide(color: colors.grey300),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: BorderSide(color: colors.grey300),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          borderSide: BorderSide(
-                            color: colors.primary700,
-                            width: 2,
-                          ),
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 14.h,
-                        ),
-                      ),
-                      items: _categories.map((category) {
-                        return DropdownMenuItem<String>(
-                          value: category['label'],
-                          child: Row(
-                            children: [
-                              Icon(
-                                category['icon'],
-                                size: 20.sp,
-                                color: colors.grey600,
-                              ),
-                              SizedBox(width: 12.w),
-                              Text(category['label']),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedCategory = value;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null) {
-                          return 'Please select a category';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 24.h),
-
-                    // Current Stage
-                    Text(
-                      'Current Stage',
-                      style: AppTextStyles.font14SemiBold.copyWith(
-                        color: colors.grey900,
                       ),
                     ),
                     SizedBox(height: 12.h),
-                    ..._stages.map((stage) {
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: 12.h),
-                        child: StageSelectionCard(
-                          title: stage['title'],
-                          subtitle: stage['subtitle'],
-                          icon: stage['icon'],
-                          color: stage['color'],
-                          isSelected: _selectedStage == stage['title'],
-                          onTap: () {
-                            setState(() {
-                              _selectedStage = stage['title'];
-                            });
-                          },
+                    FadeInDown(
+                      duration: const Duration(milliseconds: 500),
+                      delay: const Duration(milliseconds: 150),
+                      child: Text(
+                        'Let\'s start with\nthe basics',
+                        style: AppTextStyles.font24Bold.copyWith(
+                          color: colors.grey900,
+                          height: 1.2,
                         ),
-                      );
-                    }),
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+                    FadeInDown(
+                      duration: const Duration(milliseconds: 500),
+                      delay: const Duration(milliseconds: 200),
+                      child: Text(
+                        'Tell us a little about what you\'re building.',
+                        style: AppTextStyles.font14Regular.copyWith(
+                          color: colors.grey600,
+                          height: 1.4,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 32.h),
+
+                    // Project Name
+                    FadeInLeft(
+                      duration: const Duration(milliseconds: 500),
+                      delay: const Duration(milliseconds: 250),
+                      child: Text(
+                        'Project Name',
+                        style: AppTextStyles.font14SemiBold.copyWith(
+                          color: colors.grey900,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+                    FadeInLeft(
+                      duration: const Duration(milliseconds: 500),
+                      delay: const Duration(milliseconds: 300),
+                      child: AppTextFormField(
+                        controller: _nameController,
+                        hintText: 'Enter your project name',
+                        validator: (v) =>
+                            (v == null || v.isEmpty) ? 'Required' : null,
+                      ),
+                    ),
+                    SizedBox(height: 28.h),
+
+                    // Category
+                    FadeInLeft(
+                      duration: const Duration(milliseconds: 500),
+                      delay: const Duration(milliseconds: 350),
+                      child: Text(
+                        'Industry / Category',
+                        style: AppTextStyles.font14SemiBold.copyWith(
+                          color: colors.grey900,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 12.h),
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 12.w,
+                        mainAxisSpacing: 12.h,
+                        childAspectRatio: 2.4,
+                      ),
+                      itemCount: _categories.length,
+                      itemBuilder: (context, index) {
+                        final cat = _categories[index];
+                        final isSelected = _selectedCategory == cat['label'];
+
+                        return FadeInUp(
+                          duration: const Duration(milliseconds: 400),
+                          delay: Duration(milliseconds: 350 + index * 60),
+                          child: _CategoryChip(
+                            label: cat['label'],
+                            icon: cat['icon'],
+                            isSelected: isSelected,
+                            onTap: () => setState(
+                              () => _selectedCategory = cat['label'],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 32.h),
                   ],
                 ),
               ),
             ),
           ),
 
-          // Bottom Button
-          Container(
-            padding: EdgeInsets.all(20.w),
-            decoration: BoxDecoration(
-              color: colors.grey0,
-              boxShadow: [
-                BoxShadow(
-                  color: colors.grey300.withValues(alpha: .3),
-                  blurRadius: 8,
-                  offset: const Offset(0, -2),
-                ),
-              ],
-            ),
-            child: PrimaryButton(
-              label: 'Continue to Description',
-              onPressed: _handleContinue,
+          // Bottom
+          FadeInUp(
+            duration: const Duration(milliseconds: 500),
+            delay: const Duration(milliseconds: 400),
+            child: Container(
+              padding: EdgeInsets.all(20.w),
+              decoration: BoxDecoration(
+                color: colors.grey0,
+                boxShadow: [
+                  BoxShadow(
+                    color: colors.grey300.withValues(alpha: .3),
+                    blurRadius: 12,
+                    offset: const Offset(0, -4),
+                  ),
+                ],
+              ),
+              child: PrimaryButton(
+                label: 'Continue',
+                icon: Icons.arrow_forward_rounded,
+                onPressed: _handleContinue,
+              ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _CategoryChip extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _CategoryChip({
+    required this.label,
+    required this.icon,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.customAppColors;
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeInOut,
+      decoration: BoxDecoration(
+        color: isSelected
+            ? colors.primary800.withValues(alpha: .08)
+            : colors.grey50,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(
+          color: isSelected ? colors.primary800 : colors.grey200,
+          width: isSelected ? 2 : 1,
+        ),
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12.r),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+          child: Row(
+            children: [
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                padding: EdgeInsets.all(6.w),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? colors.primary800.withValues(alpha: .15)
+                      : colors.grey100,
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+                child: Icon(
+                  icon,
+                  size: 16.sp,
+                  color: isSelected ? colors.primary800 : colors.grey500,
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Expanded(
+                child: Text(
+                  label,
+                  style: AppTextStyles.font12SemiBold.copyWith(
+                    color: isSelected ? colors.primary800 : colors.grey700,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              if (isSelected)
+                Icon(
+                  Icons.check_circle_rounded,
+                  size: 16.sp,
+                  color: colors.primary800,
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }

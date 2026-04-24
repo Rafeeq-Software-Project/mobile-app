@@ -1,4 +1,8 @@
 import 'package:rafeeq_app/core/utils/common_imports.dart';
+import 'package:rafeeq_app/features/create_project/data/repos/create_project_repo.dart';
+import 'package:rafeeq_app/features/create_project/data/repos/update_project_repo.dart';
+import 'package:rafeeq_app/features/create_project/presentation/logic/create_project/create_project_cubit.dart';
+import 'package:rafeeq_app/features/create_project/presentation/logic/update_project/update_project_cubit.dart';
 import 'package:rafeeq_app/features/founder_account/data/repos/get_my_founder_profile_repo.dart';
 import 'package:rafeeq_app/features/founder_account/data/repos/update_founder_profile_repo.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/logic/get_founder_data/founder_profile_cubit.dart';
@@ -130,5 +134,21 @@ Future<void> initServiceLocator() async {
   );
   getIt.registerFactory<ProjectDetailsCubit>(
     () => ProjectDetailsCubit(getIt<ProjectDetailsRepo>()),
+  );
+
+  getIt.registerLazySingleton<CreateProjectRepo>(
+    () => CreateProjectRepo(getIt<ApiClient>(), getIt<ApiHandler>()),
+  );
+
+  getIt.registerFactory<CreateProjectCubit>(
+    () => CreateProjectCubit(getIt<CreateProjectRepo>()),
+  );
+
+  getIt.registerLazySingleton<UpdateProjectRepo>(
+    () => UpdateProjectRepo(getIt<ApiClient>(), getIt<ApiHandler>()),
+  );
+
+  getIt.registerFactory<UpdateProjectCubit>(
+    () => UpdateProjectCubit(getIt<UpdateProjectRepo>()),
   );
 }

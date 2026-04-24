@@ -19,4 +19,6 @@ class ApiConstants {
   static const String updateFounderProfile = '/founders/me';
   static const String getAllProjects = '/founder/projects';
   static const String getProjectDetails = '/founder/projects/{id}';
+  static const String createProject = '/founder/projects';
+  static const String updateProject = '/founder/projects/{project_id}';
 }

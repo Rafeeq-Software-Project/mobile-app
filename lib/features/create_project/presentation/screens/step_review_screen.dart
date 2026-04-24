@@ -61,7 +61,6 @@ class Step4ReviewScreen extends StatelessWidget {
       },
       builder: (context, state) {
         final isLoading = state == const CreateProjectState.loading();
-
         return Scaffold(
           backgroundColor: colors.grey0,
           appBar: AppBar(
@@ -111,7 +110,7 @@ class Step4ReviewScreen extends StatelessWidget {
                           child: Text(
                             'Step 4 of 4',
                             style: AppTextStyles.font12SemiBold.copyWith(
-                              color: colors.primary800,
+                              color: colors.primary700,
                             ),
                           ),
                         ),
@@ -358,7 +357,7 @@ class _ReviewItem extends StatelessWidget {
           child: Text(
             value.isEmpty ? '—' : value,
             style: highlight
-                ? AppTextStyles.font16Bold.copyWith(color: colors.primary700)
+                ? AppTextStyles.font16Bold.copyWith(color: colors.primary800)
                 : AppTextStyles.font14SemiBold.copyWith(
                     color: colors.grey800,
                     height: 1.4,
