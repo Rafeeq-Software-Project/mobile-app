@@ -9,6 +9,7 @@ import 'package:rafeeq_app/features/founder_projects/presentation/widgets/hero_h
 import 'package:rafeeq_app/features/founder_projects/presentation/widgets/stats_row.dart';
 import 'package:rafeeq_app/features/founder_projects/presentation/widgets/timeline_section.dart';
 import '../widgets/background_decoration.dart';
+import 'update_project_screen.dart';
 
 class ProjectDetailsScreen extends StatefulWidget {
   final int projectId;
@@ -24,6 +25,62 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
   void initState() {
     super.initState();
     context.read<ProjectDetailsCubit>().getProject(widget.projectId);
+  }
+
+  void _onEditPressed(ProjectModel project) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => UpdateProjectScreen(project: project)),
+    ).then((_) {
+      // Refresh details after returning from edit screen
+      context.read<ProjectDetailsCubit>().getProject(widget.projectId);
+    });
+  }
+
+  void _onDeletePressed(ProjectModel project) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(
+          'Delete Project',
+          style: TextStyle(
+            color: context.customAppColors.primary900,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        content: Text(
+          'Are you sure you want to delete "${project.name}"? This action cannot be undone.',
+          style: TextStyle(
+            color: context.customAppColors.neutral700,
+            fontSize: 14,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: context.customAppColors.grey600),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              // TODO: call your delete cubit/repo here
+              // e.g. context.read<DeleteProjectCubit>().deleteProject(project.id);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: context.customAppColors.error500,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: const Text('Delete', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -42,7 +99,7 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
               color: context.customAppColors.grey0,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: Color(0xFF4A90E2).withValues(alpha: .15),
+                color: const Color(0xFF4A90E2).withValues(alpha: .15),
               ),
               boxShadow: [
                 BoxShadow(
@@ -77,6 +134,82 @@ class _ProjectDetailsScreenState extends State<ProjectDetailsScreen> {
           ),
         ),
         centerTitle: true,
+        actions: [
+          BlocBuilder<ProjectDetailsCubit, ProjectDetailsState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                success: (project) => FadeInRight(
+                  duration: const Duration(milliseconds: 500),
+                  child: Row(
+                    children: [
+                      // Edit Button
+                      Container(
+                        margin: const EdgeInsets.only(right: 4),
+                        decoration: BoxDecoration(
+                          color: context.customAppColors.grey0,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: const Color(
+                              0xFF4A90E2,
+                            ).withValues(alpha: .15),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: context.customAppColors.primary600
+                                  .withValues(alpha: .12),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.edit_outlined,
+                            color: context.customAppColors.primary600,
+                            size: 18,
+                          ),
+                          onPressed: () => _onEditPressed(project),
+                          tooltip: 'Edit Project',
+                        ),
+                      ),
+                      // Delete Button
+                      Container(
+                        margin: const EdgeInsets.only(right: 8),
+                        decoration: BoxDecoration(
+                          color: context.customAppColors.grey0,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: context.customAppColors.error500.withValues(
+                              alpha: .2,
+                            ),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: context.customAppColors.error500
+                                  .withValues(alpha: .1),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.delete_outline_rounded,
+                            color: context.customAppColors.error500,
+                            size: 18,
+                          ),
+                          onPressed: () => _onDeletePressed(project),
+                          tooltip: 'Delete Project',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                orElse: () => const SizedBox(),
+              );
+            },
+          ),
+        ],
       ),
       body: BlocBuilder<ProjectDetailsCubit, ProjectDetailsState>(
         builder: (context, state) {

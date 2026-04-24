@@ -128,7 +128,7 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( ProjectModel project)?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( UpdateProjectResponse project)?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
@@ -152,7 +152,7 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( ProjectModel project)  success,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( UpdateProjectResponse project)  success,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
@@ -175,7 +175,7 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( ProjectModel project)?  success,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( UpdateProjectResponse project)?  success,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
@@ -260,7 +260,7 @@ class _Success implements UpdateProjectState {
   const _Success(this.project);
   
 
- final  ProjectModel project;
+ final  UpdateProjectResponse project;
 
 /// Create a copy of UpdateProjectState
 /// with the given fields replaced by the non-null parameter values.
@@ -292,7 +292,7 @@ abstract mixin class _$SuccessCopyWith<$Res> implements $UpdateProjectStateCopyW
   factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
 @useResult
 $Res call({
- ProjectModel project
+ UpdateProjectResponse project
 });
 
 
@@ -312,7 +312,7 @@ class __$SuccessCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') $Res call({Object? project = null,}) {
   return _then(_Success(
 null == project ? _self.project : project // ignore: cast_nullable_to_non_nullable
-as ProjectModel,
+as UpdateProjectResponse,
   ));
 }
 

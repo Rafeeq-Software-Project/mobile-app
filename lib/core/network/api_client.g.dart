@@ -455,7 +455,7 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<ProjectModel> updateProject(
+  Future<UpdateProjectResponse> updateProject(
     int projectId,
     CreateProjectRequest request,
   ) async {
@@ -464,7 +464,7 @@ class _ApiClient implements ApiClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _options = _setStreamType<ProjectModel>(
+    final _options = _setStreamType<UpdateProjectResponse>(
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -475,9 +475,9 @@ class _ApiClient implements ApiClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ProjectModel _value;
+    late UpdateProjectResponse _value;
     try {
-      _value = ProjectModel.fromJson(_result.data!);
+      _value = UpdateProjectResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
