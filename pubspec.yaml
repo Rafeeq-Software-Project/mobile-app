@@ -37,6 +37,7 @@ dependencies:
   dropdown_button2: ^3.0.0
   flutter:
     sdk: flutter
+  flutter_animate: ^4.5.2
   flutter_bloc: ^9.1.1
   flutter_launcher_icons: ^0.14.4
   flutter_localization: ^0.3.3

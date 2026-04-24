@@ -16,6 +16,7 @@ class ProjectDetailsCubit extends Cubit<ProjectDetailsState> {
 
     result.when(
       success: (project) {
+        if (isClosed) return;
         emit(ProjectDetailsState.success(project));
       },
       failure: (error) {

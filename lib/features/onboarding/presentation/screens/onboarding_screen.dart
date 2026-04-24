@@ -147,7 +147,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 ),
               ),
             ),
-
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -192,9 +191,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                         ),
                       ),
                     ),
-
                     const Spacer(),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

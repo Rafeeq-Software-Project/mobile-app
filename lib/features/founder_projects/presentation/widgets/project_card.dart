@@ -1,237 +1,307 @@
-import 'package:rafeeq_app/core/theme/app_colors/custom_app_colors.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:rafeeq_app/core/utils/common_imports.dart';
 import 'package:rafeeq_app/features/founder_projects/data/model/project_model.dart';
-import 'status_badge.dart';
-import 'progress_bar.dart';
-import 'action_link.dart';
+import 'package:rafeeq_app/features/founder_projects/presentation/screens/my_projects_screen.dart';
+import 'package:rafeeq_app/features/founder_projects/presentation/widgets/progress_section.dart';
 
-class ProjectCard extends StatelessWidget {
+class AnimatedProjectCard extends StatefulWidget {
   final ProjectModel project;
+  final int index;
 
-  const ProjectCard({super.key, required this.project});
+  const AnimatedProjectCard({
+    super.key,
+    required this.project,
+    required this.index,
+  });
+
+  @override
+  State<AnimatedProjectCard> createState() => _AnimatedProjectCardState();
+}
+
+class _AnimatedProjectCardState extends State<AnimatedProjectCard>
+    with SingleTickerProviderStateMixin {
+  bool _hovered = false;
+  bool progressStarted = false;
+  late final AnimationController _progressController;
+  late final Animation<double> _progressAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _progressController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    );
+    _progressAnimation = CurvedAnimation(
+      parent: _progressController,
+      curve: Curves.easeOutCubic,
+    );
+    Future.delayed(Duration(milliseconds: 300 + widget.index * 80), () {
+      if (mounted) {
+        setState(() => progressStarted = true);
+        _progressController.forward();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _progressController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final colors = context.customAppColors;
+    final p = widget.project;
 
-    // if (project.isDraft) {
-    //   return _buildDraftCard(context, colors);
-    // }
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: GestureDetector(
+        onTap: () =>
+            GoRouter.of(context).push(Routes.projectDetailsScreen, extra: p.id),
+        child:
+            AnimatedContainer(
+                  duration: 250.ms,
+                  curve: Curves.easeOut,
+                  transform: Matrix4.translationValues(0, _hovered ? -4 : 0, 0),
+                  padding: EdgeInsets.all(16.w),
+                  decoration: BoxDecoration(
+                    color: colors.grey0,
+                    borderRadius: BorderRadius.circular(20.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: _hovered
+                            ? colors.primary800.withValues(alpha: .12)
+                            : colors.grey300.withValues(alpha: .25),
+                        blurRadius: _hovered ? 20 : 8,
+                        spreadRadius: _hovered ? 1 : 0,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // ── Header badges ───────────────────
+                      Row(
+                        children: [
+                          _StatusBadge(status: p.status, colors: colors),
+                          SizedBox(width: 8.w),
+                          _CategoryBadge(label: p.category, colors: colors),
+                        ],
+                      ),
+                      SizedBox(height: 14.h),
+
+                      // ── Title ───────────────────────────
+                      Text(
+                        p.name,
+                        style: AppTextStyles.font18Bold.copyWith(
+                          color: colors.grey900,
+                        ),
+                      ),
+                      SizedBox(height: 6.h),
+
+                      // ── Description ─────────────────────
+                      Text(
+                        p.description,
+                        style: AppTextStyles.font13Regular.copyWith(
+                          color: colors.grey500,
+                          height: 1.5,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(height: 18.h),
+
+                      // ── Progress ────────────────────────
+                      ProgressSection(
+                        project: p,
+                        progressAnimation: _progressAnimation,
+                        colors: colors,
+                      ),
+
+                      SizedBox(height: 14.h),
+
+                      // ── Footer ──────────────────────────
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            p.status,
+                            style: AppTextStyles.font13Regular.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: statusColor(p.status, colors),
+                            ),
+                          ),
+                          _ActionButton(
+                            label: p.status == 'Funded' ? 'Manage' : 'Details',
+                            onTap: () => GoRouter.of(
+                              context,
+                            ).push(Routes.projectDetailsScreen, extra: p.id),
+                            colors: colors,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+                .animate(delay: (widget.index * 80).ms)
+                .fadeIn(duration: 500.ms)
+                .slideY(
+                  begin: 0.15,
+                  end: 0,
+                  duration: 500.ms,
+                  curve: Curves.easeOutCubic,
+                ),
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────
+//  STATUS BADGE
+// ─────────────────────────────────────────────
+class _StatusBadge extends StatelessWidget {
+  final String status;
+  final dynamic colors;
+
+  const _StatusBadge({required this.status, required this.colors});
+
+  @override
+  Widget build(BuildContext context) {
+    final bg = statusBg(status, colors);
+    final fg = statusColor(status, colors);
 
     return Container(
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
       decoration: BoxDecoration(
-        color: colors.grey50,
-        borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: colors.grey300.withValues(alpha: .3),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        color: bg,
+        borderRadius: BorderRadius.circular(30.r),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          // Header with Status and Category
-          Row(
-            children: [
-              StatusBadge(
-                label: project.status,
-                color: _getStatusColor(project.status, colors),
-              ),
-              SizedBox(width: 8.w),
-              StatusBadge(
-                label: project.category,
-                color: colors.grey200,
-                textColor: colors.grey700,
-              ),
-              const Spacer(),
-              //ProjectImage
-              // ClipRRect(
-              //   borderRadius: BorderRadius.circular(12.r),
-              //   child: Image.network(
-              //     project.imageUrl,
-              //     width: 60.w,
-              //     height: 60.h,
-              //     fit: BoxFit.cover,
-              //     errorBuilder: (context, error, stackTrace) {
-              //       return Container(
-              //         width: 60.w,
-              //         height: 60.h,
-              //         decoration: BoxDecoration(
-              //           color: colors.grey200,
-              //           borderRadius: BorderRadius.circular(12.r),
-              //         ),
-              //         child: Icon(Icons.image, color: colors.grey500),
-              //       );
-              //     },
-              //   ),
-              // ),
-            ],
+          Container(
+            width: 6.w,
+            height: 6.w,
+            decoration: BoxDecoration(color: fg, shape: BoxShape.circle),
           ),
-          SizedBox(height: 12.h),
-
-          // Title
+          SizedBox(width: 5.w),
           Text(
-            project.name,
-            style: AppTextStyles.font18Bold.copyWith(color: colors.grey900),
-          ),
-          SizedBox(height: 6.h),
-
-          // Description
-          Text(
-            project.description,
-            style: AppTextStyles.font13Regular.copyWith(
-              color: colors.grey600,
-              height: 1.4,
+            status,
+            style: AppTextStyles.font12Regular.copyWith(
+              fontWeight: FontWeight.w600,
+              color: fg,
             ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-          SizedBox(height: 16.h),
-
-          // // Funding Info
-          // if (!project.isDraft) ...[
-          //   Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       Text(
-          //         '\$${_formatAmount(project.raisedAmount)}',
-          //         style: AppTextStyles.font14Bold.copyWith(color: colors.black),
-          //       ),
-          //       Text(
-          //         'Goal: \$${_formatAmount(project.goalAmount)}',
-          //         style: AppTextStyles.font12Regular.copyWith(
-          //           color: colors.grey600,
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          SizedBox(height: 8.h),
-
-          // Progress Bar
-          ProgressBar(
-            percentage: project.fundingGoal,
-            color: _getStatusColor(project.status, colors),
-          ),
-          SizedBox(height: 12.h),
-
-          // Bottom Section
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                project.status,
-                style: AppTextStyles.font14SemiBold.copyWith(
-                  color: _getStatusColor(project.status, colors),
-                ),
-              ),
-              ActionLink(
-                label: project.status == 'Funded' ? 'Manage' : 'Details',
-                onTap: () {
-                  GoRouter.of(
-                    context,
-                  ).push(Routes.projectDetailsScreen, extra: project.id);
-                },
-              ),
-            ],
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildDraftCard(BuildContext context, CustomAppColors colors) {
+// ─────────────────────────────────────────────
+//  CATEGORY BADGE
+// ─────────────────────────────────────────────
+class _CategoryBadge extends StatelessWidget {
+  final String label;
+  final dynamic colors;
+
+  const _CategoryBadge({required this.label, required this.colors});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
       decoration: BoxDecoration(
-        color: colors.grey50,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(
-          color: colors.grey300,
-          width: 1,
-          style: BorderStyle.solid,
+        color: colors.grey100,
+        borderRadius: BorderRadius.circular(30.r),
+      ),
+      child: Text(
+        label,
+        style: AppTextStyles.font12Regular.copyWith(
+          fontWeight: FontWeight.w600,
+          color: colors.grey600,
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              StatusBadge(
-                label: project.status,
-                color: colors.grey200,
-                textColor: colors.grey600,
-              ),
-              SizedBox(width: 8.w),
-              StatusBadge(
-                label: project.category,
-                color: colors.grey100,
-                textColor: colors.grey600,
-              ),
-              const Spacer(),
-              Container(
-                width: 60.w,
-                height: 60.h,
-                decoration: BoxDecoration(
-                  color: colors.grey100,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Icon(
-                  Icons.image_outlined,
-                  color: colors.grey400,
-                  size: 28.sp,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 12.h),
-          Text(
-            project.name,
-            style: AppTextStyles.font18Bold.copyWith(color: colors.grey700),
-          ),
-          SizedBox(height: 6.h),
-          Text(
-            project.description,
-            style: AppTextStyles.font13Regular.copyWith(color: colors.grey500),
-          ),
-          SizedBox(height: 16.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                project.status,
-                style: AppTextStyles.font12Regular.copyWith(
-                  color: colors.grey500,
-                ),
-              ),
-              ActionLink(label: 'Resume Edit', onTap: () {}, icon: Icons.edit),
-            ],
-          ),
-        ],
-      ),
     );
   }
+}
 
-  Color _getStatusColor(String stutsName, CustomAppColors colors) {
-    switch (stutsName.toLowerCase()) {
-      case 'approved':
-        return colors.accent600;
-      case 'rejected':
-        return colors.warning500;
-      case 'pending':
-        return colors.primary800;
-      default:
-        return colors.grey500;
-    }
-  }
+// ─────────────────────────────────────────────
+//  PROGRESS SECTION
+// ─────────────────────────────────────────────
 
-  String _formatAmount(double amount) {
-    if (amount >= 1000) {
-      return '${(amount / 1000).toStringAsFixed(0)}k';
-    }
-    return amount.toStringAsFixed(0);
+// ─────────────────────────────────────────────
+//  ACTION BUTTON (Details / Manage)
+// ─────────────────────────────────────────────
+class _ActionButton extends StatefulWidget {
+  final String label;
+  final VoidCallback onTap;
+  final dynamic colors;
+
+  const _ActionButton({
+    required this.label,
+    required this.onTap,
+    required this.colors,
+  });
+
+  @override
+  State<_ActionButton> createState() => _ActionButtonState();
+}
+
+class _ActionButtonState extends State<_ActionButton> {
+  bool _pressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = widget.colors;
+
+    return GestureDetector(
+      onTapDown: (_) => setState(() => _pressed = true),
+      onTapUp: (_) {
+        setState(() => _pressed = false);
+        widget.onTap();
+      },
+      onTapCancel: () => setState(() => _pressed = false),
+      child: AnimatedScale(
+        scale: _pressed ? 0.93 : 1.0,
+        duration: 120.ms,
+        child: AnimatedContainer(
+          duration: 180.ms,
+          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
+          decoration: BoxDecoration(
+            color: _pressed
+                ? colors.primary800.withValues(alpha: .15)
+                : colors.primary800.withValues(alpha: .08),
+            borderRadius: BorderRadius.circular(20.r),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                widget.label,
+                style: AppTextStyles.font13Regular.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: colors.primary800,
+                ),
+              ),
+              SizedBox(width: 5.w),
+              AnimatedSlide(
+                offset: _pressed ? const Offset(0.25, 0) : const Offset(0, 0),
+                duration: 180.ms,
+                child: Icon(
+                  Icons.arrow_forward_rounded,
+                  size: 15.sp,
+                  color: colors.primary800,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
