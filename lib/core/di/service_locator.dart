@@ -1,4 +1,6 @@
 import 'package:rafeeq_app/core/utils/common_imports.dart';
+import 'package:rafeeq_app/features/chatbot/data/repos/charbot_repo.dart';
+import 'package:rafeeq_app/features/chatbot/presentation/logic/chatbot/chatbot_cubit.dart';
 import 'package:rafeeq_app/features/create_project/data/repos/create_project_repo.dart';
 import 'package:rafeeq_app/features/create_project/data/repos/delete_project_repo.dart';
 import 'package:rafeeq_app/features/create_project/data/repos/update_project_repo.dart';
@@ -161,4 +163,7 @@ Future<void> initServiceLocator() async {
   getIt.registerFactory<DeleteProjectCubit>(
     () => DeleteProjectCubit(getIt<DeleteProjectRepo>()),
   );
+  getIt.registerLazySingleton<ChatbotRepo>(() => ChatbotRepo(getIt<Dio>()));
+
+  getIt.registerFactory<ChatbotCubit>(() => ChatbotCubit(getIt<ChatbotRepo>()));
 }

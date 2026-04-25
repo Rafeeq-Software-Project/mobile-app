@@ -22,4 +22,7 @@ class ApiConstants {
   static const String createProject = '/founder/projects';
   static const String updateProject = '/founder/projects/{project_id}';
   static const String deleteProject = '/founder/projects/{project_id}';
+  static const String getAllPendingDrafts = '/founder/projects/drafts/pending';
+  static const String getDetailsDrafts =
+      '/founder/projects/{{project_id}}/draft';
 }

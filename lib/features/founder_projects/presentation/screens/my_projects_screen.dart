@@ -42,11 +42,6 @@ class _MyProjectsScreenState extends State<MyProjectsScreen>
     super.dispose();
   }
 
-  void _onFabTap() {
-    _fabController.forward().then((_) => _fabController.reverse());
-    GoRouter.of(context).push(Routes.createProjectSteps);
-  }
-
   @override
   Widget build(BuildContext context) {
     final colors = context.customAppColors;
@@ -72,17 +67,6 @@ class _MyProjectsScreenState extends State<MyProjectsScreen>
                   duration: 400.ms,
                   curve: Curves.easeOut,
                 ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 16.w),
-            child: _AnimatedFab(
-              controller: _fabController,
-              color: colors.primary800,
-              iconColor: colors.grey0,
-              onTap: _onFabTap,
-            ),
-          ),
-        ],
       ),
 
       body: Column(
@@ -144,62 +128,6 @@ class _MyProjectsScreenState extends State<MyProjectsScreen>
         ],
       ),
     );
-  }
-}
-
-class _AnimatedFab extends StatelessWidget {
-  final AnimationController controller;
-  final Color color;
-  final Color iconColor;
-  final VoidCallback onTap;
-
-  const _AnimatedFab({
-    required this.controller,
-    required this.color,
-    required this.iconColor,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final rotation = Tween<double>(
-      begin: 0,
-      end: 0.375,
-    ).animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut));
-    final scale = TweenSequence<double>([
-      TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.85), weight: 40),
-      TweenSequenceItem(tween: Tween(begin: 0.85, end: 1.1), weight: 30),
-      TweenSequenceItem(tween: Tween(begin: 1.1, end: 1.0), weight: 30),
-    ]).animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut));
-
-    return GestureDetector(
-          onTap: onTap,
-          child: AnimatedBuilder(
-            animation: controller,
-            builder: (_, child) => Transform.scale(
-              scale: scale.value,
-              child: Transform.rotate(
-                angle: rotation.value * 2 * 3.14159,
-                child: child,
-              ),
-            ),
-            child: Container(
-              width: 38.w,
-              height: 38.w,
-              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-              child: Icon(Icons.add, color: iconColor, size: 20.sp),
-            ),
-          ),
-        )
-        .animate()
-        .fadeIn(duration: 500.ms, delay: 200.ms)
-        .scale(
-          begin: const Offset(0, 0),
-          end: const Offset(1, 1),
-          duration: 500.ms,
-          delay: 200.ms,
-          curve: Curves.elasticOut,
-        );
   }
 }
 

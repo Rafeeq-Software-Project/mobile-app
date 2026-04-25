@@ -11,7 +11,12 @@ UpdateProjectResponse _$UpdateProjectResponseFromJson(
 ) => UpdateProjectResponse(
   mode: json['mode'] as String,
   message: json['message'] as String,
-  draft: ProjectDraftModel.fromJson(json['draft'] as Map<String, dynamic>),
+  draft: json['draft'] == null
+      ? null
+      : ProjectDraftModel.fromJson(json['draft'] as Map<String, dynamic>),
+  project: json['project'] == null
+      ? null
+      : ProjectModel.fromJson(json['project'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$UpdateProjectResponseToJson(
@@ -19,19 +24,24 @@ Map<String, dynamic> _$UpdateProjectResponseToJson(
 ) => <String, dynamic>{
   'mode': instance.mode,
   'message': instance.message,
-  'draft': instance.draft,
+  'draft': instance.draft?.toJson(),
+  'project': instance.project?.toJson(),
 };
 
 ProjectDraftModel _$ProjectDraftModelFromJson(Map<String, dynamic> json) =>
     ProjectDraftModel(
       id: (json['id'] as num).toInt(),
       projectId: (json['projectId'] as num).toInt(),
-      category: json['category'] as String,
-      fundingGoal: (json['fundingGoal'] as num).toDouble(),
-      useOfFunds: json['useOfFunds'] as String,
-      startDate: DateTime.parse(json['startDate'] as String),
-      endDate: DateTime.parse(json['endDate'] as String),
-      status: json['status'] as String,
+      category: json['category'] as String?,
+      fundingGoal: _toDoubleNullable(json['fundingGoal']),
+      useOfFunds: json['useOfFunds'] as String?,
+      startDate: json['startDate'] == null
+          ? null
+          : DateTime.parse(json['startDate'] as String),
+      endDate: json['endDate'] == null
+          ? null
+          : DateTime.parse(json['endDate'] as String),
+      status: json['status'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: json['updatedAt'] == null
           ? null
@@ -56,8 +66,8 @@ Map<String, dynamic> _$ProjectDraftModelToJson(ProjectDraftModel instance) =>
       'category': instance.category,
       'fundingGoal': instance.fundingGoal,
       'useOfFunds': instance.useOfFunds,
-      'startDate': instance.startDate.toIso8601String(),
-      'endDate': instance.endDate.toIso8601String(),
+      'startDate': instance.startDate?.toIso8601String(),
+      'endDate': instance.endDate?.toIso8601String(),
       'status': instance.status,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
@@ -67,5 +77,5 @@ Map<String, dynamic> _$ProjectDraftModelToJson(ProjectDraftModel instance) =>
       'rejectionReason': instance.rejectionReason,
       'founderName': instance.founderName,
       'founderCompany': instance.founderCompany,
-      'liveProject': instance.liveProject,
+      'liveProject': instance.liveProject.toJson(),
     };

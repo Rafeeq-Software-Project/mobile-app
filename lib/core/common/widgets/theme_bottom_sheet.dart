@@ -146,12 +146,12 @@ class _ThemeOption extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
           color: isSelected
-              ? context.customAppColors.primary700
+              ? context.customAppColors.primary800
               : context.customAppColors.grey400,
           width: 1,
         ),
         color: isSelected
-            ? context.customAppColors.primary700.withValues(alpha: 0.1)
+            ? context.customAppColors.primary800.withValues(alpha: 0.1)
             : Colors.transparent,
       ),
       child: ListTile(
@@ -161,7 +161,7 @@ class _ThemeOption extends StatelessWidget {
           height: 48.h,
           decoration: BoxDecoration(
             color: isSelected
-                ? context.customAppColors.primary700
+                ? context.customAppColors.primary800
                 : context.customAppColors.grey200,
             borderRadius: BorderRadius.circular(12.r),
           ),
@@ -190,7 +190,7 @@ class _ThemeOption extends StatelessWidget {
         trailing: isSelected
             ? Icon(
                 Icons.check_circle,
-                color: context.customAppColors.primary700,
+                color: context.customAppColors.primary800,
                 size: 20.r,
               )
             : Icon(

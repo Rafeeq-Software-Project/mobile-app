@@ -13,7 +13,7 @@ ProjectModel _$ProjectModelFromJson(Map<String, dynamic> json) => ProjectModel(
   description: json['description'] as String,
   category: json['category'] as String,
   status: json['status'] as String,
-  fundingGoal: (json['fundingGoal'] as num).toDouble(),
+  fundingGoal: _toDouble(json['fundingGoal']),
   useOfFunds: json['useOfFunds'] as String,
   startDate: DateTime.parse(json['startDate'] as String),
   endDate: DateTime.parse(json['endDate'] as String),

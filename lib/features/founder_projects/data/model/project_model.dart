@@ -10,6 +10,7 @@ class ProjectModel {
   final String description;
   final String category;
   final String status;
+  @JsonKey(fromJson: _toDouble)
   final double fundingGoal;
   final String useOfFunds;
 
@@ -54,3 +55,5 @@ class ProjectModel {
 
   Map<String, dynamic> toJson() => _$ProjectModelToJson(this);
 }
+
+double _toDouble(dynamic value) => (value as num).toDouble();

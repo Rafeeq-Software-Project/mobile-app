@@ -1,18 +1,19 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:rafeeq_app/features/founder_projects/data/model/project_model.dart';
-
 part 'update_project_response.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class UpdateProjectResponse {
   final String mode;
   final String message;
-  final ProjectDraftModel draft;
+  final ProjectDraftModel? draft;
+  final ProjectModel? project;
 
   UpdateProjectResponse({
     required this.mode,
     required this.message,
-    required this.draft,
+    this.draft,
+    this.project,
   });
 
   factory UpdateProjectResponse.fromJson(Map<String, dynamic> json) =>
@@ -21,16 +22,17 @@ class UpdateProjectResponse {
   Map<String, dynamic> toJson() => _$UpdateProjectResponseToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class ProjectDraftModel {
   final int id;
   final int projectId;
-  final String category;
-  final double fundingGoal;
-  final String useOfFunds;
-  final DateTime startDate;
-  final DateTime endDate;
-  final String status;
+  final String? category;
+  @JsonKey(fromJson: _toDoubleNullable)
+  final double? fundingGoal;
+  final String? useOfFunds;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final String? status;
   final DateTime createdAt;
 
   final DateTime? updatedAt;
@@ -47,12 +49,12 @@ class ProjectDraftModel {
   ProjectDraftModel({
     required this.id,
     required this.projectId,
-    required this.category,
-    required this.fundingGoal,
-    required this.useOfFunds,
-    required this.startDate,
-    required this.endDate,
-    required this.status,
+    this.category,
+    this.fundingGoal,
+    this.useOfFunds,
+    this.startDate,
+    this.endDate,
+    this.status,
     required this.createdAt,
     this.updatedAt,
     this.reviewedByRole,
@@ -68,4 +70,9 @@ class ProjectDraftModel {
       _$ProjectDraftModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProjectDraftModelToJson(this);
+}
+
+double? _toDoubleNullable(dynamic value) {
+  if (value == null) return null;
+  return (value as num).toDouble();
 }
