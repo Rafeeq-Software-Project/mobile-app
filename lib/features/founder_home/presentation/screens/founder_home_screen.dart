@@ -1,8 +1,13 @@
 import 'dart:math' as math;
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:rafeeq_app/core/helpers/extensions.dart';
 import 'package:rafeeq_app/core/local_data/current_user.dart';
 import 'package:rafeeq_app/core/utils/common_imports.dart';
-import '../../data/models/dashboard_project_model.dart';
+import 'package:rafeeq_app/features/founder_home/data/models/drafts/pending_draft_model.dart';
+import 'package:rafeeq_app/features/founder_home/presentation/logic/all_pending_drafts/pending_drafts_cubit.dart';
+import 'package:rafeeq_app/features/founder_home/presentation/logic/all_pending_drafts/pending_drafts_state.dart';
+import 'package:rafeeq_app/features/founder_home/presentation/widgets/loading_shimmer.dart';
 import '../../data/models/stats_model.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -71,25 +76,6 @@ class _DashboardScreenState extends State<DashboardScreen>
       ),
     ];
 
-    final draftProjects = [
-      DashboardProjectModel(
-        title: 'GreenTech Solar Expansion',
-        volunteers: 0,
-        dueDate: 'Dec 10',
-        status: 'DRAFT',
-        statusColor: 'grey',
-        progress: 0.2,
-      ),
-      DashboardProjectModel(
-        title: 'HealthTrack App v2',
-        volunteers: 0,
-        dueDate: 'Jan 15',
-        status: 'DRAFT',
-        statusColor: 'grey',
-        progress: 0.05,
-      ),
-    ];
-
     return Scaffold(
       backgroundColor: colors.grey50,
       body: Stack(
@@ -138,18 +124,114 @@ class _DashboardScreenState extends State<DashboardScreen>
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: _ProjectsSection(
-                      title: 'Drafts',
-                      subtitle: 'Pending submission',
-                      icon: Icons.edit_note_rounded,
-                      projects: draftProjects,
-                      colors: colors,
-                      accentColor: colors.grey500,
-                      isDraft: true,
+                    child: BlocBuilder<PendingDraftsCubit, PendingDraftsState>(
+                      builder: (context, state) {
+                        return state.when(
+                          initial: () => SizedBox(),
+                          loading: () => Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(7.w),
+                                    decoration: BoxDecoration(
+                                      color: colors.grey500.withValues(
+                                        alpha: .1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10.r),
+                                    ),
+                                    child: Icon(
+                                      Icons.edit_note_rounded,
+                                      color: colors.grey500,
+                                      size: 16.sp,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10.w),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Drafts',
+                                        style: TextStyle(
+                                          color: colors.primary900,
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Pending submission',
+                                        style: TextStyle(
+                                          color: colors.grey500,
+                                          fontSize: 11.sp,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  GestureDetector(
+                                    onTap: () {
+                                      GoRouter.of(
+                                        context,
+                                      ).push(Routes.allDraftsScreen);
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 12.w,
+                                        vertical: 6.h,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: colors.grey500.withValues(
+                                          alpha: .08,
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                          20.r,
+                                        ),
+                                        border: Border.all(
+                                          color: colors.grey500.withValues(
+                                            alpha: .2,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'View all',
+                                        style: TextStyle(
+                                          color: colors.grey500,
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              10.h.ph,
+                              LoadingShimmer(colors: colors, isHome: true),
+                            ],
+                          ),
+                          error: (message) => Text(message),
+                          success: (drafts) {
+                            final displayDrafts = drafts.take(2).toList();
+                            return _ProjectsSection(
+                              title: 'Drafts',
+                              subtitle: 'Pending submission',
+                              icon: Icons.edit_note_rounded,
+                              projects: displayDrafts,
+                              colors: colors,
+                              accentColor: colors.grey500,
+                              isDraft: true,
+                              onTap: (id) {
+                                GoRouter.of(
+                                  context,
+                                ).push(Routes.draftsDetailsScreen, extra: id);
+                              },
+                            );
+                          },
+                        );
+                      },
                     ),
                   ),
                 ),
-
                 SliverToBoxAdapter(child: SizedBox(height: 100.h)),
               ],
             ),
@@ -159,8 +241,6 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 }
-
-// ─── Background Mesh ─────────────────────────────────────────────────────────
 
 class _BackgroundMesh extends StatelessWidget {
   final AnimationController controller;
@@ -603,6 +683,7 @@ class _QuickActions extends StatelessWidget {
         },
       ),
       _ActionItem(
+        onTap: () => GoRouter.of(context).push(Routes.allDraftsScreen),
         icon: Icons.edit_note_rounded,
         label: 'My Drafts',
         color: colors.grey600,
@@ -764,10 +845,11 @@ class _ProjectsSection extends StatelessWidget {
   final String title;
   final String subtitle;
   final IconData icon;
-  final List<DashboardProjectModel> projects;
+  final List<PendingDraftModel> projects;
   final dynamic colors;
   final Color accentColor;
   final bool isDraft;
+  final void Function(int id)? onTap;
 
   const _ProjectsSection({
     required this.title,
@@ -777,6 +859,7 @@ class _ProjectsSection extends StatelessWidget {
     required this.colors,
     required this.accentColor,
     this.isDraft = false,
+    this.onTap,
   });
 
   @override
@@ -816,7 +899,9 @@ class _ProjectsSection extends StatelessWidget {
               ),
               const Spacer(),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  GoRouter.of(context).push(Routes.allDraftsScreen);
+                },
                 child: Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: 12.w,
@@ -849,6 +934,7 @@ class _ProjectsSection extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(bottom: 10.h),
                 child: _ProjectCard(
+                  onTap: onTap,
                   project: e.value,
                   colors: colors,
                   isDraft: isDraft,
@@ -863,13 +949,15 @@ class _ProjectsSection extends StatelessWidget {
 }
 
 class _ProjectCard extends StatefulWidget {
-  final DashboardProjectModel project;
+  final PendingDraftModel project;
   final dynamic colors;
   final bool isDraft;
+  final void Function(int id)? onTap;
   const _ProjectCard({
     required this.project,
     required this.colors,
     required this.isDraft,
+    this.onTap,
   });
 
   @override
@@ -888,7 +976,7 @@ class _ProjectCardState extends State<_ProjectCard>
       vsync: this,
       duration: const Duration(milliseconds: 900),
     );
-    _progressAnim = Tween(begin: 0.0, end: widget.project.progress).animate(
+    _progressAnim = Tween(begin: 0.0, end: widget.project.fundingGoal).animate(
       CurvedAnimation(parent: _progressCtrl, curve: Curves.easeOutCubic),
     );
     Future.delayed(const Duration(milliseconds: 300), () {
@@ -903,10 +991,10 @@ class _ProjectCardState extends State<_ProjectCard>
   }
 
   Color _statusColor() {
-    switch (widget.project.statusColor) {
-      case 'blue':
+    switch (widget.project.status) {
+      case 'active':
         return widget.colors.primary800;
-      case 'orange':
+      case 'approved ':
         return const Color(0xFFEA580C);
       default:
         return widget.colors.grey500;
@@ -916,135 +1004,122 @@ class _ProjectCardState extends State<_ProjectCard>
   @override
   Widget build(BuildContext context) {
     final sc = _statusColor();
-    return Container(
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: widget.colors.grey0,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: widget.colors.grey200),
-        boxShadow: [
-          BoxShadow(
-            color: widget.colors.grey300.withValues(alpha: .4),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              // Status dot
-              Container(
-                width: 8.w,
-                height: 8.w,
-                decoration: BoxDecoration(shape: BoxShape.circle, color: sc),
-              ),
-              SizedBox(width: 8.w),
-              Expanded(
-                child: Text(
-                  widget.project.title,
-                  style: TextStyle(
-                    color: widget.colors.primary900,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
-                decoration: BoxDecoration(
-                  color: sc.withValues(alpha: .1),
-                  borderRadius: BorderRadius.circular(20.r),
-                ),
-                child: Text(
-                  widget.project.status,
-                  style: TextStyle(
-                    color: sc,
-                    fontSize: 9.sp,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.4,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          if (!widget.isDraft && widget.project.progress > 0) ...[
-            SizedBox(height: 12.h),
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: widget.onTap == null
+          ? null
+          : () => widget.onTap!(widget.project.id),
+      child: Container(
+        padding: EdgeInsets.all(16.w),
+        decoration: BoxDecoration(
+          color: widget.colors.grey0,
+          borderRadius: BorderRadius.circular(16.r),
+          border: Border.all(color: widget.colors.grey200),
+          boxShadow: [
+            BoxShadow(
+              color: widget.colors.grey300.withValues(alpha: .4),
+              blurRadius: 10,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Row(
               children: [
+                // Status dot
+                Container(
+                  width: 8.w,
+                  height: 8.w,
+                  decoration: BoxDecoration(shape: BoxShape.circle, color: sc),
+                ),
+                SizedBox(width: 8.w),
                 Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: AnimatedBuilder(
-                      animation: _progressAnim,
-                      builder: (_, __) => LinearProgressIndicator(
-                        value: _progressAnim.value,
-                        backgroundColor: widget.colors.grey100,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          widget.colors.primary800,
-                        ),
-                        minHeight: 5.h,
-                      ),
+                  child: Text(
+                    widget.project.name,
+                    style: TextStyle(
+                      color: widget.colors.primary900,
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w700,
                     ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                SizedBox(width: 10.w),
-                AnimatedBuilder(
-                  animation: _progressAnim,
-                  builder: (_, __) => Text(
-                    '${(_progressAnim.value * 100).toInt()}%',
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+                  decoration: BoxDecoration(
+                    color: sc.withValues(alpha: .1),
+                    borderRadius: BorderRadius.circular(20.r),
+                  ),
+                  child: Text(
+                    widget.project.status,
                     style: TextStyle(
-                      color: widget.colors.grey600,
-                      fontSize: 11.sp,
-                      fontWeight: FontWeight.w600,
+                      color: sc,
+                      fontSize: 9.sp,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.4,
                     ),
                   ),
                 ),
               ],
             ),
-          ],
-          SizedBox(height: 10.h),
-          Row(
-            children: [
-              if (widget.project.volunteers > 0) ...[
-                Icon(
-                  Icons.people_outline_rounded,
-                  size: 13.sp,
-                  color: widget.colors.grey400,
-                ),
-                SizedBox(width: 4.w),
-                Text(
-                  '${widget.project.volunteers} volunteers',
-                  style: TextStyle(
-                    color: widget.colors.grey500,
-                    fontSize: 11.sp,
+            if (!widget.isDraft && widget.project.fundingGoal > 0) ...[
+              SizedBox(height: 12.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: AnimatedBuilder(
+                        animation: _progressAnim,
+                        builder: (_, __) => LinearProgressIndicator(
+                          value: _progressAnim.value,
+                          backgroundColor: widget.colors.grey100,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            widget.colors.primary800,
+                          ),
+                          minHeight: 5.h,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(width: 12.w),
-              ],
-              if (widget.project.dueDate.isNotEmpty) ...[
-                Icon(
-                  Icons.calendar_today_outlined,
-                  size: 12.sp,
-                  color: widget.colors.grey400,
-                ),
-                SizedBox(width: 4.w),
-                Text(
-                  'Due ${widget.project.dueDate}',
-                  style: TextStyle(
-                    color: widget.colors.grey500,
-                    fontSize: 11.sp,
+                  SizedBox(width: 10.w),
+                  AnimatedBuilder(
+                    animation: _progressAnim,
+                    builder: (_, __) => Text(
+                      '${(_progressAnim.value * 100).toInt()}%',
+                      style: TextStyle(
+                        color: widget.colors.grey600,
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
-                ),
-              ],
-              const Spacer(),
-              if (widget.isDraft)
-                GestureDetector(
+                ],
+              ),
+            ],
+
+            if (widget.project.endDate.isNotEmpty) ...[
+              Icon(
+                Icons.calendar_today_outlined,
+                size: 12.sp,
+                color: widget.colors.grey400,
+              ),
+              SizedBox(width: 4.w),
+              Text(
+                'Due ${widget.project.endDate}',
+                style: TextStyle(color: widget.colors.grey500, fontSize: 11.sp),
+              ),
+            ],
+            10.h.ph,
+            if (widget.isDraft)
+              Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
                   onTap: () {},
                   child: Container(
+                    width: 100.w,
                     padding: EdgeInsets.symmetric(
                       horizontal: 10.w,
                       vertical: 5.h,
@@ -1073,9 +1148,9 @@ class _ProjectCardState extends State<_ProjectCard>
                     ),
                   ),
                 ),
-            ],
-          ),
-        ],
+              ),
+          ],
+        ),
       ),
     );
   }

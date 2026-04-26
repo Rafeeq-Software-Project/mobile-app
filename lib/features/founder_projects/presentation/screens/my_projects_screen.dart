@@ -45,7 +45,6 @@ class _MyProjectsScreenState extends State<MyProjectsScreen>
   @override
   Widget build(BuildContext context) {
     final colors = context.customAppColors;
-
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(

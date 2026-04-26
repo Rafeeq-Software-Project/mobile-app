@@ -22,4 +22,6 @@ class Routes {
   static const String updateInvestorProfile = '/updateInvestorProfile';
   static const String updateFounderProfile = '/updateFounderProfile';
   static const String projectDetailsScreen = '/projectDetailsScreen';
+  static const String allDraftsScreen = '/allDraftsScreen';
+  static const String draftsDetailsScreen = '/draftsDetailsScreen';
 }

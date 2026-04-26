@@ -18,6 +18,7 @@ import 'package:rafeeq_app/features/create_project/data/models/update_project_re
 import 'package:rafeeq_app/features/founder_account/data/models/founder_profile.dart';
 import 'package:rafeeq_app/features/founder_account/data/models/update_founder_profile/update_founder_profile_request.dart';
 import 'package:rafeeq_app/features/founder_account/data/models/update_founder_profile/update_founder_profile_response.dart';
+import 'package:rafeeq_app/features/founder_home/data/models/drafts/pending_draft_model.dart';
 import 'package:rafeeq_app/features/founder_projects/data/model/project_model.dart';
 import 'package:rafeeq_app/features/investor_account/data/models/investor_profile_model.dart';
 import 'package:rafeeq_app/features/investor_account/data/models/investor_profile_picture/upload/upload_investor_profile_picture_response.dart';
@@ -96,4 +97,7 @@ abstract class ApiClient {
   Future<DeleteProjectResponse> deleteProject(
     @Path("project_id") int projectId,
   );
+
+  @GET(ApiConstants.getAllPendingDrafts)
+  Future<List<PendingDraftModel>> getAllPendingDrafts();
 }

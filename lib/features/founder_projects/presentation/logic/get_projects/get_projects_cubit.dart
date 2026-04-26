@@ -15,6 +15,7 @@ class GetProjectsCubit extends Cubit<GetProjectsState> {
 
     result.when(
       success: (projects) {
+        if (isClosed) return;
         emit(GetProjectsState.success(projects));
       },
       failure: (error) {

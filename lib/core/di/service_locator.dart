@@ -11,6 +11,8 @@ import 'package:rafeeq_app/features/founder_account/data/repos/get_my_founder_pr
 import 'package:rafeeq_app/features/founder_account/data/repos/update_founder_profile_repo.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/logic/get_founder_data/founder_profile_cubit.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/logic/update_founder_profile/update_founder_profile_cubit.dart';
+import 'package:rafeeq_app/features/founder_home/data/repos/get_all_pending_drafts_repo.dart';
+import 'package:rafeeq_app/features/founder_home/presentation/logic/all_pending_drafts/pending_drafts_cubit.dart';
 import 'package:rafeeq_app/features/founder_projects/data/repos/get_projects_repo.dart';
 import 'package:rafeeq_app/features/founder_projects/data/repos/project_details_repo.dart';
 import 'package:rafeeq_app/features/founder_projects/presentation/logic/get_projects/get_projects_cubit.dart';
@@ -166,4 +168,11 @@ Future<void> initServiceLocator() async {
   getIt.registerLazySingleton<ChatbotRepo>(() => ChatbotRepo(getIt<Dio>()));
 
   getIt.registerFactory<ChatbotCubit>(() => ChatbotCubit(getIt<ChatbotRepo>()));
+
+  getIt.registerLazySingleton<GetAllPendingDraftsRepo>(
+    () => GetAllPendingDraftsRepo(getIt<ApiClient>(), getIt<ApiHandler>()),
+  );
+  getIt.registerFactory<PendingDraftsCubit>(
+    () => PendingDraftsCubit(getIt<GetAllPendingDraftsRepo>()),
+  );
 }
