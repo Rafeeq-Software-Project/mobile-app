@@ -100,4 +100,7 @@ abstract class ApiClient {
 
   @GET(ApiConstants.getAllPendingDrafts)
   Future<List<PendingDraftModel>> getAllPendingDrafts();
+
+  @GET(ApiConstants.getDetailsDrafts)
+  Future<PendingDraftModel> getDetailsDrafts(@Path("project_id") int projectId);
 }

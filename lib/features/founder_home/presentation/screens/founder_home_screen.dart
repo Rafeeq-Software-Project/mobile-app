@@ -80,15 +80,12 @@ class _DashboardScreenState extends State<DashboardScreen>
       backgroundColor: colors.grey50,
       body: Stack(
         children: [
-          // ── Subtle background mesh ──
           _BackgroundMesh(controller: _shimmerController),
-
           SafeArea(
             child: CustomScrollView(
               controller: _scrollController,
               physics: const BouncingScrollPhysics(),
               slivers: [
-                // ── Hero Header ──
                 SliverToBoxAdapter(
                   child: _HeroHeader(
                     userName: info.firstName,
@@ -97,30 +94,21 @@ class _DashboardScreenState extends State<DashboardScreen>
                     colors: colors,
                   ),
                 ),
-
-                // ── Stats ──
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: _StatsSection(stats: stats, colors: colors),
                   ),
                 ),
-
                 SliverToBoxAdapter(child: SizedBox(height: 28.h)),
-
-                // ── Quick Actions ──
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: _QuickActions(colors: colors),
                   ),
                 ),
-
                 SliverToBoxAdapter(child: SizedBox(height: 28.h)),
-
                 SliverToBoxAdapter(child: SizedBox(height: 20.h)),
-
-                // ── Drafts ──
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -220,10 +208,12 @@ class _DashboardScreenState extends State<DashboardScreen>
                               colors: colors,
                               accentColor: colors.grey500,
                               isDraft: true,
-                              onTap: (id) {
-                                GoRouter.of(
-                                  context,
-                                ).push(Routes.draftsDetailsScreen, extra: id);
+                              onTap: (projectId) {
+                                // ✅ FIX: using projectId correctly
+                                GoRouter.of(context).push(
+                                  Routes.draftsDetailsScreen,
+                                  extra: projectId,
+                                );
                               },
                             );
                           },
@@ -271,7 +261,6 @@ class _MeshPainter extends CustomPainter {
       Paint()..color = const Color(0xFFF4F7FF),
     );
 
-    // Top-right orb
     final o1x = size.width * 0.9 + math.sin(t * 2 * math.pi) * 15;
     final o1y = size.height * 0.04 + math.cos(t * 2 * math.pi) * 10;
     canvas.drawCircle(
@@ -283,7 +272,6 @@ class _MeshPainter extends CustomPainter {
         ).createShader(Rect.fromCircle(center: Offset(o1x, o1y), radius: 160)),
     );
 
-    // Dot grid
     final dot = Paint()..color = primary.withValues(alpha: .045);
     for (double x = 24; x < size.width; x += 24) {
       for (double y = 24; y < size.height * 0.5; y += 24) {
@@ -339,10 +327,8 @@ class _HeroHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Top row
           Row(
             children: [
-              // Logo
               FadeInLeft(
                 duration: const Duration(milliseconds: 500),
                 child: Container(
@@ -381,7 +367,6 @@ class _HeroHeader extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              // Notification bell
               FadeInRight(
                 duration: const Duration(milliseconds: 500),
                 child: _IconBtn(
@@ -392,7 +377,6 @@ class _HeroHeader extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 8.w),
-              // Avatar
               FadeInRight(
                 delay: const Duration(milliseconds: 100),
                 duration: const Duration(milliseconds: 500),
@@ -425,8 +409,6 @@ class _HeroHeader extends StatelessWidget {
               ),
             ],
           ),
-
-          // Welcome text
           AnimatedCrossFade(
             duration: const Duration(milliseconds: 300),
             crossFadeState: collapsed
@@ -849,7 +831,7 @@ class _ProjectsSection extends StatelessWidget {
   final dynamic colors;
   final Color accentColor;
   final bool isDraft;
-  final void Function(int id)? onTap;
+  final void Function(int projectId)? onTap;
 
   const _ProjectsSection({
     required this.title,
@@ -952,7 +934,7 @@ class _ProjectCard extends StatefulWidget {
   final PendingDraftModel project;
   final dynamic colors;
   final bool isDraft;
-  final void Function(int id)? onTap;
+  final void Function(int projectId)? onTap;
   const _ProjectCard({
     required this.project,
     required this.colors,
@@ -1006,9 +988,8 @@ class _ProjectCardState extends State<_ProjectCard>
     final sc = _statusColor();
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: widget.onTap == null
-          ? null
-          : () => widget.onTap!(widget.project.id),
+      // ✅ FIX: pass projectId not id
+      onPressed: () => widget.onTap!(widget.project.projectId),
       child: Container(
         padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
@@ -1028,7 +1009,6 @@ class _ProjectCardState extends State<_ProjectCard>
           children: [
             Row(
               children: [
-                // Status dot
                 Container(
                   width: 8.w,
                   height: 8.w,
@@ -1099,17 +1079,24 @@ class _ProjectCardState extends State<_ProjectCard>
                 ],
               ),
             ],
-
             if (widget.project.endDate.isNotEmpty) ...[
-              Icon(
-                Icons.calendar_today_outlined,
-                size: 12.sp,
-                color: widget.colors.grey400,
-              ),
-              SizedBox(width: 4.w),
-              Text(
-                'Due ${widget.project.endDate}',
-                style: TextStyle(color: widget.colors.grey500, fontSize: 11.sp),
+              SizedBox(height: 8.h),
+              Row(
+                children: [
+                  Icon(
+                    Icons.calendar_today_outlined,
+                    size: 12.sp,
+                    color: widget.colors.grey400,
+                  ),
+                  SizedBox(width: 4.w),
+                  Text(
+                    'Due ${widget.project.endDate}',
+                    style: TextStyle(
+                      color: widget.colors.grey500,
+                      fontSize: 11.sp,
+                    ),
+                  ),
+                ],
               ),
             ],
             10.h.ph,
@@ -1117,7 +1104,8 @@ class _ProjectCardState extends State<_ProjectCard>
               Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
-                  onTap: () {},
+                  // ✅ FIX: pass projectId on Continue tap too
+                  onTap: () => widget.onTap!(widget.project.projectId),
                   child: Container(
                     width: 100.w,
                     padding: EdgeInsets.symmetric(

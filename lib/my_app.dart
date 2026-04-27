@@ -10,7 +10,6 @@ import 'generated/l10n.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -24,13 +23,9 @@ class MyApp extends StatelessWidget {
             builder: (context, newMode) {
               return MaterialApp.router(
                 debugShowCheckedModeBanner: false,
-
-                // Set the app theme
                 theme: getLightTheme(context),
                 darkTheme: getDarkTheme(context),
                 themeMode: newMode,
-
-                // Add the localization delegates
                 localizationsDelegates: const [
                   S.delegate,
                   GlobalMaterialLocalizations.delegate,
@@ -39,8 +34,6 @@ class MyApp extends StatelessWidget {
                 ],
                 locale: const Locale('en'),
                 supportedLocales: S.delegate.supportedLocales,
-
-                // Set the initial route based on user authentication and role
                 routerConfig: AppRouter.router,
               );
             },

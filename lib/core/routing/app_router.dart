@@ -5,6 +5,7 @@ import 'package:rafeeq_app/features/founder_account/presentation/logic/get_found
 import 'package:rafeeq_app/features/founder_account/presentation/logic/update_founder_profile/update_founder_profile_cubit.dart';
 import 'package:rafeeq_app/features/founder_account/presentation/screens/update_founder_profile_screen.dart';
 import 'package:rafeeq_app/features/founder_home/presentation/logic/all_pending_drafts/pending_drafts_cubit.dart';
+import 'package:rafeeq_app/features/founder_home/presentation/logic/draft_details/draft_details_cubit.dart';
 import 'package:rafeeq_app/features/founder_home/presentation/screens/all_drafts_screen.dart';
 import 'package:rafeeq_app/features/founder_home/presentation/screens/draft_details_screen.dart';
 import 'package:rafeeq_app/features/founder_projects/presentation/logic/project_details/project_details_cubit.dart';
@@ -209,7 +210,11 @@ abstract class AppRouter {
           path: Routes.draftsDetailsScreen,
           builder: (context, state) {
             final id = state.extra as int;
-            return DraftDetailsScreen(id: id);
+            return BlocProvider(
+              create: (context) =>
+                  getIt<DraftDetailsCubit>()..getDraftDetails(id),
+              child: DraftDetailsScreen(id: id),
+            );
           },
         ),
       ],

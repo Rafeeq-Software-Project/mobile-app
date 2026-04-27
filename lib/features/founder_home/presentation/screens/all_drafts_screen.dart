@@ -38,9 +38,9 @@ Color _dueDateColor(String rawDate, dynamic colors) {
       date.month,
       date.day,
     ).difference(DateTime(now.year, now.month, now.day)).inDays;
-    if (diff < 0) return const Color(0xFFDC2626); // overdue  → red
-    if (diff <= 3) return const Color(0xFFEA580C); // urgent   → orange
-    return colors.grey400; // normal   → grey
+    if (diff < 0) return const Color(0xFFDC2626);
+    if (diff <= 3) return const Color(0xFFEA580C);
+    return colors.grey400;
   } catch (_) {
     return colors.grey400;
   }
@@ -89,27 +89,19 @@ class _AllDraftsScreenState extends State<AllDraftsScreen>
       backgroundColor: const Color(0xFFF0F4FF),
       body: Stack(
         children: [
-          // ── Animated background ──
           _AnimatedBackground(controller: _bgController, colors: colors),
-
           SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ── Header ──
                 _Header(colors: colors),
-
-                // ── Filter chips ──
                 _FilterBar(
                   filters: _filters,
                   selected: _selectedFilter,
                   colors: colors,
                   onSelect: (f) => setState(() => _selectedFilter = f),
                 ),
-
                 SizedBox(height: 8.h),
-
-                // ── Content ──
                 Expanded(
                   child: BlocBuilder<PendingDraftsCubit, PendingDraftsState>(
                     builder: (context, state) {
@@ -138,8 +130,6 @@ class _AllDraftsScreenState extends State<AllDraftsScreen>
           ),
         ],
       ),
-
-      // ── FAB ──
       floatingActionButton: FadeInUp(
         delay: const Duration(milliseconds: 400),
         child: _NewDraftFAB(colors: colors),
@@ -179,7 +169,6 @@ class _BgPainter extends CustomPainter {
       Paint()..color = const Color(0xFFF0F4FF),
     );
 
-    // Floating orb top-left
     final x1 = size.width * 0.15 + math.sin(t * 2 * math.pi) * 20;
     final y1 = size.height * 0.08 + math.cos(t * 2 * math.pi) * 12;
     canvas.drawCircle(
@@ -194,7 +183,6 @@ class _BgPainter extends CustomPainter {
         ).createShader(Rect.fromCircle(center: Offset(x1, y1), radius: 130)),
     );
 
-    // Dot grid
     final dot = Paint()..color = primary.withValues(alpha: .04);
     for (double x = 20; x < size.width; x += 22) {
       for (double y = 20; y < size.height * 0.45; y += 22) {
@@ -219,7 +207,6 @@ class _Header extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(20.w, 12.h, 20.w, 0),
       child: Row(
         children: [
-          // Back button
           FadeInLeft(
             duration: const Duration(milliseconds: 400),
             child: GestureDetector(
@@ -247,10 +234,7 @@ class _Header extends StatelessWidget {
               ),
             ),
           ),
-
           SizedBox(width: 14.w),
-
-          // Title
           FadeInLeft(
             delay: const Duration(milliseconds: 80),
             duration: const Duration(milliseconds: 400),
@@ -273,10 +257,7 @@ class _Header extends StatelessWidget {
               ],
             ),
           ),
-
           const Spacer(),
-
-          // Sort button
           FadeInRight(
             duration: const Duration(milliseconds: 400),
             child: Container(
@@ -464,9 +445,10 @@ class _DraftCardState extends State<_DraftCard>
       onTapUp: (_) => _ctrl.reverse(),
       onTapCancel: () => _ctrl.reverse(),
       onTap: () {
+        // ✅ FIX: use projectId not id
         GoRouter.of(
           context,
-        ).push(Routes.draftsDetailsScreen, extra: [widget.draft.id]);
+        ).push(Routes.draftsDetailsScreen, extra: widget.draft.projectId);
       },
       child: ScaleTransition(
         scale: _scale,
@@ -487,11 +469,9 @@ class _DraftCardState extends State<_DraftCard>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ── Top row ──
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Index badge
                   Container(
                     width: 36.w,
                     height: 36.w,
@@ -534,7 +514,6 @@ class _DraftCardState extends State<_DraftCard>
                           overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(height: 4.h),
-                        // Status chip
                         Container(
                           padding: EdgeInsets.symmetric(
                             horizontal: 8.w,
@@ -574,7 +553,6 @@ class _DraftCardState extends State<_DraftCard>
                       ],
                     ),
                   ),
-                  // Arrow
                   Icon(
                     Icons.arrow_forward_ios_rounded,
                     size: 14.sp,
@@ -582,17 +560,12 @@ class _DraftCardState extends State<_DraftCard>
                   ),
                 ],
               ),
-
-              // ── Divider ──
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 12.h),
                 child: Divider(height: 1, color: widget.colors.grey100),
               ),
-
-              // ── Bottom row ──
               Row(
                 children: [
-                  // Date
                   if (widget.draft.endDate.isNotEmpty) ...[
                     _DueDateBadge(
                       rawDate: widget.draft.endDate,
@@ -600,8 +573,6 @@ class _DraftCardState extends State<_DraftCard>
                     ),
                     SizedBox(width: 10.w),
                   ],
-
-                  // Funding goal
                   if (widget.draft.fundingGoal > 0) ...[
                     Icon(
                       Icons.attach_money_rounded,
@@ -617,16 +588,14 @@ class _DraftCardState extends State<_DraftCard>
                       ),
                     ),
                   ],
-
                   const Spacer(),
-
-                  // Continue button
                   CupertinoButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
+                      // ✅ FIX: use projectId not id
                       GoRouter.of(context).push(
                         Routes.draftsDetailsScreen,
-                        extra: [widget.draft.id],
+                        extra: widget.draft.projectId,
                       );
                     },
                     child: Container(
