@@ -23,14 +23,30 @@
 To create a thriving startup ecosystem where ideas meet resources, talent meets opportunities, and innovation meets investment.
 
 ### 👥 Target Users
-- 🚀 **Founders:** Create projects, find investors, build teams
-- 💰 **Investors:** Discover opportunities, review applications, build portfolio
+| Role | Description |
+|------|-------------|
+| 🚀 **Founders** | Create projects, find investors, build teams |
+| 💰 **Investors** | Discover opportunities, review applications, build portfolio |
+
+---
+
+## 🎬 Demo
+
+<div align="center">
+
+https://github.com/user-attachments/assets/2ddd5a17-653a-4201-8c36-93c78d96f046
+
+</div>
 
 ---
 
 ## ✨ Features
 
 ### For Founders 🚀
+
+<details>
+<summary>Click to expand</summary>
+
 - ✅ **5-Step Project Creation Wizard**
   - Basic information & cover image
   - Project narrative & problem statement
@@ -40,86 +56,92 @@ To create a thriving startup ecosystem where ideas meet resources, talent meets 
 - ✅ **Project Portfolio Management**
   - Track multiple projects
   - Filter by status (Open, Funded, Draft)
-  - Progress tracking
-  - Status badges
+  - Progress tracking & status badges
 - ✅ **Analytics Dashboard**
   - Active volunteers tracking
-  - Project statistics
-  - Success rate metrics
+  - Project statistics & success rate metrics
   - Total hours logged
 - ✅ **Investor Application Management**
   - Review incoming applications
   - Applicant profiles with ratings
   - Accept/Reject workflow
 
+</details>
+
 ### For Investors 💰
+
+<details>
+<summary>Click to expand</summary>
+
 - ✅ **Browse Opportunities**
-  - Category-based filtering
-  - Stage-based filtering (Idea, MVP, Scaling)
+  - Category-based & stage-based filtering (Idea, MVP, Scaling)
   - Search functionality
 - ✅ **Application Review System**
   - Detailed project information
-  - Financial metrics
-  - Team composition
+  - Financial metrics & team composition
 - ✅ **Portfolio Showcase**
-  - Track investments
-  - Success stories
-  - Exit strategies
+  - Track investments, success stories, exit strategies
 - ✅ **Bookmark System**
-  - Save interesting opportunities
-  - Quick access to saved projects
+  - Save interesting opportunities for quick access
+
+</details>
 
 ### Common Features 🔧
-- ✅ **User Profiles**
-  - Verified badges
-  - Reputation system (5-star ratings)
-  - Skills & tags
-  - Portfolio showcase
-  - Current venture display
-- ✅ **Responsive Design**
-  - Optimized for all screen sizes
-  - Smooth animations
-  - Beautiful gradients
+
+- ✅ **User Profiles** — Verified badges, 5-star reputation system, skills & tags, portfolio showcase
+- ✅ **Responsive Design** — Optimized for all screen sizes with smooth animations and beautiful gradients
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- **Framework:** Flutter 3.0+
-- **Language:** Dart 3.0+
-- **UI Library:** Material Design 3
-- **Responsive Design:** flutter_screenutil ^5.9.0
-
-### State Management
-- **Current:** StatefulWidget with setState / Cubit
-
-### Design
-- **Font:** Cairo (Arabic & English support)
-- **Icons:** Material Icons + Custom Icons
-- **Colors:** Custom theme system with light/dark support
-
-### Development Tools
-- **Version Control:** Git / GitHub
-- **IDE:** VS Code / Android Studio
-- **Testing:** Flutter Test (prepared)
+| Category | Technology |
+|----------|------------|
+| **Framework** | Flutter 3.0+ |
+| **Language** | Dart 3.0+ |
+| **UI Library** | Material Design 3 |
+| **Responsive** | flutter_screenutil ^5.9.0 |
+| **State Management** | StatefulWidget / Cubit |
+| **Font** | Cairo (Arabic & English support) |
+| **Version Control** | Git / GitHub |
 
 ---
 
-https://github.com/user-attachments/assets/2ddd5a17-653a-4201-8c36-93c78d96f046
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Flutter SDK 3.0+
+- Dart SDK 3.0+
+- Android Studio / VS Code
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Rafeeq-Software-Project/mobile-app.git
+
+# Navigate to the project directory
+cd mobile-app
+
+# Install dependencies
+flutter pub get
+
+# Run the app
+flutter run
+```
 
 ---
-
 
 ## 👥 Team
 
 **Rafeeq Software Project Team**
 
-- UI/UX Development: ✅ Complete
-- Backend Development: ⏳ In Progress
-- Mobile Application Development: ⏳ In Progress
-
-
+| Area | Status |
+|------|--------|
+| UI/UX Development | ✅ Complete |
+| Backend Development | 🔄 Largely Complete |
+| Mobile App Development | 🔄 Largely Complete |
 
 ---
 
@@ -132,12 +154,12 @@ https://github.com/user-attachments/assets/2ddd5a17-653a-4201-8c36-93c78d96f046
 ---
 
 ## 🙏 Acknowledgments
-- All contributors and supporters
+
+Thanks to all contributors and supporters of the Rafeeq project.
 
 ---
 
 <div align="center">
-
 
 ![Flutter](https://img.shields.io/badge/Made%20with-Flutter-02569B?style=for-the-badge&logo=flutter)
 
@@ -146,6 +168,3 @@ https://github.com/user-attachments/assets/2ddd5a17-653a-4201-8c36-93c78d96f046
 [⬆ Back to Top](#rafeeq-mobile-app-)
 
 </div>
-
-
-
