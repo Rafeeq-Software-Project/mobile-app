@@ -34,7 +34,7 @@ To create a thriving startup ecosystem where ideas meet resources, talent meets 
 
 <div align="center">
 
-https://github.com/user-attachments/assets/2ddd5a17-653a-4201-8c36-93c78d96f046
+https://github.com/user-attachments/assets/7b5d511c-4193-4394-8e32-c4cc216254aa
 
 </div>
 
